@@ -2,6 +2,8 @@ package ec.edu.espe.medicalappointmentsystem.model;
 
 //import java.text.ParseException;
 //import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -17,6 +19,31 @@ public class Appointment {
     public Appointment(int id, Date dateAppointment) {
         this.id = id;
         this.dateAppointment = dateAppointment;
+    }
+    
+    public static void AddApointment(){
+        System.out.println("Appointment id: ");
+                    int id = input.nextInt();
+                    input.nextLine();  // Consume newline
+
+                    System.out.println("Enter Appointment Date (yyyy-MM-dd): ");
+                    String dateStr = input.nextLine();
+                    Date dateAppointment;
+                    try {
+                        dateAppointment = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                        break;
+                    }
+
+                    // Create appointment
+                    Appointment appointment = new Appointment(id, dateAppointment);
+                    appointments.add(appointment);
+
+                    // Save appointment to file
+                    appointmentFileManager.saveAppointment(appointment.toString(), "appointments");
+                    System.out.println("Appointment created successfully.");
+                    break;
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * @author USUARIO
  */
-public class MedicalAppointmentSystem {
+public class Menu {
   
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -27,35 +27,15 @@ public class MedicalAppointmentSystem {
             System.out.println("Medical Appointment System");
             System.out.println("1. Create Appointment");
             System.out.println("2. View Appointments");
-            System.out.println("3. Exit");
+            System.out.println("3. Add Doctor");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             choice = input.nextInt();
             input.nextLine();  // Consume newline
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter Appointment ID: ");
-                    int id = input.nextInt();
-                    input.nextLine();  // Consume newline
-
-                    System.out.println("Enter Appointment Date (yyyy-MM-dd): ");
-                    String dateStr = input.nextLine();
-                    Date dateAppointment;
-                    try {
-                        dateAppointment = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-                    } catch (ParseException e) {
-                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-                        break;
-                    }
-
-                    // Create appointment
-                    Appointment appointment = new Appointment(id, dateAppointment);
-                    appointments.add(appointment);
-
-                    // Save appointment to file
-                    appointmentFileManager.saveAppointment(appointment.toString(), "appointments");
-                    System.out.println("Appointment created successfully.");
-                    break;
+                    
 
                 case 2:
                     // View appointments
