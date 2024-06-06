@@ -13,9 +13,7 @@ import java.util.List;
  * Author:
  */
 public class Calendar {
-<<<<<<< HEAD
-
-    private static List<List<Appointment>> calendar;
+ private static List<List<Appointment>> calendar;
 
     public Calendar() {
         calendar = new ArrayList<>();
@@ -25,6 +23,7 @@ public class Calendar {
                 day.add(null);
             }
             calendar.add(day);
+<<<<<<< HEAD
 =======
     private List<String> workingDays;
     private List<String> availableSlots;
@@ -54,6 +53,8 @@ public class Calendar {
         } else {
             System.out.println("Error: Day of week or time slot out of range.");
             return null;
+=======
+>>>>>>> dafb916965bfe88299f2d141aa5b0322a79a91b2
         }
     }
 

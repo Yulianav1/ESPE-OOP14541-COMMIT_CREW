@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -19,8 +20,7 @@ import java.util.Scanner;
 public class Menu {
 
     private static List<Appointment> appointments;
-
-    public static void menu(String[] args) {
+public static void menu(String[] args) {
         Scanner input = new Scanner(System.in);
         List<Appointment> appointments = new ArrayList<>();
         List<Doctor> doctors = new ArrayList<>();
@@ -36,8 +36,8 @@ public class Menu {
             System.out.println("1. Create Appointment");
             System.out.println("2. View Appointments");
             System.out.println("3. Add Doctor");
-            System.out.println("4. Exit");
-            System.out.println("5. View Calendar");
+            System.out.println("4. View Calendar");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
             choice = input.nextInt();
             input.nextLine();
@@ -45,17 +45,10 @@ public class Menu {
             switch (choice) {
                 case 1:
                     AppointmentController.addAppointment(doctors, appointments);
+                    break;
 
                 case 2:
-
-                    // View appointments
-                    System.out.println("Viewing Appointments:");
-                    for (Appointment apt : appointments) {
-                        System.out.println(apt.getDoctor().getName() + "Doctor: ");
-                        System.out.println("Date: " + apt.getDate());
-                        System.out.println("Time: " + apt.getTime());
-                        System.out.println("-------------------");
-                    }
+                    viewAppointments();
                     break;
 
                 case 3:
@@ -63,19 +56,31 @@ public class Menu {
                     break;
 
                 case 4:
+<<<<<<< HEAD
                     System.out.println("Exiting program. Goodbye!");
                     break;
                 case 5:
                     Calendar myCalendar = new Calendar(); 
                     viewCalendar(myCalendar); 
+=======
+                    Calendar myCalendar = new Calendar(); // Crear una instancia de Calendar
+                    viewCalendar(myCalendar); // Llamar a viewCalendar() pasando la instancia de Calendar
+>>>>>>> dafb916965bfe88299f2d141aa5b0322a79a91b2
+                    break;
+
+                case 5:
+                    System.out.println("Exiting program. Goodbye!");
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 5.");
                     break;
             }
         } while (choice != 5);
     }
+
+
+    
 
     public static void viewAppointments() {
         // Mostrar las citas
@@ -88,7 +93,7 @@ public class Menu {
         }
     }
 
-    public static void viewCalendar(Calendar myCalendar) { // Modificar la firma del método para aceptar un objeto Calendar
+     public static void viewCalendar(Calendar myCalendar) { // Modificar la firma del método para aceptar un objeto Calendar
         // Mostrar el calendario
         System.out.println("Viewing Calendar:");
         for (int i = 0; i < 5; i++) {
