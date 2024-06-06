@@ -55,7 +55,6 @@ public class DateValidator {
             e.printStackTrace(); // Imprimir el rastro de la pila para depurar
         }
     }
-<<<<<<< HEAD
 
     public static void main(String[] args) {
         LocalDate currentDate = getCurrentDate(); // Obtener la fecha actual
@@ -82,6 +81,4 @@ class AppointmentData {
         return appointmentDate;
     }
 }
-=======
-}
->>>>>>> 01175e5c77cab827d1ea4ae9289445dd371866fa
+
