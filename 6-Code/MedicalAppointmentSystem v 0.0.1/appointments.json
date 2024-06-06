@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Appointment{id=12, dateAppointment=2024-12-01, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=null}
+=======
+Appointment{id=1, dateAppointment=2024-09-23, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=null}
+>>>>>>> 6c2fa7b47c6a30930445123f85d4e463d19d0008
