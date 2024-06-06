@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+Este es el contenido del archivo modificado en la rama actual.
+=======
+Este es el contenido del archivo modificado en la otra rama.
+>>>>>>> otra_rama
