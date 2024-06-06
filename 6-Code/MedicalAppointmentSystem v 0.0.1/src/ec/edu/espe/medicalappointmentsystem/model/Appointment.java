@@ -2,6 +2,7 @@ package ec.edu.espe.medicalappointmentsystem.model;
 
 //import java.text.ParseException;
 //import java.text.SimpleDateFormat;
+import ec.edu.espe.medicalappointmentsystem.util.DateValidator;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,14 +16,16 @@ public class Appointment {
 
     private int id;
     private LocalDate dateAppointment;
-    public Doctor doctor;
+    private Doctor doctor;
     private Patient patient;
+    private String patientID;
 
-    public Appointment(int id, LocalDate dateAppointment, Doctor doctor, Patient patient) {
+    public Appointment(int id, LocalDate dateAppointment, Doctor doctor, Patient patient, String patientID) {
         this.id = id;
         this.dateAppointment = dateAppointment;
         this.doctor = doctor;
         this.patient = patient;
+        this.patientID = patientID;
     }
 
     public static void addAppointment() {
@@ -31,10 +34,9 @@ public class Appointment {
             int id = input.nextInt();
             input.nextLine();
 
-            // Get appointment date
-            System.out.println("Enter Appointment Date (yyyy-MM-dd): ");
-            String dateStr = input.nextLine();
-            LocalDate dateAppointment = LocalDate.parse(dateStr);
+            // Get current date and generate patient ID
+            LocalDate dateAppointment = LocalDate.now();
+            String patientID = DateValidator.generatePatientID(dateAppointment);
 
             // Get doctor information
             Doctor doctor = Doctor.inputDoctorData();
@@ -43,7 +45,7 @@ public class Appointment {
             Patient patient = Patient.inputPatientData();
 
             // Create appointment
-            Appointment appointment = new Appointment(id, dateAppointment, doctor, patient);
+            Appointment appointment = new Appointment(id, dateAppointment, doctor, patient, patientID);
 
             // Save appointment to file
             FileManager.save(appointment.toString(), "appointments");
@@ -59,6 +61,7 @@ public class Appointment {
                 + ", dateAppointment=" + dateAppointment
                 + ", doctor=" + doctor
                 + ", patient=" + patient
+                + ", patientID='" + patientID + '\''
                 + '}';
     }
 
@@ -76,6 +79,22 @@ public class Appointment {
 
     public void setDateAppointment(LocalDate dateAppointment) {
         this.dateAppointment = dateAppointment;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public String getPatientID() {
+        return patientID;
+    }
+
+    public void setPatientID(String patientID) {
+        this.patientID = patientID;
     }
 
     public static Doctor inputDoctorData(List<Doctor> doctors) {
@@ -112,17 +131,4 @@ public class Appointment {
             return selectedDoctor;
         }
     }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public String getTime() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public String getDate() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

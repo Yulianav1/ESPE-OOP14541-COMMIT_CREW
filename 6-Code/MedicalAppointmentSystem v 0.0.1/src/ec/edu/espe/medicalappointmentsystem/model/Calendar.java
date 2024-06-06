@@ -13,9 +13,7 @@ import java.util.List;
  * Author:
  */
 public class Calendar {
-<<<<<<< HEAD
-
-    private static List<List<Appointment>> calendar;
+ private static List<List<Appointment>> calendar;
 
     public Calendar() {
         calendar = new ArrayList<>();
@@ -25,36 +23,6 @@ public class Calendar {
                 day.add(null);
             }
             calendar.add(day);
-=======
-    private List<String> workingDays;
-    private List<String> availableSlots;
-    private List<List<Appointment>> calendar;
-    public Calendar() {
-        this.calendar = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            List<Appointment> day = new ArrayList<>();
-            for (int j = 0; j < 10; j++) { // 10 slots representando los intervalos de una hora y media desde las 7:00 hasta la 1:30
-                day.add(null); // Inicializar con citas nulas
-            }
-            this.calendar.add(day);
-        }
-    }
-
-    public void addAppointment(int dayOfWeek, int timeSlot, Appointment appointment) {
-        if (dayOfWeek >= 0 && dayOfWeek < 5 && timeSlot >= 0 && timeSlot < 10) {
-            calendar.get(dayOfWeek).set(timeSlot, appointment);
-        } else {
-            System.out.println("Error: Day of week or time slot out of range.");
-        }
-    }
-
-    public Appointment getAppointment(int dayOfWeek, int timeSlot) {
-        if (dayOfWeek >= 0 && dayOfWeek < 5 && timeSlot >= 0 && timeSlot < 10) {
-            return calendar.get(dayOfWeek).get(timeSlot);
-        } else {
-            System.out.println("Error: Day of week or time slot out of range.");
-            return null;
->>>>>>> 5d0a9deb3292febbb841bebab03cc0301209d849
         }
     }
 

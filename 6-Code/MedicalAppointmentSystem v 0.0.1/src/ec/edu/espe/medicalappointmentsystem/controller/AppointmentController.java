@@ -17,19 +17,21 @@ import java.util.Scanner;
  */
 public class AppointmentController {
 
-    public static void addAppointment(List<Doctor> doctors, List<Appointment> appointments) {
+     public static void addAppointment(List<Doctor> doctors, List<Appointment> appointments) {
         try (Scanner input = new Scanner(System.in)) {
             System.out.println("Enter appointment ID:");
             int id = input.nextInt();
             input.nextLine();
 
-            LocalDate appointmentDate = DateValidator.getValidAppointmentDate();
+            // Usar la fecha actual en lugar de pedir al usuario que ingrese la fecha
+            LocalDate appointmentDate = LocalDate.now();
+            String patientID = DateValidator.generatePatientID(appointmentDate);
 
             Doctor selectedDoctor = Appointment.inputDoctorData(doctors);
 
             Patient patient = Patient.inputPatientData();
 
-            Appointment appointment = new Appointment(id, appointmentDate, selectedDoctor, patient);
+            Appointment appointment = new Appointment(id, appointmentDate, selectedDoctor, patient, patientID);
 
             appointments.add(appointment); // Agregar la cita a la lista de citas en el menú
 
@@ -40,5 +42,4 @@ public class AppointmentController {
             System.out.println("An error occurred while creating the appointment: " + e.getMessage());
         }
     }
-
 }
