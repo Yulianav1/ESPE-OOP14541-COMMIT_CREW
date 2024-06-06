@@ -3,9 +3,8 @@ package ec.edu.espe.medicalappointmentsystem.model;
 //import java.text.ParseException;
 //import java.text.SimpleDateFormat;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,36 +13,37 @@ import java.util.Scanner;
  */
 public class Appointment {
 
-
-
-
-
     private int id;
-    private Date dateAppointment;
+    private LocalDate dateAppointment;
+    private Doctor doctor;
+    private Patient patient;
 
-    public Appointment(int id, Date dateAppointment) {
+    public Appointment(int id, LocalDate dateAppointment, Doctor doctor, Patient patient) {
         this.id = id;
         this.dateAppointment = dateAppointment;
+        this.doctor = doctor;
+        this.patient = patient;
     }
 
     public static void addAppointment() {
         try (Scanner input = new Scanner(System.in)) {
             System.out.println("Appointment id: ");
             int id = input.nextInt();
-            input.nextLine();  // Consume newline
+            input.nextLine();
 
+            // Get appointment date
             System.out.println("Enter Appointment Date (yyyy-MM-dd): ");
             String dateStr = input.nextLine();
-            Date dateAppointment;
-            try {
-                dateAppointment = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-            } catch (ParseException e) {
-                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-                return; // Terminar el método si hay un error de formato de fecha
-            }
+            LocalDate dateAppointment = LocalDate.parse(dateStr);
+
+            // Get doctor information
+            Doctor doctor = Doctor.inputDoctorData();
+
+            // Get patient information
+            Patient patient = Patient.inputPatientData();
 
             // Create appointment
-            Appointment appointment = new Appointment(id, dateAppointment);
+            Appointment appointment = new Appointment(id, dateAppointment, doctor, patient);
 
             // Save appointment to file
             FileManager.save(appointment.toString(), "appointments");
@@ -54,7 +54,12 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Appointment{" + "id=" + id + ", dateAppointment=" + dateAppointment + '}';
+        return "Appointment{"
+                + "id=" + id
+                + ", dateAppointment=" + dateAppointment
+                + ", doctor=" + doctor
+                + ", patient=" + patient
+                + '}';
     }
 
     public int getId() {
@@ -65,50 +70,47 @@ public class Appointment {
         this.id = id;
     }
 
-    public Date getDateAppointment() {
+    public LocalDate getDateAppointment() {
         return dateAppointment;
     }
 
-    public void setDateAppointment(Date dateAppointment) {
+    public void setDateAppointment(LocalDate dateAppointment) {
         this.dateAppointment = dateAppointment;
     }
 
-    public static void inputDoctorData() {
+    public static Doctor inputDoctorData(List<Doctor> doctors) {
         try (Scanner input = new Scanner(System.in)) {
             String continueInput;
+            Doctor selectedDoctor = null;
+
+            System.out.println("Doctors List:");
+            for (Doctor doctor : doctors) {
+                doctor.printDoctorInfo();
+            }
 
             do {
-                int id;
-                String name;
-                String specialty;
-                String schedule;
+                System.out.println("Enter doctor's ID:");
+                int selectedId = input.nextInt();
+                input.nextLine();
 
-                System.out.println("Enter doctor's the ID:");
-                String idStr = input.nextLine();
-                id = Integer.parseInt(idStr);
+                // Buscar el doctor seleccionado en la lista
+                for (Doctor doctor : doctors) {
+                    if (doctor.getId() == selectedId) {
+                        selectedDoctor = doctor;
+                        break;
+                    }
+                }
 
-                System.out.println("Enter the doctor's name:");
-                name = input.nextLine();
+                if (selectedDoctor == null) {
+                    System.out.println("Doctor not found. Please enter a valid ID.");
+                }
 
-                System.out.println("Select the specialty:");
-                specialty = input.nextLine();
-
-                System.out.println("Enter the doctor's schedule:");
-                schedule = input.nextLine();
-
-                Doctor doctor = new Doctor(id, name, specialty, schedule);
-
-                System.out.println("New doctor added --> \n" + doctor);
-
-                System.out.println("Do you want to enter another doctor (yes/no):");
+                System.out.println("Do you want to select another doctor (yes/no):");
                 continueInput = input.nextLine();
             } while (continueInput.equalsIgnoreCase("yes"));
 
+            return selectedDoctor;
         }
-
     }
 
 }
-
-
-

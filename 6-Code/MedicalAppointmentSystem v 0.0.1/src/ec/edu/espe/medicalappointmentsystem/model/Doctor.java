@@ -4,11 +4,15 @@
  */
 package ec.edu.espe.medicalappointmentsystem.model;
 
+import java.util.Scanner;
+
 /**
  *
  * @author CommitCrew
  */
 public class Doctor {
+
+    private String Schedule;
 
     public Doctor(int id, String name, String specialty, String Schedule) {
         this.id = id;
@@ -16,14 +20,17 @@ public class Doctor {
         this.specialty = specialty;
         this.Schedule = Schedule;
     }
-    Doctor doctor1 = new Doctor(1, "Dr. Samantha Villagomez", "Pediatra", "Martes-Jueves 7h-14h");
-    Doctor doctor2 = new Doctor(2, "Dr. Stalin Aguilar", "Médico General", "Lunes-Miércoles 9h-17h")
-            
-     @Override
+
+    private int id;
+    private String name;
+    private String specialty;
+    private String schedule;
+
+    @Override
     public String toString() {
         return "Doctor{" + "id=" + id + ", name=" + name + ", specialty=" + specialty + ", Schedule=" + Schedule + '}';
     }
-    
+
     /**
      * @return the id
      */
@@ -79,9 +86,31 @@ public class Doctor {
     public void setSchedule(String Schedule) {
         this.Schedule = Schedule;
     }
-    private int id;
-    private String name;
-    private String specialty;
-    private String Schedule;
-    
+
+    public static Doctor inputDoctorData() {
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.println("Enter doctor's ID:");
+            int id = input.nextInt();
+            input.nextLine(); // Consume newline
+
+            System.out.println("Enter the doctor's name:");
+            String name = input.nextLine();
+
+            System.out.println("Enter the doctor's specialty:");
+            String specialty = input.nextLine();
+
+            System.out.println("Enter the doctor's schedule:");
+            String schedule = input.nextLine();
+
+            return new Doctor(id, name, specialty, schedule);
+        }
+    }
+
+    public void printDoctorInfo() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Specialty: " + specialty);
+        System.out.println("Schedule: " + schedule);
+    }
+
 }

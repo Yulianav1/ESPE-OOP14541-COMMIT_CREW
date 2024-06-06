@@ -2,21 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ec.edu.espe.medicalappointmentsystem.controller;
+package ec.edu.espe.medicalappointmentsystem.view;
+
+import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
 import ec.edu.espe.medicalappointmentsystem.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 /**
  *
  * @author USUARIO
  */
 public class Menu {
- 
-    public static void main(String[] args) {
+
+    public static void menu(String[] args) {
         Scanner input = new Scanner(System.in);
         List<Appointment> appointments = new ArrayList<>();
+        List<Doctor> doctors = new ArrayList<>();
 
         int choice;
         do {
@@ -27,12 +31,11 @@ public class Menu {
             System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             choice = input.nextInt();
-            input.nextLine();  // Consume newline
+            input.nextLine();
 
             switch (choice) {
                 case 1:
-                    // Create appointment
-                    Appointment.addAppointment();
+                    AppointmentController.addAppointment(doctors);
                     break;
 
                 case 2:
@@ -44,8 +47,7 @@ public class Menu {
                     break;
 
                 case 3:
-                    // Add doctor
-                    Appointment.inputDoctorData();
+                    //AppointmentController.addAppointment(doctors);
                     break;
 
                 case 4:
@@ -59,8 +61,3 @@ public class Menu {
         } while (choice != 4);
     }
 }
-
-
-
- 
-

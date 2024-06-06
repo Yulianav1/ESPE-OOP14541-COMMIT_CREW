@@ -1,6 +1,7 @@
 package ec.edu.espe.medicalappointmentsystem.model;
 
 import java.util.Date;
+import java.util.Scanner;
 
 /**
  *
@@ -22,6 +23,26 @@ public class Patient {
     @Override
     public String toString() {
         return "Patient{" + "id=" + id + ", name=" + name + ", age=" + age + ", bornOnDate=" + bornOnDate + '}';
+    }
+    
+    public static Patient inputPatientData() {
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.println("Enter patient ID:");
+            int id = input.nextInt();
+            input.nextLine(); // Consume newline
+
+            System.out.println("Enter patient name:");
+            String name = input.nextLine();
+
+            System.out.println("Enter patient age:");
+            int age = input.nextInt();
+            input.nextLine(); // Consume newline
+
+            return new Patient(id, name, age, null);
+        } catch (Exception e) {
+            System.out.println("An error occurred while entering patient data: " + e.getMessage());
+            return null;
+        }
     }
     
     /**
