@@ -2,6 +2,7 @@ package ec.edu.espe.medicalappointmentsystem.model;
 
 //import java.text.ParseException;
 //import java.text.SimpleDateFormat;
+import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +14,10 @@ import java.util.Scanner;
  */
 public class Appointment {
 
+
+
+
+
     private int id;
     private Date dateAppointment;
 
@@ -20,30 +25,31 @@ public class Appointment {
         this.id = id;
         this.dateAppointment = dateAppointment;
     }
-    
-    public static void AddApointment(){
-        System.out.println("Appointment id: ");
-                    int id = input.nextInt();
-                    input.nextLine();  // Consume newline
 
-                    System.out.println("Enter Appointment Date (yyyy-MM-dd): ");
-                    String dateStr = input.nextLine();
-                    Date dateAppointment;
-                    try {
-                        dateAppointment = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-                    } catch (ParseException e) {
-                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-                        break;
-                    }
+    public static void addAppointment() {
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.println("Appointment id: ");
+            int id = input.nextInt();
+            input.nextLine();  // Consume newline
 
-                    // Create appointment
-                    Appointment appointment = new Appointment(id, dateAppointment);
-                    appointments.add(appointment);
+            System.out.println("Enter Appointment Date (yyyy-MM-dd): ");
+            String dateStr = input.nextLine();
+            Date dateAppointment;
+            try {
+                dateAppointment = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                return; // Terminar el método si hay un error de formato de fecha
+            }
 
-                    // Save appointment to file
-                    appointmentFileManager.saveAppointment(appointment.toString(), "appointments");
-                    System.out.println("Appointment created successfully.");
-                    break;
+            // Create appointment
+            Appointment appointment = new Appointment(id, dateAppointment);
+
+            // Save appointment to file
+            FileManager.save(appointment.toString(), "appointments");
+
+            System.out.println("Appointment created successfully.");
+        }
     }
 
     @Override
@@ -51,30 +57,18 @@ public class Appointment {
         return "Appointment{" + "id=" + id + ", dateAppointment=" + dateAppointment + '}';
     }
 
-    /**
-     * @return the id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
-     * @return the dateAppointment
-     */
     public Date getDateAppointment() {
         return dateAppointment;
     }
 
-    /**
-     * @param dateAppointment the dateAppointment to set
-     */
     public void setDateAppointment(Date dateAppointment) {
         this.dateAppointment = dateAppointment;
     }
@@ -115,3 +109,6 @@ public class Appointment {
     }
 
 }
+
+
+

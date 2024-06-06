@@ -4,11 +4,16 @@
  */
 package ec.edu.espe.medicalappointmentsystem.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  *
  * @author CommitCrew
  */
 public class Specialty {
+    
+        
     private String specialtyName;
     private String description;
 

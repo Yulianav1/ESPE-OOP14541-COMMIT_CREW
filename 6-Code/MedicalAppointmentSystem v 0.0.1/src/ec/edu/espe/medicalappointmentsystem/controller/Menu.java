@@ -5,10 +5,7 @@
 package ec.edu.espe.medicalappointmentsystem.controller;
 import ec.edu.espe.medicalappointmentsystem.model.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 /**
@@ -16,11 +13,10 @@ import java.util.Scanner;
  * @author USUARIO
  */
 public class Menu {
-  
+ 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         List<Appointment> appointments = new ArrayList<>();
-        AppointmentFileManager appointmentFileManager = new AppointmentFileManager();
 
         int choice;
         do {
@@ -35,7 +31,9 @@ public class Menu {
 
             switch (choice) {
                 case 1:
-                    
+                    // Create appointment
+                    Appointment.addAppointment();
+                    break;
 
                 case 2:
                     // View appointments
@@ -46,16 +44,23 @@ public class Menu {
                     break;
 
                 case 3:
+                    // Add doctor
+                    Appointment.inputDoctorData();
+                    break;
+
+                case 4:
                     System.out.println("Exiting program. Goodbye!");
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
                     break;
             }
-        } while (choice != 3);
+        } while (choice != 4);
     }
 }
+
+
 
  
 
