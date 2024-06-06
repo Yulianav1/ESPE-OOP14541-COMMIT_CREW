@@ -1,0 +1,1 @@
+Appointment{id=12, dateAppointment=2024-12-01, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=null}
