@@ -54,7 +54,6 @@ public class Calendar {
         } else {
             System.out.println("Error: Day of week or time slot out of range.");
             return null;
->>>>>>> 5d0a9deb3292febbb841bebab03cc0301209d849
         }
     }
 
