@@ -15,7 +15,7 @@ public class Appointment {
 
     private int id;
     private LocalDate dateAppointment;
-    private Doctor doctor;
+    public Doctor doctor;
     private Patient patient;
 
     public Appointment(int id, LocalDate dateAppointment, Doctor doctor, Patient patient) {
@@ -111,6 +111,18 @@ public class Appointment {
 
             return selectedDoctor;
         }
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public String getTime() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getDate() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

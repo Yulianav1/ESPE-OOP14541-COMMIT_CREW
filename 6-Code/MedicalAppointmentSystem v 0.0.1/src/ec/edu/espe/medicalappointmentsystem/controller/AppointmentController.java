@@ -5,6 +5,7 @@ import ec.edu.espe.medicalappointmentsystem.util.DateValidator;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
+import ec.edu.espe.medicalappointmentsystem.view.Menu;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,7 @@ import java.util.Scanner;
  */
 public class AppointmentController {
 
-    private static List<Appointment> appointments = new ArrayList<>();
-
-    public static void addAppointment(List<Doctor> doctors) {
+    public static void addAppointment(List<Doctor> doctors, List<Appointment> appointments) {
         try (Scanner input = new Scanner(System.in)) {
             System.out.println("Enter appointment ID:");
             int id = input.nextInt();
@@ -32,7 +31,7 @@ public class AppointmentController {
 
             Appointment appointment = new Appointment(id, appointmentDate, selectedDoctor, patient);
 
-            appointments.add(appointment);
+            appointments.add(appointment); // Agregar la cita a la lista de citas en el menú
 
             FileManager.save(appointment.toString(), "appointments");
 

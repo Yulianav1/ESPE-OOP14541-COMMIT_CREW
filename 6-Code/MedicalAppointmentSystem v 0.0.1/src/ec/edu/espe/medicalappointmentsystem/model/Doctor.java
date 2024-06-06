@@ -22,7 +22,7 @@ public class Doctor {
     }
 
     private int id;
-    private String name;
+    public String name;
     private String specialty;
     private String schedule;
 
