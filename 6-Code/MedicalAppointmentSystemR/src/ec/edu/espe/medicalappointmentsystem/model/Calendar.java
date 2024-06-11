@@ -25,7 +25,7 @@ public class Calendar {
         if (dayOfWeek >= 0 && dayOfWeek < 5 && timeSlot >= 0 && timeSlot < 10) {
             calendar.get(dayOfWeek).set(timeSlot, appointment);
         } else {
-            System.out.println("Error: Day of week or time slot out of range.");
+            System.out.println("Error: Día de la semana o franja horaria fuera de rango.");
         }
     }
 
@@ -33,7 +33,7 @@ public class Calendar {
         if (dayOfWeek >= 0 && dayOfWeek < 5 && timeSlot >= 0 && timeSlot < 10) {
             return calendar.get(dayOfWeek).get(timeSlot);
         } else {
-            System.out.println("Error: Day of week or time slot out of range.");
+            System.out.println("Error: Día de la semana o franja horaria fuera de rango.");
             return null;
         }
     }

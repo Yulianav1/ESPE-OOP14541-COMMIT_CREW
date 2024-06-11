@@ -9,9 +9,9 @@ import java.util.Scanner;
  */
 public class Patient {
 
-    private int id;
-    private String name;
-    private int age;
+    public int id;
+    public String name;
+    public int age;
 
     public Patient(int id, String name, int age) {
         this.id = id;
@@ -68,20 +68,20 @@ public class Patient {
 
     public static Patient inputPatientData(Scanner input) {
         try {
-            System.out.println("Enter patient ID:");
+            System.out.println("Ingrese el id del paciente:");
             int id = input.nextInt();
             input.nextLine();
 
-            System.out.println("Enter patient name:");
+            System.out.println("Ingrese el nombre del paciente:");
             String name = input.nextLine();
 
-            System.out.println("Enter patient age:");
+            System.out.println("Ingrese la edad del paciente:");
             int age = input.nextInt();
             input.nextLine();
 
             return new Patient(id, name, age);
         } catch (Exception e) {
-            System.out.println("An error occurred while entering patient data: " + e.getMessage());
+            System.out.println("Un error ha ocurrido: " + e.getMessage());
             return null;
         }
     }

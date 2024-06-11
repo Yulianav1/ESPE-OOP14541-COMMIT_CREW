@@ -4,8 +4,11 @@ package ec.edu.espe.medicalappointmentsystem.model;
 //import java.text.SimpleDateFormat;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 import java.time.LocalDate;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 /**
  *
@@ -13,17 +16,17 @@ import java.util.Scanner;
  */
 public class Appointment {
 
-    private int id;
-    private LocalDate dateAppointment;
-    public Doctor doctor;
+    private String id;
+    private String dateAppointment; 
+    private Doctor doctor;
     private Patient patient;
 
-    public Appointment(int id, LocalDate dateAppointment, Doctor doctor, Patient patient) {
-        this.id = id;
-        this.dateAppointment = dateAppointment;
-        this.doctor = doctor;
-        this.patient = patient;
-    }
+    public Appointment(String dateAppointment, Doctor doctor, Patient patient) {
+    this.id = UUID.randomUUID().toString();
+    this.dateAppointment = dateAppointment;
+    this.doctor = doctor;
+    this.patient = patient;
+}
 
     @Override
     public String toString() {
@@ -35,20 +38,20 @@ public class Appointment {
                 + '}';
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public LocalDate getDateAppointment() {
-        return dateAppointment;
+         return LocalDate.parse(dateAppointment, DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
     public void setDateAppointment(LocalDate dateAppointment) {
-        this.dateAppointment = dateAppointment;
+        this.dateAppointment = dateAppointment.format(DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
     public Doctor getDoctor() {

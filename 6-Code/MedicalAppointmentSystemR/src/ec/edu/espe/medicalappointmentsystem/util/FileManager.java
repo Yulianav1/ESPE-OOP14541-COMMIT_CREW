@@ -21,10 +21,10 @@ public class FileManager {
             bufferedWriter.write(data);
             bufferedWriter.newLine();
 
-            System.out.println("Data successfully saved to JSON file.");
+            System.out.println("Datos guardados correctamente en un archivo JSON.");
 
         } catch (IOException e) {
-            System.err.println("Error writing to the file: " + e.getMessage());
+            System.err.println("Error al escribir en el archivo: " + e.getMessage());
         }
     }
 }

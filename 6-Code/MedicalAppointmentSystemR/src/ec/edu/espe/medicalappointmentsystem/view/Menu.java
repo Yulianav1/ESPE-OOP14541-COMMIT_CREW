@@ -31,7 +31,7 @@ public class Menu {
 
         int choice;
         do {
-            System.out.println("Welcome to the Medical Appointment System");
+            System.out.println("Bienvenido al sistema de agendamiento de citas");
             System.out.println("1. Agendar Cita");
             System.out.println("2. Ver citas registradas");
             System.out.println("3. Agregar doctor");
@@ -71,15 +71,15 @@ public class Menu {
     }
 
     public static void viewCalendar(Calendar myCalendar) {
-        System.out.println("Viewing Calendar:");
+        System.out.println("Viendo el calendario:");
         for (int i = 0; i < 5; i++) {
-            System.out.println("Day " + (i + 1) + ":");
+            System.out.println("Dia " + (i + 1) + ":");
             for (int j = 0; j < 10; j++) {
                 Appointment apt = myCalendar.getAppointment(i, j);
                 if (apt != null) {
-                    System.out.println("Time Slot " + (j + 1) + ": " + apt.getDoctor().getName());
+                    System.out.println("Franja horaria " + (j + 1) + ": " + apt.getDoctor().getName());
                 } else {
-                    System.out.println("Time Slot " + (j + 1) + ": No Appointment");
+                    System.out.println("Franja horaria " + (j + 1) + ": Sin cita");
                 }
             }
             System.out.println("-------------------");
