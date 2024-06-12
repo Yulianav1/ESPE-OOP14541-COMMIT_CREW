@@ -12,16 +12,16 @@ import java.util.List;
  * Author:
  */
  public class Calendar {
-    private List<List<Appointment>> calendar;
+ private static List<List<Appointment>> calendar;
 
     public Calendar() {
-        this.calendar = new ArrayList<>();
+        calendar = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             List<Appointment> day = new ArrayList<>();
             for (int j = 0; j < 10; j++) {
-                day.add(null); // Inicializar con citas nulas
+                day.add(null);
             }
-            this.calendar.add(day);
+            calendar.add(day);
         }
     }
 
@@ -33,12 +33,14 @@ import java.util.List;
         }
     }
 
-    public Appointment getAppointment(int dayOfWeek, int timeSlot) {
+    public static Appointment getAppointment(int dayOfWeek, int timeSlot) {
         if (dayOfWeek >= 0 && dayOfWeek < 5 && timeSlot >= 0 && timeSlot < 10) {
             return calendar.get(dayOfWeek).get(timeSlot);
         } else {
             System.out.println("Error: Day of week or time slot out of range.");
             return null;
-        }
-    }
 }
+}
+
+
+ }

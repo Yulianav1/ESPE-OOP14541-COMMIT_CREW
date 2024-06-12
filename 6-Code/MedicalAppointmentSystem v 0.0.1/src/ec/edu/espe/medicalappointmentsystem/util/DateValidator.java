@@ -64,7 +64,6 @@ public class DateValidator {
 }
 
 class AppointmentData {
-
     private String patientID;
     private LocalDate appointmentDate;
 
@@ -81,4 +80,5 @@ class AppointmentData {
         return appointmentDate;
     }
 }
+
 

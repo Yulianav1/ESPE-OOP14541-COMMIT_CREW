@@ -17,23 +17,27 @@ import java.util.Scanner;
  */
 public class AppointmentController {
 
-     public static void addAppointment(List<Doctor> doctors, List<Appointment> appointments) {
+ public static void addAppointment(List<Doctor> doctors, List<Appointment> appointments, List<Patient> patients) {
         try (Scanner input = new Scanner(System.in)) {
             System.out.println("Enter appointment ID:");
             int id = input.nextInt();
             input.nextLine();
 
-            // Usar la fecha actual en lugar de pedir al usuario que ingrese la fecha
-            LocalDate appointmentDate = LocalDate.now();
-            String patientID = DateValidator.generatePatientID(appointmentDate);
+            // Get appointment date
+            System.out.println("Enter Appointment Date (yyyy-MM-dd): ");
+            String dateStr = input.nextLine();
+            LocalDate dateAppointment = LocalDate.parse(dateStr);
 
-            Doctor selectedDoctor = Appointment.inputDoctorData(doctors);
+            // Get doctor information
+            Doctor selectedDoctor = inputDoctorData(doctors);
 
+            // Get patient information
             Patient patient = Patient.inputPatientData();
 
-            Appointment appointment = new Appointment(id, appointmentDate, selectedDoctor, patient, patientID);
+            // Create appointment
+            Appointment appointment = new Appointment(id, dateAppointment, selectedDoctor, patient);
 
-            appointments.add(appointment); // Agregar la cita a la lista de citas en el menú
+            appointments.add(appointment); // Add the appointment to the list of appointments
 
             FileManager.save(appointment.toString(), "appointments");
 
@@ -42,4 +46,40 @@ public class AppointmentController {
             System.out.println("An error occurred while creating the appointment: " + e.getMessage());
         }
     }
+
+    private static Doctor inputDoctorData(List<Doctor> doctors) {
+        try (Scanner input = new Scanner(System.in)) {
+            String continueInput;
+            Doctor selectedDoctor = null;
+
+            System.out.println("Doctors List:");
+            for (Doctor doctor : doctors) {
+                doctor.printDoctorInfo();
+            }
+
+            do {
+                System.out.println("Enter doctor's ID:");
+                int selectedId = input.nextInt();
+                input.nextLine();
+
+                // Search for the selected doctor in the list
+                for (Doctor doctor : doctors) {
+                    if (doctor.getId() == selectedId) {
+                        selectedDoctor = doctor;
+                        break;
+                    }
+                }
+
+                if (selectedDoctor == null) {
+                    System.out.println("Doctor not found. Please enter a valid ID.");
+                }
+
+                System.out.println("Do you want to select another doctor (yes/no):");
+                continueInput = input.nextLine();
+            } while (continueInput.equalsIgnoreCase("yes"));
+
+            return selectedDoctor;
+        }
+    }
+
 }
