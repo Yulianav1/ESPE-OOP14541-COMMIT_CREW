@@ -24,15 +24,15 @@ public class DateValidator {
 
         while (true) {
             try {
-                System.out.println("Ingrese el año de la cita: ");
+                System.out.println("Ingrese el anio de la cita: ");
                 year = Integer.parseInt(scanner.nextLine());
                 int currentYear = LocalDate.now().getYear();
                 if (year < currentYear || year > currentYear + 1) {
-                    throw new IllegalArgumentException("El año debe ser el actual o el siguiente como maximo.");
+                    throw new IllegalArgumentException("El anio debe ser el actual o el siguiente como maximo.");
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Entrada Invalida. Ingrese un número válido para el año.");
+                System.out.println("Entrada Invalida. Ingrese un número valido para el año.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -55,7 +55,7 @@ public class DateValidator {
         
         while (true) {
             try {
-                System.out.println("Ingrese el día de la cita: ");
+                System.out.println("Ingrese el dia de la cita: ");
                 day = Integer.parseInt(scanner.nextLine());
                 LocalDate appointmentDate = LocalDate.of(year, month, day);
                 LocalDate today = LocalDate.now();
@@ -65,11 +65,11 @@ public class DateValidator {
                     throw new IllegalArgumentException("La fecha no puede ser anterior al día de hoy.");
                 }
                 if (appointmentDate.isAfter(oneYearFromNow)) {
-                    throw new IllegalArgumentException("La fecha debe ser dentro de un año a partir de hoy.");
+                    throw new IllegalArgumentException("La fecha debe ser dentro de un anio a partir de hoy.");
                 }
                 return appointmentDate;
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Ingrese un día válido.");
+                System.out.println("Entrada invalida. Ingrese un día valido.");
             } catch (DateTimeParseException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -94,7 +94,7 @@ public class DateValidator {
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Ingrese un número válido para el intervalo de tiempo.");
+                System.out.println("Entrada inválida. Ingrese un número valido para el intervalo de tiempo.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -110,9 +110,9 @@ public class DateValidator {
 
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write(json);
-            System.out.println("Appointment date successfully saved to JSON file.");
+            System.out.println("La fecha de la cita se guardó correctamente en el archivo JSON.");
         } catch (IOException e) {
-            System.out.println("An error occurred while saving appointment date to JSON file: " + e.getMessage());
+            System.out.println("Se produjo un error al guardar la fecha de la cita en un archivo JSON:" + e.getMessage());
             e.printStackTrace(); 
         }
     }
