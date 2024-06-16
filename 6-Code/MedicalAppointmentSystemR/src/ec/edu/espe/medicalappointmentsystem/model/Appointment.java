@@ -1,41 +1,37 @@
 package ec.edu.espe.medicalappointmentsystem.model;
 
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-import ec.edu.espe.medicalappointmentsystem.util.FileManager;
-import java.time.LocalDate;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
-/**
- *
- * @author CommitCrew
- */
-public class Appointment {
 
+public class Appointment {
     private String id;
-    private String dateAppointment; 
+    private LocalDate dateAppointment;
     private Doctor doctor;
     private Patient patient;
 
-    public Appointment(String dateAppointment, Doctor doctor, Patient patient) {
-    this.id = UUID.randomUUID().toString();
-    this.dateAppointment = dateAppointment;
-    this.doctor = doctor;
-    this.patient = patient;
-}
+    public Appointment() {
+        
+    }
+
+    public Appointment(LocalDate dateAppointment, Doctor doctor, Patient patient) {
+        this.id = UUID.randomUUID().toString();
+        this.dateAppointment = dateAppointment;
+        this.doctor = doctor;
+        this.patient = patient;
+    }
 
     @Override
     public String toString() {
-        return "Appointment{"
-                + "id=" + id
-                + ", dateAppointment=" + dateAppointment
-                + ", doctor=" + doctor
-                + ", patient=" + patient
-                + '}';
+        return "Appointment{" +
+                "id='" + id + '\'' +
+                ", dateAppointment='" + dateAppointment + '\'' +
+                ", doctor=" + doctor +
+                ", patient=" + patient +
+                '}';
     }
 
     public String getId() {
@@ -47,23 +43,19 @@ public class Appointment {
     }
 
     public LocalDate getDateAppointment() {
-         return LocalDate.parse(dateAppointment, DateTimeFormatter.ISO_LOCAL_DATE);
+        return dateAppointment;
     }
 
     public void setDateAppointment(LocalDate dateAppointment) {
-        this.dateAppointment = dateAppointment.format(DateTimeFormatter.ISO_LOCAL_DATE);
+        this.dateAppointment = dateAppointment;
     }
 
     public Doctor getDoctor() {
         return doctor;
     }
 
-    public String getTime() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public String getDate() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public Patient getPatient() {
@@ -107,5 +99,4 @@ public class Appointment {
             return selectedDoctor;
         }
     }
-
 }

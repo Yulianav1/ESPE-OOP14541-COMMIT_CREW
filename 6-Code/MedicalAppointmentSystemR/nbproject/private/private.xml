@@ -3,7 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/controller/DoctorController.java</file>
+            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Reminder.java</file>
+            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Patient.java</file>
+            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/view/MedicalAppointmentSystem.java</file>
+            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/controller/AppointmentController.java</file>
+            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Doctor.java</file>
+            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/util/FileManager.java</file>
+            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Appointment.java</file>
             <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/view/Menu.java</file>
         </group>
     </open-files>

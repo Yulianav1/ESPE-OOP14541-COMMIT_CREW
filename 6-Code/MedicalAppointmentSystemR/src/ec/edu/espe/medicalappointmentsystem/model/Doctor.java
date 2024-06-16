@@ -25,7 +25,8 @@ public class Doctor {
     public String name;
     private String specialty;
     private String schedule;
-
+    public Doctor() {
+    }
     @Override
     public String toString() {
         return "Doctor{" + "id=" + id + ", name=" + name + ", specialty=" + specialty + ", Schedule=" + Schedule + '}';
