@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [ {
   "id" : "6a0fe13c-28c9-4bd4-be34-42cba2d2da35",
   "dateAppointment" : "2024-12-12",
@@ -44,3 +45,28 @@
     "email" : "alexisviterivila@gmail.com"
   }
 } ]
+=======
+
+Appointment{id=12, dateAppointment=2024-12-01, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=null}
+
+Appointment{id=1, dateAppointment=2024-09-23, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=null}
+
+Appointment{id=1, dateAppointment=2024-08-23, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=null}
+Appointment{id=1, dateAppointment=2024-07-07, doctor=Doctor{id=2, name=Dr. Stalin Aguilar, specialty=Médico General, Schedule=Lunes-Miércoles 9h-17h}, patient=null}
+Appointment{id=1, dateAppointment=2024-09-25, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=null}
+Appointment{id=1, dateAppointment=2024-06-24, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=null}
+Appointment{id=1, dateAppointment=2024-09-04, doctor=Doctor{id=2, name=Dr. Stalin Aguilar, specialty=Médico General, Schedule=Lunes-Miércoles 9h-17h}, patient=Patient{id=1, name=Luis, age=18, bornOnDate=null}}
+Appointment{id=1, dateAppointment=2024-12-08, doctor=Doctor{id=2, name=Dr. Stalin Aguilar, specialty=Médico General, Schedule=Lunes-Miércoles 9h-17h}, patient=Patient{id=201950896, name=Domenica Villagomez, age=18, bornOnDate=null}}
+Appointment{id=1, dateAppointment=2024-11-08, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=Patient{id=201950896, name=Domenica Villagomez, age=18}}
+Appointment{id=2, dateAppointment=2024-07-10, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=Patient{id=201, name=Fiona Shrek, age=23}}
+Appointment{id=3, dateAppointment=2024-08-09, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=Patient{id=3923, name=Fanesca Toro, age=29}}
+Appointment{id=9392, dateAppointment=2024-06-07, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=Patient{id=32879, name=Holly Holo, age=19}}
+
+[Appointment{id=cc5634d6-64fc-4457-9356-d47d35efbaa8, dateAppointment=2024-12-01, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=Patient{id=123456789, name=La Roca, age=200}}
+Appointment{id=59001f22-173f-4d33-af07-94fd9ab8d3cb, dateAppointment=2024-12-01, doctor=Doctor{id=2, name=Dr. Stalin Aguilar, specialty=Medico General, Schedule=Lunes-Miércoles 9h-17h}, patient=Patient{id=1234567890, name=Ignacio, age=19}}
+Appointment{id=4f56ced1-f30b-4813-adb3-d494f30a5023, dateAppointment=2024-12-01, doctor=Doctor{id=2, name=Dr. Stalin Aguilar, specialty=Medico General, Schedule=Lunes-Miércoles 9h-17h}, patient=Patient{id=172775390, name=Alexis Viteri, age=19}}
+Appointment{id=76bbc529-b748-49cf-ad93-8bf97c94516e, dateAppointment=2024-09-25, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=Patient{id=4, name=Luis, age=19}}
+
+Appointment{id=b43dcaf2-5c12-4fdd-b83b-96446ede55a8, dateAppointment=2024-12-03, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=Patient{id=12356, name=Anahi, age=35}}
+Appointment{id=539c2ad7-16f0-48c3-bf28-ea008a932e10, dateAppointment=2024-12-03, doctor=Doctor{id=1, name=Dr. Samantha Villagomez, specialty=Pediatra, Schedule=Martes-Jueves 7h-14h}, patient=Patient{id=2321, name=Anahi, age=20}}
+>>>>>>> adc6e3d730d9250b5ba2955be3ff3ecef364823f

@@ -25,6 +25,7 @@ replay_pid*
 /6-Code/MedicalAppointmentSystem v 0.0.1/nbproject/private/
 /6-Code/MedicalAppointmentSystem v 0.0.1/build/
 /6-Code/MedicalAppointmentSystem v 0.0.1/dist/
+<<<<<<< HEAD
 /6-Code/MedicalAppointmentSystemR - copia/build/
 /6-Code/MedicalAppointmentSystemR - copia/nbproject/private/
 /6-Code/M/build/
@@ -34,3 +35,6 @@ replay_pid*
 /6-Code/MedicalAppointmentSystemR/EmailSender/nbproject/private/
 /6-Code/MedicalAppointmentSystemR/EmailSender/build/
 /6-Code/MedicalAppointmentSystemR/EmailSender/dist/
+=======
+/6-Code/MedicalAppointmentSystemR/dist/
+>>>>>>> adc6e3d730d9250b5ba2955be3ff3ecef364823f
