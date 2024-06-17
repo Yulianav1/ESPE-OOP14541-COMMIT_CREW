@@ -1,11 +1,11 @@
 package ec.edu.espe.medicalappointmentsystem.model;
 
+import ec.edu.espe.medicalappointmentsystem.util.DateValidator;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
-
 
 public class Appointment {
     private String id;
@@ -14,7 +14,6 @@ public class Appointment {
     private Patient patient;
 
     public Appointment() {
-        
     }
 
     public Appointment(LocalDate dateAppointment, Doctor doctor, Patient patient) {
@@ -67,36 +66,48 @@ public class Appointment {
     }
 
     public static Doctor inputDoctorData(List<Doctor> doctors) {
-        try (Scanner input = new Scanner(System.in)) {
-            String continueInput;
-            Doctor selectedDoctor = null;
+        Scanner input = new Scanner(System.in);
+        String continueInput;
+        Doctor selectedDoctor = null;
 
-            System.out.println("Doctors List:");
+        System.out.println("Doctors List:");
+        for (Doctor doctor : doctors) {
+            doctor.printDoctorInfo();
+        }
+
+        do {
+            System.out.println("Enter doctor's ID:");
+            int selectedId = input.nextInt();
+            input.nextLine();
+
             for (Doctor doctor : doctors) {
-                doctor.printDoctorInfo();
+                if (doctor.getId() == selectedId) {
+                    selectedDoctor = doctor;
+                    break;
+                }
             }
 
-            do {
-                System.out.println("Enter doctor's ID:");
-                int selectedId = input.nextInt();
-                input.nextLine();
+            if (selectedDoctor == null) {
+                System.out.println("Doctor not found. Please enter a valid ID.");
+            }
 
-                for (Doctor doctor : doctors) {
-                    if (doctor.getId() == selectedId) {
-                        selectedDoctor = doctor;
-                        break;
-                    }
-                }
+            System.out.println("Do you want to select another doctor (yes/no):");
+            continueInput = input.nextLine();
+        } while (continueInput.equalsIgnoreCase("yes"));
 
-                if (selectedDoctor == null) {
-                    System.out.println("Doctor not found. Please enter a valid ID.");
-                }
+        return selectedDoctor;
+    }
 
-                System.out.println("Do you want to select another doctor (yes/no):");
-                continueInput = input.nextLine();
-            } while (continueInput.equalsIgnoreCase("yes"));
+    public static Appointment createAppointment(List<Doctor> doctors, Patient patient) {
+        LocalDate appointmentDate = DateValidator.getValidAppointmentDate();
+        int timeSlot = DateValidator.getValidAppointmentTime();
+        Doctor doctor = inputDoctorData(doctors);
 
-            return selectedDoctor;
+        if (doctor != null) {
+            return new Appointment(appointmentDate, doctor, patient);
+        } else {
+            System.out.println("Error: No se seleccionó un doctor válido.");
+            return null;
         }
     }
 }

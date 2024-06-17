@@ -13,4 +13,19 @@
     "age" : 19,
     "email" : "vacaluis114@gmail.com"
   }
+}, {
+  "id" : "fb933684-017d-46b3-9081-2d241dcb7637",
+  "dateAppointment" : "2024-09-15",
+  "doctor" : {
+    "id" : 1,
+    "name" : "Dr. Samantha Villagomez",
+    "specialty" : "Pediatra",
+    "schedule" : "Martes-Jueves 7h-14h"
+  },
+  "patient" : {
+    "id" : 1752922854,
+    "name" : "Luis",
+    "age" : 19,
+    "email" : "Vacaluis114@gmail.com"
+  }
 } ]

@@ -1,18 +1,8 @@
-
 package ec.edu.espe.medicalappointmentsystem.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-
-/**
- *
- * @author USUARIO
- */
 
 public class DateValidator {
 
@@ -21,18 +11,18 @@ public class DateValidator {
         int year;
         int month;
         int day;
+        LocalDate appointmentDate = null;
 
         while (true) {
             try {
-                System.out.println("Ingrese el anio de la cita: ");
+                System.out.println("Ingrese el año de la cita: ");
                 year = Integer.parseInt(scanner.nextLine());
-                int currentYear = LocalDate.now().getYear();
-                if (year < currentYear || year > currentYear + 1) {
-                    throw new IllegalArgumentException("El anio debe ser el actual o el siguiente como maximo.");
+                if (year < 2024) {
+                    throw new IllegalArgumentException("El año debe ser 2024 o mayor.");
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Entrada Invalida. Ingrese un número valido para el año.");
+                System.out.println("Entrada inválida. Ingrese un número válido para el año.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -47,31 +37,37 @@ public class DateValidator {
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Entrada Invalida. Ingrese un mes valido.");
+                System.out.println("Entrada inválida. Ingrese un mes válido.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
-        
+
         while (true) {
             try {
-                System.out.println("Ingrese el dia de la cita: ");
+                System.out.println("Ingrese el día de la cita: ");
                 day = Integer.parseInt(scanner.nextLine());
-                LocalDate appointmentDate = LocalDate.of(year, month, day);
-                LocalDate today = LocalDate.now();
-                LocalDate oneYearFromNow = today.plusYears(1);
-
-                if (appointmentDate.isBefore(today)) {
+                appointmentDate = LocalDate.of(year, month, day);
+                if (appointmentDate.isBefore(LocalDate.now())) {
                     throw new IllegalArgumentException("La fecha no puede ser anterior al día de hoy.");
                 }
-                if (appointmentDate.isAfter(oneYearFromNow)) {
-                    throw new IllegalArgumentException("La fecha debe ser dentro de un anio a partir de hoy.");
-                }
-                return appointmentDate;
+                break;
             } catch (NumberFormatException e) {
-                System.out.println("Entrada invalida. Ingrese un día valido.");
+                System.out.println("Entrada inválida. Ingrese un día válido.");
             } catch (DateTimeParseException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
+            }
+        }
+
+        while (true) {
+            System.out.println("Ha ingresado la fecha: " + appointmentDate.toString() + ". ¿Desea confirmar esta fecha? (si/no): ");
+            String confirm = scanner.nextLine().trim().toLowerCase();
+            if (confirm.equals("si")) {
+                return appointmentDate;
+            } else if (confirm.equals("no")) {
+                return getValidAppointmentDate();
+            } else {
+                System.out.println("Entrada inválida. Por favor ingrese 'si' o 'no'.");
             }
         }
     }
@@ -94,28 +90,11 @@ public class DateValidator {
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Ingrese un número valido para el intervalo de tiempo.");
+                System.out.println("Entrada inválida. Ingrese un número válido para el intervalo de tiempo.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
         return timeSlot;
     }
-    
-    
-
-    public static void saveAppointmentToJson(LocalDate appointmentDate, String filePath) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(appointmentDate);
-
-        try (FileWriter writer = new FileWriter(filePath)) {
-            writer.write(json);
-            System.out.println("La fecha de la cita se guardó correctamente en el archivo JSON.");
-        } catch (IOException e) {
-            System.out.println("Se produjo un error al guardar la fecha de la cita en un archivo JSON:" + e.getMessage());
-            e.printStackTrace(); 
-        }
-    }
-    
-  
 }
