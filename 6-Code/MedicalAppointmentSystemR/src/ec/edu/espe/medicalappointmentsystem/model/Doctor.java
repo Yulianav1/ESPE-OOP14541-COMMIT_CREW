@@ -1,117 +1,96 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ec.edu.espe.medicalappointmentsystem.model;
 
 import java.util.Scanner;
 
-/**
- *
- * @author CommitCrew
- */
 public class Doctor {
 
-    private String Schedule;
+    private int id;
+    private String name;
+    private String specialty;
+    private String schedule;
 
-    public Doctor(int id, String name, String specialty, String Schedule) {
+    public Doctor(int id, String name, String specialty, String schedule) {
         this.id = id;
         this.name = name;
         this.specialty = specialty;
-        this.Schedule = Schedule;
+        this.schedule = schedule;
     }
 
-    private int id;
-    public String name;
-    private String specialty;
-    private String schedule;
-    public Doctor() {
-    }
+    public Doctor() {}
+
     @Override
     public String toString() {
-        return "Doctor{" + "id=" + id + ", name=" + name + ", specialty=" + specialty + ", Schedule=" + Schedule + '}';
+        return String.format("Doctor { ID: %d, Nombre: %s, Especialidad: %s, Horario: %s }",
+                id, name, specialty, schedule);
     }
 
-    /**
-     * @return the id
-     */
+    // Getters y Setters
     public int getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the specialty
-     */
     public String getSpecialty() {
         return specialty;
     }
 
-    /**
-     * @param specialty the specialty to set
-     */
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
 
-    /**
-     * @return the Schedule
-     */
     public String getSchedule() {
-        return Schedule;
+        return schedule;
     }
 
-    /**
-     * @param Schedule the Schedule to set
-     */
-    public void setSchedule(String Schedule) {
-        this.Schedule = Schedule;
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
     }
 
     public static Doctor inputDoctorData() {
         try (Scanner input = new Scanner(System.in)) {
-            System.out.println("Enter doctor's ID:");
+            System.out.println("==========================================");
+            System.out.println("|       Ingrese los datos del Doctor       |");
+            System.out.println("==========================================");
+
+            System.out.print("| Ingrese el ID del doctor: ");
             int id = input.nextInt();
             input.nextLine(); // Consume newline
 
-            System.out.println("Enter the doctor's name:");
+            System.out.print("| Ingrese el nombre del doctor: ");
             String name = input.nextLine();
 
-            System.out.println("Enter the doctor's specialty:");
+            System.out.print("| Ingrese la especialidad del doctor: ");
             String specialty = input.nextLine();
 
-            System.out.println("Enter the doctor's schedule:");
+            System.out.print("| Ingrese el horario del doctor: ");
             String schedule = input.nextLine();
+
+            System.out.println("==========================================");
 
             return new Doctor(id, name, specialty, schedule);
         }
     }
 
     public void printDoctorInfo() {
-        System.out.println("ID: " + id);
-        System.out.println("Name: " + name);
-        System.out.println("Specialty: " + specialty);
-        System.out.println("Schedule: " + schedule);
+        System.out.println("==========================================");
+        System.out.println("|          Información del Doctor         |");
+        System.out.println("==========================================");
+        System.out.printf("| ID:        %-30d |\n", id);
+        System.out.printf("| Nombre:    %-30s |\n", name);
+        System.out.printf("| Especialidad: %-30s |\n", specialty);
+        System.out.printf("| Horario:   %-30s |\n", schedule);
+        System.out.println("==========================================");
     }
 
 }

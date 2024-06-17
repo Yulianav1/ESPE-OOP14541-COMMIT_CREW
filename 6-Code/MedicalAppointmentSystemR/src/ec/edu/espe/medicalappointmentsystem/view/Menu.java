@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ec.edu.espe.medicalappointmentsystem.view;
 
 import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
@@ -27,24 +23,27 @@ public class Menu {
 
         int choice;
         do {
-            System.out.println("Bienvenido al sistema de agendamiento de citas");
-            System.out.println("1. Agendar Cita");
-            System.out.println("2. Ver citas registradas");
-            System.out.println("3. Agregar doctor");
-            System.out.println("4. Ver calendario");
-            System.out.println("5. Exit");
-            System.out.print("Ingrese la operacion a realizar: ");
+            System.out.println("==========================================");
+            System.out.println("|   Bienvenido al Sistema de Agendamiento de Citas  |");
+            System.out.println("==========================================");
+            System.out.println("| 1. Agendar Cita                                          |");
+            System.out.println("| 2. Ver citas registradas                                 |");
+            System.out.println("| 3. Agregar doctor                                        |");
+            System.out.println("| 4. Ver calendario                                        |");
+            System.out.println("| 5. Salir                                                 |");
+            System.out.println("==========================================");
+            System.out.print("Ingrese la operación a realizar: ");
             choice = input.nextInt();
-            input.nextLine();
+            input.nextLine(); 
 
             switch (choice) {
                 case 1:
-                    AppointmentController.addAppointment(doctors, patients, input); 
-                    Reminder.PutReminder(); 
+                    AppointmentController.addAppointment(doctors, patients, input);
+                    Reminder.PutReminder();
                     break;
 
                 case 2:
-                    AppointmentController.viewAppointments(); 
+                    AppointmentController.viewAppointments();
                     break;
 
                 case 3:
@@ -61,22 +60,24 @@ public class Menu {
                     break;
 
                 default:
-                    System.out.println("Opción no valida. Ingrese un numero del 1 al 5");
+                    System.out.println("Opción no válida. Ingrese un número del 1 al 5");
                     break;
             }
         } while (choice != 5);
     }
 
     public static void viewCalendar(Calendar myCalendar) {
-        System.out.println("Viendo el calendario:");
+        System.out.println("==========================================");
+        System.out.println("|           Viendo el Calendario          |");
+        System.out.println("==========================================");
         for (int i = 0; i < 5; i++) {
             System.out.println("Día " + (i + 1) + ":");
             for (int j = 0; j < 10; j++) {
                 Appointment apt = myCalendar.getAppointment(i, j);
                 if (apt != null) {
-                    System.out.println("Franja horaria " + (j + 1) + ": " + apt.getDoctor().getName());
+                    System.out.println("  Franja horaria " + (j + 1) + ": " + apt.getDoctor().getName());
                 } else {
-                    System.out.println("Franja horaria " + (j + 1) + ": Sin cita");
+                    System.out.println("  Franja horaria " + (j + 1) + ": Sin cita");
                 }
             }
             System.out.println("-------------------");

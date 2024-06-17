@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Reminder.java</file>
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Patient.java</file>
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/view/MedicalAppointmentSystem.java</file>
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/controller/AppointmentController.java</file>
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Doctor.java</file>
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/util/FileManager.java</file>
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Appointment.java</file>
-            <file>file:/C:/Users/galo/Documents/alexis/term/COMMIT-CREW/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/view/Menu.java</file>
-=======
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Specialty.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Reminder.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Clinic.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Doctor.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/util/FileManager.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Patient.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/util/DateValidator.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Calendar.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Appointment.java</file>
-            <file>file:/C:/POO-CommitCrew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Receptionist.java</file>
->>>>>>> adc6e3d730d9250b5ba2955be3ff3ecef364823f
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Reminder.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/util/FileManager.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/util/EmailSender.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Patient.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/view/Menu.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Clinic.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Specialty.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/util/EmailConfig.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Doctor.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Appointment.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Calendar.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/view/MedicalAppointmentSystem.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/model/Receptionist.java</file>
+            <file>file:/C:/Commit%20crew/ESPE-OOP14541-COMMIT_CREW/6-Code/MedicalAppointmentSystemR/src/ec/edu/espe/medicalappointmentsystem/util/DateValidator.java</file>
         </group>
     </open-files>
 </project-private>
