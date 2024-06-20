@@ -1,5 +1,7 @@
 package ec.edu.espe.medicalappointmentsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
 import java.util.Scanner;
 
 public class Patient {
@@ -66,14 +68,16 @@ public class Patient {
 
             System.out.print("| Ingrese el ID del paciente (cedula): ");
             int id = input.nextInt();
-            input.nextLine(); // Limpiar el buffer
+            String numId = Integer.toString(id);
+            //IdValidator.idValidator(numId);
+            input.nextLine(); 
 
             System.out.print("| Ingrese el nombre del paciente: ");
             String name = input.nextLine();
 
             System.out.print("| Ingrese la edad del paciente: ");
             int age = input.nextInt();
-            input.nextLine(); // Limpiar el buffer
+            input.nextLine(); 
             
             System.out.print("| Ingrese el correo electrónico del paciente: ");
             String email = input.nextLine();

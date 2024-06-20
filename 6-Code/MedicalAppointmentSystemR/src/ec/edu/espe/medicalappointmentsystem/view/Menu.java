@@ -47,7 +47,8 @@ public class Menu {
                     break;
 
                 case 3:
-                    // Implementación para agregar doctor si es necesario
+                    // There are no more doctors for the moment
+                    System.out.println("Opcion no autorizada por el momento1");
                     break;
 
                 case 4:
