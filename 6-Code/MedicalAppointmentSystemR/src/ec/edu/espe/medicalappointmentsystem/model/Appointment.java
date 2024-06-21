@@ -12,16 +12,19 @@ public class Appointment {
     private LocalDate dateAppointment;
     private Doctor doctor;
     private Patient patient;
+    private boolean emailSent;
 
     public Appointment() {
     }
 
     public Appointment(LocalDate dateAppointment, Doctor doctor, Patient patient) {
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString(); // Generar un ID único
         this.dateAppointment = dateAppointment;
         this.doctor = doctor;
         this.patient = patient;
     }
+
+    
 
     @Override
     public String toString() {
@@ -30,9 +33,20 @@ public class Appointment {
                 ", dateAppointment='" + dateAppointment + '\'' +
                 ", doctor=" + doctor +
                 ", patient=" + patient +
+                ", emailSent="+ emailSent+
                 '}';
     }
 
+    public boolean getEmailSent() {
+        return emailSent;
+    }
+
+    public void setEmailSent(boolean emailSent) {
+        this.emailSent = emailSent;
+    }
+    
+    
+    
     public String getId() {
         return id;
     }

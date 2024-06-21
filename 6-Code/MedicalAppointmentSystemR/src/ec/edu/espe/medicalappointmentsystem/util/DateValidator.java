@@ -12,6 +12,7 @@ public class DateValidator {
         int month;
         int day;
         LocalDate appointmentDate = null;
+        LocalDate currentDate = LocalDate.now();
 
         while (true) {
             try {
@@ -34,6 +35,9 @@ public class DateValidator {
                 month = Integer.parseInt(scanner.nextLine());
                 if (month < 1 || month > 12) {
                     throw new IllegalArgumentException("El mes debe ser entre 1 y 12.");
+                }
+                if (year == currentDate.getYear() && month < currentDate.getMonthValue()) {
+                    throw new IllegalArgumentException("El mes no puede ser anterior al mes actual.");
                 }
                 break;
             } catch (NumberFormatException e) {

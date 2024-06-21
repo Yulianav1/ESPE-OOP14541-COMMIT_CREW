@@ -58,4 +58,14 @@ public class FileManager {
         appointments.add(appointment);
         saveAppointments(appointments);
     }
+    public static void markEmailSent(Appointment appointment) {
+        List<Appointment> appointments = loadAppointments();
+        for (Appointment app : appointments) {
+            if (app.getId().equals(appointment.getId())) {
+                app.setEmailSent(true); // Marcar como enviado
+                break;
+            }
+        }
+        saveAppointments(appointments);
+    }
 }

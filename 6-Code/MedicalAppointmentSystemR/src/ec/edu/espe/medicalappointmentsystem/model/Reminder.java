@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 /**
  * Reminder Model
  * 
@@ -53,8 +54,8 @@ import java.time.temporal.ChronoUnit;
 
         for (Appointment appointment : appointments) {
             Patient patient = appointment.getPatient();
-            if(checkDays(appointment.getDateAppointment())){
-             Doctor doctor = appointment.getDoctor();
+            if(checkDays(appointment.getDateAppointment())&&checkShipment(appointment.getEmailSent())){
+            Doctor doctor = appointment.getDoctor();
             String to = patient.getEmail();
             String subject = "Recordatorio de Cita Médica";
             String body = "Estimado(a) " + patient.getName() + ",\n\n" +
@@ -70,12 +71,15 @@ import java.time.temporal.ChronoUnit;
 
             // Enviar el correo
             emailSender.sendMail(to, subject, body);
-            System.out.println("Correo enviado a: " + to);   
+            System.out.println("Correo enviado a: " + to);
+            appointment.setEmailSent(true);
+            
             }else{
                 System.out.println(".......................");
             }
    
         }
+         FileManager.saveAppointments(appointments);
 
     } catch (FileNotFoundException e) {
             System.err.println("Error: Archivo appointments.json no encontrado.");
@@ -93,7 +97,13 @@ import java.time.temporal.ChronoUnit;
         long daysUntilAppointment = ChronoUnit.DAYS.between(today, appointmentDate);
         return daysUntilAppointment <= 3 && daysUntilAppointment >= 0;
       }
-
+      public static boolean checkShipment(boolean emailSent){
+          boolean confirmer=false;
+          if(emailSent == false){
+              confirmer=true;
+          }
+        return confirmer;
+    }
 
         // Getters and Setters
         public Date getAppointmentDate() {
