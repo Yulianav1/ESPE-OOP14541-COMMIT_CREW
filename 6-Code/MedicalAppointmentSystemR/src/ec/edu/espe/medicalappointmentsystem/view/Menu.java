@@ -1,6 +1,7 @@
 package ec.edu.espe.medicalappointmentsystem.view;
 
 import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
+import ec.edu.espe.medicalappointmentsystem.controller.DoctorController;
 import ec.edu.espe.medicalappointmentsystem.model.Appointment;
 import ec.edu.espe.medicalappointmentsystem.model.Calendar;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
@@ -20,6 +21,7 @@ public class Menu {
         List<Doctor> doctors = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();
         List<Appointment> appointments = FileManager.loadAppointments();
+        DoctorController doctorController = new DoctorController();
 
         Doctor doctor1 = new Doctor(1, "Dr. Samantha Villagomez", "Pediatra", "Martes-Jueves 7h-14h");
         Doctor doctor2 = new Doctor(2, "Dr. Stalin Aguilar", "Medico General", "Lunes-Miércoles 9h-17h");
@@ -28,7 +30,6 @@ public class Menu {
 
         Calendar myCalendar = new Calendar();
 
-        // Cargar las citas desde el archivo y actualizar el calendario
         for (Appointment appointment : appointments) {
             LocalDate appointmentDate = appointment.getDateAppointment();
             int dayIndex = appointmentDate.getDayOfYear() - LocalDate.now().getDayOfYear();
@@ -47,7 +48,8 @@ public class Menu {
             System.out.println("| 2. Ver citas registradas                         |");
             System.out.println("| 3. Agregar doctor                                |");
             System.out.println("| 4. Ver calendario                                |");
-            System.out.println("| 5. Salir                                         |");
+            System.out.println("| 5. Ver doctores                                  |");
+            System.out.println("| 6. Salir                                         |");
             System.out.println("====================================================");
             System.out.print("Ingrese la operación a realizar: ");
             choice = input.nextInt();
@@ -72,7 +74,7 @@ public class Menu {
                     break;
 
                 case 3:
-                    System.out.println("Opción no autorizada por el momento");
+                    doctorController.addDoctor();
                     break;
 
                 case 4:
@@ -80,7 +82,11 @@ public class Menu {
                     break;
 
                 case 5:
-                    System.out.println("Saliendo del programa... \n");
+                    doctorController.viewDoctors();
+                    break;
+
+                case 6:
+                    System.out.println("Saliendo del programa...\n");
                     break;
 
                 default:
@@ -109,7 +115,4 @@ public class Menu {
         }
     }
 
-    public static void main(String[] args) {
-        menu(args); // Llamada correcta al método menu
-    }
 }

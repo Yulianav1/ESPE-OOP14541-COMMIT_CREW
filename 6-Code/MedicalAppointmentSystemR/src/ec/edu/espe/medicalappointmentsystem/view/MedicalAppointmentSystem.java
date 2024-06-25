@@ -11,7 +11,7 @@ package ec.edu.espe.medicalappointmentsystem.view;
 public class MedicalAppointmentSystem {
 
     public static void main(String[] args) {
-        Menu.main(args);
+        Menu.menu(args);
     }
 }
 

@@ -16,7 +16,8 @@ public class Doctor {
         this.schedule = schedule;
     }
 
-    public Doctor() {}
+    public Doctor() {
+    }
 
     @Override
     public String toString() {

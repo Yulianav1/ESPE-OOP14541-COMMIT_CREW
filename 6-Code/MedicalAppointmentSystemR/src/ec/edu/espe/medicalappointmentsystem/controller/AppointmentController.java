@@ -23,10 +23,10 @@ public class AppointmentController {
             Appointment appointment = new Appointment(formattedDate, timeSlot, selectedDoctor, patient);
             FileManager.addAndSaveAppointment(appointment);
             System.out.println("Cita creada exitosamente.");
-            return appointment;  // Devolver la cita creada
+            return appointment;  
         } else {
             System.out.println("No se pudo crear la cita. Los datos del paciente no eran válidos.");
-            return null;  // Devolver null si no se pudo crear la cita
+            return null; 
         }
     }
 
@@ -41,7 +41,7 @@ public class AppointmentController {
                 System.out.println("Doctor: " + apt.getDoctor().getName());
                 System.out.println("Especialidad: " + apt.getDoctor().getSpecialty());
                 System.out.println("Fecha: " + apt.getDateAppointment());
-                System.out.println("Hora: " + getTimeSlotString(apt.getTimeSlot()));  // Imprimir la franja horaria
+                System.out.println("Hora: " + getTimeSlotString(apt.getTimeSlot())); 
                 System.out.println("Paciente: " + apt.getPatient().getName());
                 System.out.println("-------------------");
             }

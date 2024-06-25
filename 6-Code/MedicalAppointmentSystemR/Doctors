@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. Samantha Villagomez",
+    "specialty": "Pediatra",
+    "schedule": "Martes-Jueves 7h-14h"
+  },
+  {
+    "id": 2,
+    "name": "Dr. Stalin Aguilar",
+    "specialty": "Medico General",
+    "schedule": "Lunes-Miércoles 9h-17h"
+  }
+]
