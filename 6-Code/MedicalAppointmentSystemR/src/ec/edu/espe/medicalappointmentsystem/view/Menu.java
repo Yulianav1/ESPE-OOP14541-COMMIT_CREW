@@ -7,10 +7,22 @@ import ec.edu.espe.medicalappointmentsystem.util.Reminder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 public class Menu {
 
+<<<<<<< HEAD
     public static void main(String[] args) {
+=======
+    public static void menu(String[] args) {
+        try {
+            // Configurar la salida estándar para que use UTF-8
+            System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("No se pudo establecer la codificación UTF-8 para la salida estándar.");
+            e.printStackTrace();
+        }
+>>>>>>> a934f890a63f25f55694399e4212c225bfcf31bf
         Scanner input = new Scanner(System.in);
         List<Doctor> doctors = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();
@@ -57,7 +69,12 @@ public class Menu {
                     break;
 
                 case 3:
+<<<<<<< HEAD
                     addDoctor(doctors);
+=======
+                    // There are no more doctors for the moment
+                    System.out.println("Opcion no autorizada por el momento1");
+>>>>>>> a934f890a63f25f55694399e4212c225bfcf31bf
                     break;
 
                 case 4:
