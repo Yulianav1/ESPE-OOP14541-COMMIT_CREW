@@ -1,6 +1,5 @@
 package ec.edu.espe.medicalappointmentsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
 import java.util.Scanner;
 
@@ -11,14 +10,12 @@ public class Patient {
     private int age;
     private String email;
 
-    public Patient(int id, String name, int age, String email, boolean emailSent) {
+    public Patient(int id, String name, int age, String email) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
     }
-
-    
 
     public Patient() {
         // Constructor por defecto
@@ -28,8 +25,6 @@ public class Patient {
     public String toString() {
         return "Patient{" + "id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + '}';
     }
-    
-    
 
     // Getters y Setters
     public int getId() {
@@ -63,108 +58,84 @@ public class Patient {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-   public static Patient inputPatientData(Scanner input) {
+
+    public static Patient inputPatientData(Scanner input) {
         int id = 0;
         String name = "";
         int age = 0;
         String email = "";
 
-<<<<<<< HEAD
-    // Método estático para ingresar datos del paciente desde consola
-    public static Patient inputPatientData(Scanner input) {
         try {
             System.out.println("==========================================");
             System.out.println("|      Ingrese los datos del Paciente     |");
             System.out.println("==========================================");
 
-            System.out.print("| Ingrese el ID del paciente (cedula): ");
-            int id = input.nextInt();
-            input.nextLine(); // Limpiar el buffer
+            while (true) {
+                try {
+                    System.out.print("| Ingrese el ID del paciente (cedula): ");
+                    id = Integer.parseInt(input.nextLine());
+                    String numId = Integer.toString(id);
+                    IdValidator.idValidator(numId);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Entrada inválida. Ingrese un número válido para el ID.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
 
-            System.out.print("| Ingrese el nombre del paciente: ");
-            String name = input.nextLine();
+            // Ingreso del nombre del paciente
+            while (true) {
+                try {
+                    System.out.print("| Ingrese el nombre del paciente: ");
+                    name = input.nextLine();
+                    if (name.isEmpty()) {
+                        throw new IllegalArgumentException("El nombre no puede estar vacío.");
+                    }
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
 
-            System.out.print("| Ingrese la edad del paciente: ");
-            int age = input.nextInt();
-            input.nextLine(); // Limpiar el buffer
             
-            System.out.print("| Ingrese el correo electrónico del paciente: ");
-            String email = input.nextLine();
+            while (true) {
+                try {
+                    System.out.print("| Ingrese la edad del paciente: ");
+                    age = Integer.parseInt(input.nextLine());
+                    if (age <= 0) {
+                        throw new IllegalArgumentException("La edad debe ser un número positivo.");
+                    }
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Entrada inválida. Ingrese un número válido para la edad.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
+
+            // Ingreso del correo electrónico del paciente
+            while (true) {
+                try {
+                    System.out.print("| Ingrese el correo electrónico del paciente: ");
+                    email = input.nextLine();
+                    if (!email.contains("@") || !email.contains(".")) {
+                        throw new IllegalArgumentException("El correo electrónico no es válido.");
+                    }
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
 
             System.out.println("==========================================");
-
             return new Patient(id, name, age, email);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             return null;
-=======
-        while (true) {
-            try {
-                System.out.print("| Ingrese el ID del paciente (cedula): ");
-                id = Integer.parseInt(input.nextLine());
-                String numId = Integer.toString(id);
-                IdValidator.idValidator(numId);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Entrada inválida. Ingrese un número válido para el ID.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
->>>>>>> a934f890a63f25f55694399e4212c225bfcf31bf
         }
-
-<<<<<<< HEAD
-    // Método para imprimir la información del paciente
-=======
-        // Ingreso del nombre del paciente
-        while (true) {
-            try {
-                System.out.print("| Ingrese el nombre del paciente: ");
-                name = input.nextLine();
-                if (name.isEmpty()) {
-                    throw new IllegalArgumentException("El nombre no puede estar vacío.");
-                }
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-
-        // Ingreso de la edad del paciente
-        while (true) {
-            try {
-                System.out.print("| Ingrese la edad del paciente: ");
-                age = Integer.parseInt(input.nextLine());
-                if (age <= 0) {
-                    throw new IllegalArgumentException("La edad debe ser un número positivo.");
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Entrada inválida. Ingrese un número válido para la edad.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-
-        // Ingreso del correo electrónico del paciente
-        while (true) {
-            try {
-                System.out.print("| Ingrese el correo electrónico del paciente: ");
-                email = input.nextLine();
-                if (!email.contains("@") || !email.contains(".")) {
-                    throw new IllegalArgumentException("El correo electrónico no es válido.");
-                }
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-
-        System.out.println("==========================================");
-        return new Patient(id, name, age, email,false);
     }
->>>>>>> a934f890a63f25f55694399e4212c225bfcf31bf
+
     public void printPatientInfo() {
         System.out.println("==========================================");
         System.out.println("|        Información del Paciente         |");
@@ -175,6 +146,5 @@ public class Patient {
         System.out.printf("| Correo:     %-30s |\n", email);
         System.out.println("==========================================");
     }
-    
 }
 

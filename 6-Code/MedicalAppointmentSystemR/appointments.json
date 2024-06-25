@@ -110,4 +110,20 @@
     "email" : "alexisviteriavila@gmail.com"
   },
   "emailSent" : false
+}, {
+  "id" : "c218719c-e0e6-4d52-9ca3-cc574fcf5efc",
+  "dateAppointment" : "2024-06-25",
+  "doctor" : {
+    "id" : 1,
+    "name" : "Dr. Samantha Villagomez",
+    "specialty" : "Pediatra",
+    "schedule" : "Martes-Jueves 7h-14h"
+  },
+  "patient" : {
+    "id" : 1724042567,
+    "name" : "12783",
+    "age" : 53,
+    "email" : "VALENCIAYULIANA123@GMAIL.COM"
+  },
+  "emailSent" : false
 } ]
