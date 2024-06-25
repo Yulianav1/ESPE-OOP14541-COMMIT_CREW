@@ -2,39 +2,41 @@ package ec.edu.espe.medicalappointmentsystem.view;
 
 import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
 import ec.edu.espe.medicalappointmentsystem.model.Appointment;
+import ec.edu.espe.medicalappointmentsystem.model.Calendar;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
-import ec.edu.espe.medicalappointmentsystem.model.Calendar;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 import ec.edu.espe.medicalappointmentsystem.util.Reminder;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 
 public class Menu {
 
     public static void menu(String[] args) {
-        try {
-            System.setOut(new PrintStream(System.out, true, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            System.err.println("No se pudo establecer la codificación UTF-8 para la salida estándar.");
-            e.printStackTrace();
-        }
-
         Scanner input = new Scanner(System.in);
         List<Doctor> doctors = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();
-        List<Appointment> appointments = FileManager.loadAppointments(); 
+        List<Appointment> appointments = FileManager.loadAppointments();
 
         Doctor doctor1 = new Doctor(1, "Dr. Samantha Villagomez", "Pediatra", "Martes-Jueves 7h-14h");
         Doctor doctor2 = new Doctor(2, "Dr. Stalin Aguilar", "Medico General", "Lunes-Miércoles 9h-17h");
         doctors.add(doctor1);
         doctors.add(doctor2);
 
-        Calendar myCalendar = new Calendar(); 
+        Calendar myCalendar = new Calendar();
+
+        // Cargar las citas desde el archivo y actualizar el calendario
+        for (Appointment appointment : appointments) {
+            LocalDate appointmentDate = appointment.getDateAppointment();
+            int dayIndex = appointmentDate.getDayOfYear() - LocalDate.now().getDayOfYear();
+            if (dayIndex >= 0 && dayIndex < 365) {
+                int timeSlot = appointment.getTimeSlot();
+                myCalendar.setAppointment(dayIndex, timeSlot, appointment);
+            }
+        }
 
         int choice;
         do {
@@ -53,7 +55,15 @@ public class Menu {
 
             switch (choice) {
                 case 1:
-                    AppointmentController.addAppointment(doctors, patients, input);
+                    Appointment appointment = AppointmentController.addAppointment(doctors, patients, input);
+                    if (appointment != null) {
+                        LocalDate appointmentDate = appointment.getDateAppointment();
+                        int dayIndex = appointmentDate.getDayOfYear() - LocalDate.now().getDayOfYear();
+                        if (dayIndex >= 0 && dayIndex < 365) {
+                            int timeSlot = appointment.getTimeSlot();
+                            myCalendar.setAppointment(dayIndex, timeSlot, appointment);
+                        }
+                    }
                     Reminder.putReminder();
                     break;
 
@@ -97,14 +107,6 @@ public class Menu {
             }
             System.out.println("--------------------------------------");
         }
-    }
-
-    public static List<Appointment> getAppointments() {
-        return FileManager.loadAppointments();
-    }
-
-    public static void setAppointments(List<Appointment> appointments) {
-        FileManager.saveAppointments(appointments);
     }
 
     public static void main(String[] args) {

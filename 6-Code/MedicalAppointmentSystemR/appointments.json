@@ -1,6 +1,7 @@
 [ {
   "id" : "e0c6e6db-10d0-42aa-976c-cde02b091759",
   "dateAppointment" : "2024-12-12",
+  "timeSlot" : 0,
   "doctor" : {
     "id" : 1,
     "name" : "Dr. Samantha Villagomez",
@@ -17,6 +18,7 @@
 }, {
   "id" : "821180e1-73d6-4c25-8067-6f8960cceda7",
   "dateAppointment" : "2024-06-21",
+  "timeSlot" : 0,
   "doctor" : {
     "id" : 1,
     "name" : "Dr. Samantha Villagomez",
@@ -33,6 +35,7 @@
 }, {
   "id" : "39391c8b-8230-4d9b-8224-ce7f241809c5",
   "dateAppointment" : "2024-06-22",
+  "timeSlot" : 0,
   "doctor" : {
     "id" : 1,
     "name" : "Dr. Samantha Villagomez",
@@ -49,6 +52,7 @@
 }, {
   "id" : "e85e1d5f-2ef6-4ae4-b702-366e12cc8cd9",
   "dateAppointment" : "2024-12-12",
+  "timeSlot" : 0,
   "doctor" : {
     "id" : 1,
     "name" : "Dr. Samantha Villagomez",
@@ -65,6 +69,7 @@
 }, {
   "id" : "f6a77528-e83a-494f-8b21-19f76641efcb",
   "dateAppointment" : "2024-06-22",
+  "timeSlot" : 0,
   "doctor" : {
     "id" : 2,
     "name" : "Dr. Stalin Aguilar",
@@ -81,6 +86,7 @@
 }, {
   "id" : "2e0af22c-7015-46d7-a4bd-262aa258f897",
   "dateAppointment" : "2024-12-12",
+  "timeSlot" : 0,
   "doctor" : {
     "id" : 1,
     "name" : "Dr. Samantha Villagomez",
@@ -97,6 +103,7 @@
 }, {
   "id" : "3d803945-4157-48be-b0be-9980621d5809",
   "dateAppointment" : "2024-12-03",
+  "timeSlot" : 0,
   "doctor" : {
     "id" : 1,
     "name" : "Dr. Samantha Villagomez",
@@ -113,6 +120,7 @@
 }, {
   "id" : "c218719c-e0e6-4d52-9ca3-cc574fcf5efc",
   "dateAppointment" : "2024-06-25",
+  "timeSlot" : 0,
   "doctor" : {
     "id" : 1,
     "name" : "Dr. Samantha Villagomez",
@@ -124,6 +132,23 @@
     "name" : "12783",
     "age" : 53,
     "email" : "VALENCIAYULIANA123@GMAIL.COM"
+  },
+  "emailSent" : false
+}, {
+  "id" : "06f46530-e32d-490c-86fc-223c6aaddb43",
+  "dateAppointment" : "2024-06-26",
+  "timeSlot" : 1,
+  "doctor" : {
+    "id" : 2,
+    "name" : "Dr. Stalin Aguilar",
+    "specialty" : "Medico General",
+    "schedule" : "Lunes-Miércoles 9h-17h"
+  },
+  "patient" : {
+    "id" : 1752922854,
+    "name" : "Luis ",
+    "age" : 20,
+    "email" : "vacaluis114@gmail.com "
   },
   "emailSent" : false
 } ]

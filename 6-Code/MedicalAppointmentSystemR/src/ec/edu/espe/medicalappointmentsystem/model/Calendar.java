@@ -9,11 +9,12 @@ public class Calendar {
 
     public Calendar() {
         appointments = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            appointments.add(new ArrayList<>(10));
+        for (int i = 0; i < 365; i++) { // Soporte para citas durante todo el año
+            List<Appointment> dailyAppointments = new ArrayList<>(10);
             for (int j = 0; j < 10; j++) {
-                appointments.get(i).add(null);
+                dailyAppointments.add(null);
             }
+            appointments.add(dailyAppointments);
         }
     }
 
@@ -22,13 +23,15 @@ public class Calendar {
     }
 
     public Appointment getAppointment(int dayIndex, int timeSlot) {
+        if (dayIndex < 0 || dayIndex >= appointments.size() || timeSlot < 0 || timeSlot >= 10) {
+            return null;
+        }
         return appointments.get(dayIndex).get(timeSlot);
     }
 
     public void setAppointment(int dayIndex, int timeSlot, Appointment appointment) {
-        appointments.get(dayIndex).set(timeSlot, appointment);
+        if (dayIndex >= 0 && dayIndex < appointments.size() && timeSlot >= 0 && timeSlot < 10) {
+            appointments.get(dayIndex).set(timeSlot, appointment);
+        }
     }
 }
-
-
-

@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Appointment {
     private String id;
     private LocalDate dateAppointment;
+    private int timeSlot;
     private Doctor doctor;
     private Patient patient;
     private boolean emailSent;
@@ -17,23 +18,23 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(LocalDate dateAppointment, Doctor doctor, Patient patient) {
+    public Appointment(LocalDate dateAppointment, int timeSlot, Doctor doctor, Patient patient) {
         this.id = UUID.randomUUID().toString(); // Generar un ID único
         this.dateAppointment = dateAppointment;
+        this.timeSlot = timeSlot;
         this.doctor = doctor;
         this.patient = patient;
     }
-
-    
 
     @Override
     public String toString() {
         return "Appointment{" +
                 "id='" + id + '\'' +
                 ", dateAppointment='" + dateAppointment + '\'' +
+                ", timeSlot=" + timeSlot +
                 ", doctor=" + doctor +
                 ", patient=" + patient +
-                ", emailSent="+ emailSent+
+                ", emailSent=" + emailSent +
                 '}';
     }
 
@@ -44,9 +45,7 @@ public class Appointment {
     public void setEmailSent(boolean emailSent) {
         this.emailSent = emailSent;
     }
-    
-    
-    
+
     public String getId() {
         return id;
     }
@@ -61,6 +60,14 @@ public class Appointment {
 
     public void setDateAppointment(LocalDate dateAppointment) {
         this.dateAppointment = dateAppointment;
+    }
+
+    public int getTimeSlot() {
+        return timeSlot;
+    }
+
+    public void setTimeSlot(int timeSlot) {
+        this.timeSlot = timeSlot;
     }
 
     public Doctor getDoctor() {
@@ -118,7 +125,7 @@ public class Appointment {
         Doctor doctor = inputDoctorData(doctors);
 
         if (doctor != null) {
-            return new Appointment(appointmentDate, doctor, patient);
+            return new Appointment(appointmentDate, timeSlot, doctor, patient);
         } else {
             System.out.println("Error: No se seleccionó un doctor válido.");
             return null;
