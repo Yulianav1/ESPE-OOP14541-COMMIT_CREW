@@ -1,8 +1,8 @@
 package ec.edu.espe.medicalappointmentsystem.view;
 
-import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
 import ec.edu.espe.medicalappointmentsystem.model.*;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
+import ec.edu.espe.medicalappointmentsystem.util.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static void menu(String[] args) {
+    public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         List<Doctor> doctors = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();
@@ -20,6 +20,8 @@ public class Menu {
         Doctor doctor2 = new Doctor(2, "Dr. Stalin Aguilar", "Medico General", "Lunes-Miércoles 9h-17h");
         doctors.add(doctor1);
         doctors.add(doctor2);
+
+        Calendar myCalendar = new Calendar(); // Suponiendo que ya tienes una instancia válida de Calendar
 
         int choice;
         do {
@@ -34,24 +36,31 @@ public class Menu {
             System.out.println("==========================================");
             System.out.print("Ingrese la operación a realizar: ");
             choice = input.nextInt();
-            input.nextLine(); 
+            input.nextLine();
 
             switch (choice) {
                 case 1:
-                    AppointmentController.addAppointment(doctors, patients, input);
-                    Reminder.PutReminder();
-                    break;
+   
+    if (patients.isEmpty()) {
+        System.out.println("No hay pacientes registrados. Agregue pacientes primero.");
+    } else {
+        Appointment newAppointment = Appointment.createAppointment(doctors, patients.get(0));
+        if (newAppointment != null) {
+            appointments.add(newAppointment);
+            Reminder.putReminder(); // Llama a putReminder sin argumentos
+        }
+    }
+    break;
 
                 case 2:
-                    AppointmentController.viewAppointments();
+                    viewAppointments(appointments);
                     break;
 
                 case 3:
-                    // Implementación para agregar doctor si es necesario
+                    addDoctor(doctors);
                     break;
 
                 case 4:
-                    Calendar myCalendar = new Calendar();
                     viewCalendar(myCalendar);
                     break;
 
@@ -68,10 +77,12 @@ public class Menu {
 
     public static void viewCalendar(Calendar myCalendar) {
         System.out.println("==========================================");
-        System.out.println("|           Viendo el Calendario          |");
+        System.out.println("|           Calendario                   |");
         System.out.println("==========================================");
+
+        // Mostrar calendario para los próximos 5 días
         for (int i = 0; i < 5; i++) {
-            System.out.println("Día " + (i + 1) + ":");
+            System.out.println("Fecha " + myCalendar.getDate(i) + ":"); // Corregido método getDate(i)
             for (int j = 0; j < 10; j++) {
                 Appointment apt = myCalendar.getAppointment(i, j);
                 if (apt != null) {
@@ -84,11 +95,50 @@ public class Menu {
         }
     }
 
-    public static List<Appointment> getAppointments() {
-        return FileManager.loadAppointments();
+    public static void viewAppointments(List<Appointment> appointments) {
+        if (appointments.isEmpty()) {
+            System.out.println("No hay citas registradas.");
+        } else {
+            System.out.println("Citas registradas:");
+            for (Appointment appointment : appointments) {
+                System.out.println(appointment);
+            }
+        }
     }
 
-    public static void setAppointments(List<Appointment> appointments) {
-        FileManager.saveAppointments(appointments);
+    public static void addDoctor(List<Doctor> doctors) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Ingrese el ID del doctor: ");
+        int id = input.nextInt();
+        input.nextLine(); // Consumir el salto de línea
+
+        System.out.print("Ingrese el nombre del doctor: ");
+        String name = input.nextLine();
+
+        System.out.print("Ingrese la especialidad del doctor: ");
+        String specialty = input.nextLine();
+
+        System.out.print("Ingrese el horario del doctor: ");
+        String schedule = input.nextLine();
+
+        Doctor newDoctor = new Doctor(id, name, specialty, schedule);
+        doctors.add(newDoctor);
+
+        System.out.println("Doctor agregado exitosamente:");
+        newDoctor.printDoctorInfo();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

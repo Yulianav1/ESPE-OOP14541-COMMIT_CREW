@@ -58,6 +58,7 @@ public class Patient {
         this.email = email;
     }
 
+    // Método estático para ingresar datos del paciente desde consola
     public static Patient inputPatientData(Scanner input) {
         try {
             System.out.println("==========================================");
@@ -87,6 +88,7 @@ public class Patient {
         }
     }
 
+    // Método para imprimir la información del paciente
     public void printPatientInfo() {
         System.out.println("==========================================");
         System.out.println("|        Información del Paciente         |");
@@ -98,3 +100,4 @@ public class Patient {
         System.out.println("==========================================");
     }
 }
+

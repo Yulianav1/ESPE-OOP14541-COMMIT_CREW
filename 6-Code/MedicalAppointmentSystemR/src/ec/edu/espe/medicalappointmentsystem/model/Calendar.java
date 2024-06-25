@@ -1,14 +1,11 @@
 package ec.edu.espe.medicalappointmentsystem.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 
- * Author: CommitCrew
- */
 public class Calendar {
- private static List<List<Appointment>> calendar;
+    private List<List<Appointment>> calendar;
 
     public Calendar() {
         calendar = new ArrayList<>();
@@ -29,7 +26,7 @@ public class Calendar {
         }
     }
 
-    public static Appointment getAppointment(int dayOfWeek, int timeSlot) {
+    public Appointment getAppointment(int dayOfWeek, int timeSlot) {
         if (dayOfWeek >= 0 && dayOfWeek < 5 && timeSlot >= 0 && timeSlot < 10) {
             return calendar.get(dayOfWeek).get(timeSlot);
         } else {
@@ -38,4 +35,12 @@ public class Calendar {
         }
     }
 
+    public String getDate(int index) {
+        // Lógica para obtener la fecha formateada en el índice proporcionado
+        LocalDate date = LocalDate.now().plusDays(index);
+        return date.toString(); // Ejemplo básico, puedes formatear la fecha según tu necesidad
+    }
+
+    // Otros métodos del calendario
 }
+

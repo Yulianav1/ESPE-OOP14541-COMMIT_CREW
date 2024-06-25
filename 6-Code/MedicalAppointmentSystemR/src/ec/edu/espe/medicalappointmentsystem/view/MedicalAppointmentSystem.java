@@ -10,12 +10,10 @@ package ec.edu.espe.medicalappointmentsystem.view;
  *
  * @author CommitCrew
  */
+
 public class MedicalAppointmentSystem {
-    
-     public static void main(String[] args) {
-         
-        Menu.menu(args); 
-        
+
+    public static void main(String[] args) {
+        Menu.main(args); 
     }
-    
 }
