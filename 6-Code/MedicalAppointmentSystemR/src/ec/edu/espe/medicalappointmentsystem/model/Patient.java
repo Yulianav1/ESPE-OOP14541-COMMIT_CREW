@@ -84,14 +84,20 @@ public class Patient {
                 }
             }
 
-            // Ingreso del nombre del paciente
             while (true) {
                 try {
-                    System.out.print("| Ingrese el nombre del paciente: ");
+                    System.out.print("| Ingrese el nombre y apellido del paciente: ");
                     name = input.nextLine();
                     if (name.isEmpty()) {
                         throw new IllegalArgumentException("El nombre no puede estar vacío.");
                     }
+                    if (!name.matches("[a-zA-Z ]+")) {
+                        throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
+                    }
+                    if (name.trim().split("\\s+").length < 2) {
+                        throw new IllegalArgumentException("El nombre debe contener al menos dos palabras.");
+                    }
+                    name = capitalizeWords(name);
                     break;
                 } catch (IllegalArgumentException e) {
                     System.out.println("Error: " + e.getMessage());
@@ -114,7 +120,6 @@ public class Patient {
                 }
             }
 
-            // Ingreso del correo electrónico del paciente
             while (true) {
                 try {
                     System.out.print("| Ingrese el correo electrónico del paciente: ");
@@ -146,5 +151,17 @@ public class Patient {
         System.out.printf("| Correo:     %-30s |\n", email);
         System.out.println("==========================================");
     }
-}
+    public static String capitalizeWords(String str) {
+        String[] words = str.split("\\s+");
+        StringBuilder capitalizedStr = new StringBuilder();
 
+        for (String word : words) {
+            if (word.length() > 0) {
+                capitalizedStr.append(Character.toUpperCase(word.charAt(0)))
+                               .append(word.substring(1).toLowerCase())
+                               .append(" ");
+            }
+        }
+        return capitalizedStr.toString().trim();
+    }
+}

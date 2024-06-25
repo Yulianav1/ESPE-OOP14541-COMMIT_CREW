@@ -14,6 +14,7 @@ public class Appointment {
     private Doctor doctor;
     private Patient patient;
     private boolean emailSent;
+    private String hourToAppointment;
 
     public Appointment() {
     }
@@ -35,8 +36,18 @@ public class Appointment {
                 ", doctor=" + doctor +
                 ", patient=" + patient +
                 ", emailSent=" + emailSent +
+                ", hourToAppointment=" + hourToAppointment +
                 '}';
     }
+
+    public String getHourToAppointment() {
+        return hourToAppointment;
+    }
+
+    public void setHourToAppointment(String hourToAppointment) {
+        this.hourToAppointment = hourToAppointment;
+    }
+    
 
     public boolean getEmailSent() {
         return emailSent;

@@ -7,16 +7,24 @@ import ec.edu.espe.medicalappointmentsystem.model.Calendar;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
-import ec.edu.espe.medicalappointmentsystem.util.Reminder;
+import ec.edu.espe.medicalappointmentsystem.model.Reminder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-public class Menu {
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+    public class Menu {
 
     public static void menu(String[] args) {
+        Reminder.putReminder();
+        try {
+            System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("No se pudo establecer la codificación UTF-8 para la salida estándar.");
+            e.printStackTrace();
+        }        
         Scanner input = new Scanner(System.in);
         List<Doctor> doctors = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();
@@ -51,9 +59,15 @@ public class Menu {
             System.out.println("| 5. Ver doctores                                  |");
             System.out.println("| 6. Salir                                         |");
             System.out.println("====================================================");
-            System.out.print("Ingrese la operación a realizar: ");
-            choice = input.nextInt();
-            input.nextLine();
+            while (true) {
+                try {
+                    System.out.print("Ingrese la operación a realizar: ");
+                    choice = Integer.parseInt(input.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Entrada inválida. Ingrese un número del 1 al 6.");
+                }
+            }
 
             switch (choice) {
                 case 1:
@@ -90,10 +104,10 @@ public class Menu {
                     break;
 
                 default:
-                    System.out.println("Opción no válida. Ingrese un número del 1 al 5");
+                    System.out.println("Opción no válida. Ingrese un número del 1 al 6");
                     break;
             }
-        } while (choice != 5);
+        } while (choice != 6);
     }
 
     public static void viewCalendar(Calendar myCalendar) {

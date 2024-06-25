@@ -23,6 +23,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
+import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
+import ec.edu.espe.medicalappointmentsystem.util.DateValidator;
 /**
  * Reminder Model
  * 
@@ -38,18 +40,15 @@ import ec.edu.espe.medicalappointmentsystem.util.FileManager;
             this.appointmentTime = appointmentTime;
             this.recipient = recipient;
  }
-      public static void PutReminder() {
+      public static void putReminder() {
     try {
-            // Configuración de ObjectMapper
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule()); // Registrar el módulo para LocalDate
+            objectMapper.registerModule(new JavaTimeModule()); 
 
-            // Construir la ruta al archivo appointments.json
             String filePath = "appointments.json";
 
-            // Leer el JSON y convertirlo a lista de Appointment
             List<Appointment> appointments = objectMapper.readValue(new File(filePath),
-                    objectMapper.getTypeFactory().constructCollectionType(List.class, Appointment.class));
+            objectMapper.getTypeFactory().constructCollectionType(List.class, Appointment.class));
             EmailSender emailSender = new EmailSender(new EmailConfig("smtp.gmail.com", 587, "alexisviterigithub@gmail.com", "djdkbbjlijjeghcv"));
 
         for (Appointment appointment : appointments) {
@@ -57,25 +56,25 @@ import ec.edu.espe.medicalappointmentsystem.util.FileManager;
             if(checkDays(appointment.getDateAppointment())&&checkShipment(appointment.getEmailSent())){
             Doctor doctor = appointment.getDoctor();
             String to = patient.getEmail();
+            appointment.setHourToAppointment(DateValidator.getAppointmentTime(appointment.getTimeSlot()));
             String subject = "Recordatorio de Cita Médica";
             String body = "Estimado(a) " + patient.getName() + ",\n\n" +
                     "Este es un recordatorio de su cita médica.\n\n" +
                     "Detalles de la cita:\n" +
                     "ID de la cita: " + appointment.getId() + "\n" +
                     "Fecha: " + appointment.getDateAppointment() + "\n" +
+                    "Hora: " + appointment.getHourToAppointment() + "\n" +
                     "Doctor: " + doctor.getName() + "\n" +
                     "Especialidad: " + doctor.getSpecialty() + "\n\n" +
                     "Por favor, asegúrese de llegar a tiempo.\n\n" +
                     "Saludos cordiales,\n" +
                     "Su equipo médico";
-
-            // Enviar el correo
             emailSender.sendMail(to, subject, body);
             System.out.println("Correo enviado a: " + to);
             appointment.setEmailSent(true);
             
             }else{
-                System.out.println(".......................");
+                System.out.print(".");
             }
    
         }

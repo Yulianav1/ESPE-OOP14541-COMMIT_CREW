@@ -35,7 +35,7 @@ public class FileManager {
     public static void saveAppointments(List<Appointment> appointments) {
         try {
             mapper.writeValue(new File("appointments.json"), appointments);
-            System.out.println("Citas guardadas correctamente en un archivo JSON.");
+            System.out.println("Citas cargadas correctamente.");
         } catch (IOException e) {
             System.err.println("Error al escribir en el archivo: " + e.getMessage());
         }

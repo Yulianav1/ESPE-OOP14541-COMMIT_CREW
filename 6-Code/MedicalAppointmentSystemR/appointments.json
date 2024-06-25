@@ -1,7 +1,7 @@
 [ {
-  "id" : "e0c6e6db-10d0-42aa-976c-cde02b091759",
-  "dateAppointment" : "2024-12-12",
-  "timeSlot" : 0,
+  "id" : "f88a55bb-b06b-4973-b3cd-49b67a3e321f",
+  "dateAppointment" : "2024-06-27",
+  "timeSlot" : 5,
   "doctor" : {
     "id" : 1,
     "name" : "Dr. Samantha Villagomez",
@@ -11,144 +11,9 @@
   "patient" : {
     "id" : 1727753970,
     "name" : "Alexis Viteri",
-    "age" : 99,
+    "age" : 60,
     "email" : "alexisviteriavila@gmail.com"
   },
-  "emailSent" : false
-}, {
-  "id" : "821180e1-73d6-4c25-8067-6f8960cceda7",
-  "dateAppointment" : "2024-06-21",
-  "timeSlot" : 0,
-  "doctor" : {
-    "id" : 1,
-    "name" : "Dr. Samantha Villagomez",
-    "specialty" : "Pediatra",
-    "schedule" : "Martes-Jueves 7h-14h"
-  },
-  "patient" : {
-    "id" : 1727753970,
-    "name" : "Alexis2",
-    "age" : 66,
-    "email" : "alexisviteriavila@gmail.com"
-  },
-  "emailSent" : true
-}, {
-  "id" : "39391c8b-8230-4d9b-8224-ce7f241809c5",
-  "dateAppointment" : "2024-06-22",
-  "timeSlot" : 0,
-  "doctor" : {
-    "id" : 1,
-    "name" : "Dr. Samantha Villagomez",
-    "specialty" : "Pediatra",
-    "schedule" : "Martes-Jueves 7h-14h"
-  },
-  "patient" : {
-    "id" : 1727753970,
-    "name" : "Alexis Viteri 3",
-    "age" : 77,
-    "email" : "alexisviteriavila@gmail.com"
-  },
-  "emailSent" : true
-}, {
-  "id" : "e85e1d5f-2ef6-4ae4-b702-366e12cc8cd9",
-  "dateAppointment" : "2024-12-12",
-  "timeSlot" : 0,
-  "doctor" : {
-    "id" : 1,
-    "name" : "Dr. Samantha Villagomez",
-    "specialty" : "Pediatra",
-    "schedule" : "Martes-Jueves 7h-14h"
-  },
-  "patient" : {
-    "id" : 1727753970,
-    "name" : "Alexis4",
-    "age" : 55,
-    "email" : "alexisviteriavila@gmail.com"
-  },
-  "emailSent" : false
-}, {
-  "id" : "f6a77528-e83a-494f-8b21-19f76641efcb",
-  "dateAppointment" : "2024-06-22",
-  "timeSlot" : 0,
-  "doctor" : {
-    "id" : 2,
-    "name" : "Dr. Stalin Aguilar",
-    "specialty" : "Medico General",
-    "schedule" : "Lunes-Miércoles 9h-17h"
-  },
-  "patient" : {
-    "id" : 1727753970,
-    "name" : "Alexiscambio2",
-    "age" : 567,
-    "email" : "alexisviteriaila@gmail.com"
-  },
-  "emailSent" : true
-}, {
-  "id" : "2e0af22c-7015-46d7-a4bd-262aa258f897",
-  "dateAppointment" : "2024-12-12",
-  "timeSlot" : 0,
-  "doctor" : {
-    "id" : 1,
-    "name" : "Dr. Samantha Villagomez",
-    "specialty" : "Pediatra",
-    "schedule" : "Martes-Jueves 7h-14h"
-  },
-  "patient" : {
-    "id" : 1727753897,
-    "name" : "Alexis esto no deberia enviarse",
-    "age" : 34,
-    "email" : "alexisviteriavila@gmail.com"
-  },
-  "emailSent" : false
-}, {
-  "id" : "3d803945-4157-48be-b0be-9980621d5809",
-  "dateAppointment" : "2024-12-03",
-  "timeSlot" : 0,
-  "doctor" : {
-    "id" : 1,
-    "name" : "Dr. Samantha Villagomez",
-    "specialty" : "Pediatra",
-    "schedule" : "Martes-Jueves 7h-14h"
-  },
-  "patient" : {
-    "id" : 1727753970,
-    "name" : "este tampoco",
-    "age" : 222,
-    "email" : "alexisviteriavila@gmail.com"
-  },
-  "emailSent" : false
-}, {
-  "id" : "c218719c-e0e6-4d52-9ca3-cc574fcf5efc",
-  "dateAppointment" : "2024-06-25",
-  "timeSlot" : 0,
-  "doctor" : {
-    "id" : 1,
-    "name" : "Dr. Samantha Villagomez",
-    "specialty" : "Pediatra",
-    "schedule" : "Martes-Jueves 7h-14h"
-  },
-  "patient" : {
-    "id" : 1724042567,
-    "name" : "12783",
-    "age" : 53,
-    "email" : "VALENCIAYULIANA123@GMAIL.COM"
-  },
-  "emailSent" : false
-}, {
-  "id" : "06f46530-e32d-490c-86fc-223c6aaddb43",
-  "dateAppointment" : "2024-06-26",
-  "timeSlot" : 1,
-  "doctor" : {
-    "id" : 2,
-    "name" : "Dr. Stalin Aguilar",
-    "specialty" : "Medico General",
-    "schedule" : "Lunes-Miércoles 9h-17h"
-  },
-  "patient" : {
-    "id" : 1752922854,
-    "name" : "Luis ",
-    "age" : 20,
-    "email" : "vacaluis114@gmail.com "
-  },
-  "emailSent" : false
+  "emailSent" : true,
+  "hourToAppointment" : "1:00 pm - 2:30 pm"
 } ]
