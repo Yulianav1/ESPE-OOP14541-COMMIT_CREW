@@ -4,21 +4,20 @@ import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
 import java.util.Scanner;
 
 public class Patient {
-
+    
     private int id;
     private String name;
     private int age;
     private String email;
+    
+    public Patient() {
+    }
 
     public Patient(int id, String name, int age, String email) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
-    }
-
-    public Patient() {
-        // Constructor por defecto
     }
 
     @Override

@@ -66,7 +66,7 @@ public class Doctor {
 
             System.out.print("| Ingrese el ID del doctor: ");
             int id = input.nextInt();
-            input.nextLine(); // Consume newline
+            input.nextLine();
 
             System.out.print("| Ingrese el nombre del doctor: ");
             String name = input.nextLine();
