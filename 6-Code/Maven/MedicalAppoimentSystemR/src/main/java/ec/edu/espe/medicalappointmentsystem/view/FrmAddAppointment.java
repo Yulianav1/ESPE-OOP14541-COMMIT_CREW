@@ -409,13 +409,13 @@ public class FrmAddAppointment extends javax.swing.JFrame {
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
 
-        String email = txtEmail.getText();
+        //String email = txtEmail.getText();
 
-        if (utils.Validation.isValidEmail(email)) {
-            System.out.println("Correo electrónico válido");
-        } else {
-            System.out.println("Correo electrónico no válido");
-        }
+        //if (utils.Validation.isValidEmail(email)) {
+            //System.out.println("Correo electrónico válido");
+       // } //else {
+            //System.out.println("Correo electrónico no válido");
+        //}
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
