@@ -55,24 +55,27 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
+        <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Citas"/>
+            <Property name="text" type="java.lang.String" value="Cita"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="itmAddAppointment">
+            <MenuItem class="javax.swing.JMenuItem" name="itmAddAppointment">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Agregar Cita"/>
+                <Property name="text" type="java.lang.String" value="A&#xf1;adir cita"/>
               </Properties>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="itmRescheduleAppointment">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmAddAppointmentActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itmRescheduleAppointment">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Reagendar Cita"/>
+                <Property name="text" type="java.lang.String" value="Reagendar cita"/>
               </Properties>
-            </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="cancelAppointment">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itmCancelAppointment">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cancelar Cita"/>
+                <Property name="text" type="java.lang.String" value="Cancelar cita"/>
               </Properties>
             </MenuItem>
           </SubComponents>

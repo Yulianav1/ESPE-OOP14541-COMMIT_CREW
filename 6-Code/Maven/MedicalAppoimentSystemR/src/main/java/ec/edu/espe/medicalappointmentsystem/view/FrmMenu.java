@@ -4,6 +4,8 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
+import ec.edu.espe.medicalappointmentsystem.view.FrmAddAppointment;
+
 /**
  *
  * @author usuar
@@ -36,10 +38,10 @@ public class FrmMenu extends javax.swing.JFrame {
         itmLogout = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         itmExit = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        itmAddAppointment = new javax.swing.JMenu();
-        itmRescheduleAppointment = new javax.swing.JMenu();
-        cancelAppointment = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        itmAddAppointment = new javax.swing.JMenuItem();
+        itmRescheduleAppointment = new javax.swing.JMenuItem();
+        itmCancelAppointment = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         itmCalendar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -93,18 +95,23 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(itmLogout);
 
-        jMenu2.setText("Citas");
+        jMenu1.setText("Cita");
 
-        itmAddAppointment.setText("Agregar Cita");
-        jMenu2.add(itmAddAppointment);
+        itmAddAppointment.setText("Añadir cita");
+        itmAddAppointment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmAddAppointmentActionPerformed(evt);
+            }
+        });
+        jMenu1.add(itmAddAppointment);
 
-        itmRescheduleAppointment.setText("Reagendar Cita");
-        jMenu2.add(itmRescheduleAppointment);
+        itmRescheduleAppointment.setText("Reagendar cita");
+        jMenu1.add(itmRescheduleAppointment);
 
-        cancelAppointment.setText("Cancelar Cita");
-        jMenu2.add(cancelAppointment);
+        itmCancelAppointment.setText("Cancelar cita");
+        jMenu1.add(itmCancelAppointment);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu1);
 
         jMenu10.setText("Calendario");
 
@@ -175,6 +182,12 @@ public class FrmMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_itmCalendarActionPerformed
 
+    private void itmAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAddAppointmentActionPerformed
+        FrmAddAppointment frmAddAppointment = new FrmAddAppointment();
+        this.setVisible(false);
+        frmAddAppointment.setVisible(true);
+    }//GEN-LAST:event_itmAddAppointmentActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -201,6 +214,7 @@ public class FrmMenu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FrmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -211,19 +225,19 @@ public class FrmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem cancelAppointment;
-    private javax.swing.JMenu itmAddAppointment;
+    private javax.swing.JMenuItem itmAddAppointment;
     private javax.swing.JMenuItem itmAddDoctor;
     private javax.swing.JMenuItem itmCalendar;
+    private javax.swing.JMenuItem itmCancelAppointment;
     private javax.swing.JMenu itmDeleteDoctor;
     private javax.swing.JMenuItem itmExit;
     private javax.swing.JMenu itmLogout;
-    private javax.swing.JMenu itmRescheduleAppointment;
+    private javax.swing.JMenuItem itmRescheduleAppointment;
     private javax.swing.JMenu itmSpecialty;
     private javax.swing.JMenuItem itmViewDoctor;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
