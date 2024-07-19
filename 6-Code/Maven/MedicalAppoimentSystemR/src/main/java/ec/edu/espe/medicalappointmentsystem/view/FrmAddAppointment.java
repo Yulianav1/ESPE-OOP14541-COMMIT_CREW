@@ -4,6 +4,10 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
+import ec.edu.espe.medicalappointmentsystem.util.EmailValidator;
+import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Domenica Villagomez, CommitCrew, DCCO-ESPE
@@ -408,14 +412,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCellphoneActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-
-        //String email = txtEmail.getText();
-
-        //if (utils.Validation.isValidEmail(email)) {
-            //System.out.println("Correo electrónico válido");
-       // } //else {
-            //System.out.println("Correo electrónico no válido");
-        //}
+        
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
@@ -429,17 +426,38 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAppointmentActionPerformed
+        String numId = txtId.getText();
+        String email = txtEmail.getText();
 
+        try {
+            IdValidator.idValidator(numId);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Cédula Inválida", JOptionPane.ERROR_MESSAGE);
+            txtId.setText("");
+            txtId.requestFocus();
+            return;
+        }
+
+        try {
+            EmailValidator.emailValidator(email);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Correo Electrónico Inválido", JOptionPane.ERROR_MESSAGE);
+            txtEmail.setText(""); 
+            txtEmail.requestFocus(); 
+            return; 
+        }
+
+        JOptionPane.showMessageDialog(this, "Cita añadida correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnAddAppointmentActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -450,16 +468,28 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

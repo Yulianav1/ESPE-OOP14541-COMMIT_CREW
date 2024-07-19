@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author usuar
+ * @author Domenica Villagomez, CommitCrew, DCCO-ESPE
  */
 public class FrmMenu extends javax.swing.JFrame {
 
@@ -18,7 +18,7 @@ public class FrmMenu extends javax.swing.JFrame {
      */
     public FrmMenu() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/images/background.png")).getImage());
+        //setIconImage(new ImageIcon(getClass().getResource("/images/background.png")).getImage());
     }
 
     /**
@@ -124,6 +124,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu5.setText("Doctor");
 
         itmAddDoctor.setText("Añadir Doctor");
+        itmAddDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmAddDoctorActionPerformed(evt);
+            }
+        });
         jMenu5.add(itmAddDoctor);
 
         itmViewDoctor.setText("Ver Doctores");
@@ -181,6 +186,13 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setVisible(false);
         frmAddAppointment.setVisible(true);
     }//GEN-LAST:event_itmAddAppointmentActionPerformed
+
+    private void itmAddDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAddDoctorActionPerformed
+        FrmAddDoctor frmAddDoctor = new FrmAddDoctor();
+        this.setVisible(false);
+        frmAddDoctor.setVisible(true);
+        
+    }//GEN-LAST:event_itmAddDoctorActionPerformed
 
     /**
      * @param args the command line arguments

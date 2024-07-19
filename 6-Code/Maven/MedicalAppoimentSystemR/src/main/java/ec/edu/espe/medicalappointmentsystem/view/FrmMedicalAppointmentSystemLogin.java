@@ -145,9 +145,9 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         if (true){
-        FrmMenu frmMenu = new FrmMenu();
-        this.setVisible(false);
-        frmMenu.setVisible(true);
+            FrmMenu frmMenu = new FrmMenu();
+            this.setVisible(false);
+            frmMenu.setVisible(true);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
