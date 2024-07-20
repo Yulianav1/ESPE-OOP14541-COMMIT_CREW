@@ -5,12 +5,70 @@ import ec.edu.espe.medicalappointmentsystem.model.Appointment;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class AppointmentController {
+    public static LocalDate convertToLocalDate(Date date) {
+        return date.toInstant()
+                   .atZone(ZoneId.systemDefault())
+                   .toLocalDate();
+    }
+    public static void sendToDatabase(Appointment appointment) {
+        String uri = "mongodb+srv://alexisviterigithub:ajviteri2@ajviteri2.y5pwei7.mongodb.net/";
+        
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("oop");
+            MongoCollection<Document> collection = database.getCollection("student");
+
+            Document doc = new Document("id", appointment.getId())
+                    .append("dateAppointment", appointment.getDateAppointment().toString())
+                    .append("timeSlot", appointment.getTimeSlot())
+                    .append("doctor", new Document("id", appointment.getDoctor().getId())
+                            .append("name", appointment.getDoctor().getName())
+                            .append("specialty", appointment.getDoctor().getSpecialty())
+                            .append("schedule", appointment.getDoctor().getSchedule()))
+                    .append("patient", new Document("id", appointment.getPatient().getId())
+                            .append("name", appointment.getPatient().getName())
+                            .append("age", appointment.getPatient().getAge())
+                            .append("email", appointment.getPatient().getEmail()))
+                    .append("emailSent", appointment.getEmailSent()) // Usar getEmailSent()
+                    .append("hourToAppointment", appointment.getHourToAppointment() != null ? appointment.getHourToAppointment() : null);
+
+            collection.insertOne(doc);
+            System.out.println("Appointment inserted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static int determinateSlot(String range){
+        int slot=0;
+        String range1="7:00 am - 8:30 am";
+        String range2="8:30 am - 11:00 am";
+        String range3="11:00 am - 12:30 pm";
+        String range4="12:30 pm - 1:00 pm";
+        String range5="1:00 pm - 2:30 pm";
+        if (range.equals(range1)){
+            slot=1;
+        }else if(range.equals(range2)){
+            slot=2;
+        }else if(range.equals(range3)){
+            slot=3;
+        }else if(range.equals(range4)){
+            slot=4;
+        }else if(range.equals(range5)){
+            slot=5;
+        }
+        return slot;
+    }
 
     public static Appointment addAppointment(List<Doctor> doctors, List<Patient> patients, Scanner input) {
         LocalDate appointmentDate = DateValidator.getValidAppointmentDate();

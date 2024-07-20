@@ -4,12 +4,34 @@
  */
 package ec.edu.espe.medicalappointmentsystem.util;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  *
  * @author Domenics Villagomez CommitCrew, DCCO-ESPE
  */
 public class IdValidator {
+    public static int calculateAge(Date birthDate) {
+        // Obtener la fecha actual
+        Calendar currentDate = Calendar.getInstance();
+        
+        // Crear un Calendar para la fecha de nacimiento
+        Calendar birthCalendar = Calendar.getInstance();
+        birthCalendar.setTime(birthDate);
 
+        // Calcular la diferencia en años
+        int age = currentDate.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
+
+        // Ajustar la edad si la fecha de nacimiento aún no ha ocurrido este año
+        if (currentDate.get(Calendar.DAY_OF_YEAR) < birthCalendar.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+
+        return age;
+    }
     public static void idValidator(String numId) throws IllegalArgumentException {
         numId = numId.trim();
         

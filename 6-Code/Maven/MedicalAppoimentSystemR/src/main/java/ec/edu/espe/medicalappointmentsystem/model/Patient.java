@@ -5,15 +5,24 @@ import java.util.Scanner;
 
 public class Patient {
     
-    private int id;
+    private String id;
     private String name;
     private int age;
     private String email;
+    private String celphone;
     
     public Patient() {
     }
 
-    public Patient(int id, String name, int age, String email) {
+    public Patient(String id, String name, int age, String email, String celphone) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.celphone = celphone;
+    }
+
+    public Patient(String id, String name, int age, String email) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -22,15 +31,15 @@ public class Patient {
 
     @Override
     public String toString() {
-        return "Patient{" + "id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + '}';
+        return "Patient{" + "id=" + getId() + ", name=" + getName() + ", age=" + getAge() + ", email=" + getEmail() + '}';
     }
 
     // Getters y Setters
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -131,7 +140,7 @@ public static Patient inputPatientData(Scanner input) {
         }
 
         System.out.println("==========================================");
-        return new Patient(Integer.parseInt(id), name, age, email);
+        return new Patient(id, name, age, email);
     } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
         return null;
@@ -142,10 +151,10 @@ public static Patient inputPatientData(Scanner input) {
         System.out.println("==========================================");
         System.out.println("|        Información del Paciente         |");
         System.out.println("==========================================");
-        System.out.printf("| ID:         %-30d |\n", id);
-        System.out.printf("| Nombre:     %-30s |\n", name);
-        System.out.printf("| Edad:       %-30d |\n", age);
-        System.out.printf("| Correo:     %-30s |\n", email);
+        System.out.printf("| ID:         %-30d |\n", getId());
+        System.out.printf("| Nombre:     %-30s |\n", getName());
+        System.out.printf("| Edad:       %-30d |\n", getAge());
+        System.out.printf("| Correo:     %-30s |\n", getEmail());
         System.out.println("==========================================");
     }
     public static String capitalizeWords(String str) {
@@ -160,5 +169,19 @@ public static Patient inputPatientData(Scanner input) {
             }
         }
         return capitalizedStr.toString().trim();
+    }
+
+    /**
+     * @return the celphone
+     */
+    public String getCelphone() {
+        return celphone;
+    }
+
+    /**
+     * @param celphone the celphone to set
+     */
+    public void setCelphone(String celphone) {
+        this.celphone = celphone;
     }
 }
