@@ -21,7 +21,8 @@
         <dependency>
         <groupId>org.mongodb</groupId>
         <artifactId>mongodb-driver-sync</artifactId>
-        <version>4.8.1</version> <!-- Asegúrate de que sea la versión más reciente -->
+        <version>5.1.2</version> <!-- Asegúrate de que sea la versión más reciente -->
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
