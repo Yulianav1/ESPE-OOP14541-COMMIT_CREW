@@ -183,7 +183,11 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_itmExitActionPerformed
 
     private void itmCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCalendarActionPerformed
-        // TODO add your handling code here:
+        FrmCalendar frmCalendar = new FrmCalendar();
+        this.setVisible(false);
+        frmCalendar.setVisible(true);
+        
+    
     }//GEN-LAST:event_itmCalendarActionPerformed
 
     private void itmAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAddAppointmentActionPerformed
@@ -196,7 +200,7 @@ public class FrmMenu extends javax.swing.JFrame {
         FrmAddDoctor frmAddDoctor = new FrmAddDoctor();
         this.setVisible(false);
         frmAddDoctor.setVisible(true);
-        
+
     }//GEN-LAST:event_itmAddDoctorActionPerformed
 
     private void itmRescheduleAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmRescheduleAppointmentActionPerformed

@@ -93,4 +93,23 @@
   },
   "emailSent" : false,
   "hourToAppointment" : null
+}, {
+  "id" : "2191f9bb-ba3a-4a48-b919-75c18ce2d408",
+  "dateAppointment" : "2024-07-22",
+  "timeSlot" : 1,
+  "doctor" : {
+    "id" : 1,
+    "name" : "Dra. Samantha Villagómez",
+    "specialty" : "Medicina General",
+    "schedule" : "7:00 am - 8:30 am"
+  },
+  "patient" : {
+    "id" : "1724042567",
+    "name" : "Yuliana Anahi Valencia Bustamante",
+    "age" : -1,
+    "email" : "valenciayuliana@gmail.com",
+    "celphone" : "0984056438"
+  },
+  "emailSent" : false,
+  "hourToAppointment" : null
 } ]
