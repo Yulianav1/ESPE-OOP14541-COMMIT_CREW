@@ -32,13 +32,13 @@ public class FrmMenuDoctor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        itmLogout = new javax.swing.JMenuItem();
+        itmExit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        itmAddAppointment = new javax.swing.JMenuItem();
+        itmReagendar = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        itmCalendar = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -50,43 +50,58 @@ public class FrmMenuDoctor extends javax.swing.JFrame {
 
         jMenu1.setText("Medical Appointment System");
 
-        jMenuItem1.setText("Logout");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        itmLogout.setText("Logout");
+        itmLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                itmLogoutActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(itmLogout);
 
-        jMenuItem2.setText("Exit");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        itmExit.setText("Exit");
+        itmExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                itmExitActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(itmExit);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Cita");
 
-        jMenuItem3.setText("Añadir cita");
-        jMenu2.add(jMenuItem3);
+        itmAddAppointment.setText("Añadir cita");
+        itmAddAppointment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmAddAppointmentActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itmAddAppointment);
 
-        jMenuItem4.setText("Reagendar cita");
-        jMenu2.add(jMenuItem4);
+        itmReagendar.setText("Reagendar cita");
+        itmReagendar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmReagendarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itmReagendar);
 
         jMenuItem5.setText("Cancelar cita");
         jMenu2.add(jMenuItem5);
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Calendario");
+        itmCalendar.setText("Calendario");
 
         jMenuItem6.setText("Ver calendario");
-        jMenu3.add(jMenuItem6);
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        itmCalendar.add(jMenuItem6);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(itmCalendar);
 
         jMenu4.setText("Reporte");
 
@@ -118,13 +133,33 @@ public class FrmMenuDoctor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void itmLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmLogoutActionPerformed
+        FrmMedicalAppointmentSystemLogin frmLogin = new FrmMedicalAppointmentSystemLogin();
+        this.setVisible(false);
+        frmLogin.setVisible(true);
+    }//GEN-LAST:event_itmLogoutActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void itmExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_itmExitActionPerformed
+
+    private void itmAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAddAppointmentActionPerformed
+        FrmAddAppointment frmAddAppointment = new FrmAddAppointment();
+        this.setVisible(false);
+        frmAddAppointment.setVisible(true);
+    }//GEN-LAST:event_itmAddAppointmentActionPerformed
+
+    private void itmReagendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmReagendarActionPerformed
+        FrmReagendar frmReagendar = new FrmReagendar();
+        this.setVisible(false);
+        frmReagendar.setVisible(true);
+    }//GEN-LAST:event_itmReagendarActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        FrmCalendar frmCalendar = new FrmCalendar();
+        this.setVisible(false);
+        frmCalendar.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,16 +197,16 @@ public class FrmMenuDoctor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem itmAddAppointment;
+    private javax.swing.JMenu itmCalendar;
+    private javax.swing.JMenuItem itmExit;
+    private javax.swing.JMenuItem itmLogout;
+    private javax.swing.JMenuItem itmReagendar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;

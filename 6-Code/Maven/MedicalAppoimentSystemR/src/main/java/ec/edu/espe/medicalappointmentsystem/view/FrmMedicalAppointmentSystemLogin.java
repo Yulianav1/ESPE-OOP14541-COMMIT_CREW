@@ -144,11 +144,18 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        if (true){
-            FrmMenu frmMenu = new FrmMenu();
-            this.setVisible(false);
-            frmMenu.setVisible(true);
-        }
+        String usuario = jTextField1.getText();
+    String contrasenia = jTextField2.getText();
+    
+    if (usuario.isEmpty() || contrasenia.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingrese el usuario y la contraseña.", "Campos vacíos", javax.swing.JOptionPane.ERROR_MESSAGE);
+    } else if (usuario.equals("Admin") && contrasenia.equals("Medical4584App")) {
+        FrmMenu frmMenu = new FrmMenu();
+        this.setVisible(false);
+        frmMenu.setVisible(true);
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

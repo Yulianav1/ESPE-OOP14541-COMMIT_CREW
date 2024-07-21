@@ -38,8 +38,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        itmLogout = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        mnuMedical = new javax.swing.JMenu();
+        itmLogout = new javax.swing.JMenuItem();
         itmExit = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         itmAddAppointment = new javax.swing.JMenuItem();
@@ -71,15 +71,15 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background.jpg"))); // NOI18N
 
-        itmLogout.setText("Medical Appointment System");
+        mnuMedical.setText("Medical Appointment System");
 
-        jMenuItem3.setText("Logout");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        itmLogout.setText("Logout");
+        itmLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                itmLogoutActionPerformed(evt);
             }
         });
-        itmLogout.add(jMenuItem3);
+        mnuMedical.add(itmLogout);
 
         itmExit.setText("Exit");
         itmExit.addActionListener(new java.awt.event.ActionListener() {
@@ -87,9 +87,9 @@ public class FrmMenu extends javax.swing.JFrame {
                 itmExitActionPerformed(evt);
             }
         });
-        itmLogout.add(itmExit);
+        mnuMedical.add(itmExit);
 
-        jMenuBar1.add(itmLogout);
+        jMenuBar1.add(mnuMedical);
 
         jMenu1.setText("Cita");
 
@@ -174,20 +174,20 @@ public class FrmMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void itmLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmLogoutActionPerformed
+        FrmMedicalAppointmentSystemLogin frmLogin = new FrmMedicalAppointmentSystemLogin();
+        this.setVisible(false);
+        frmLogin.setVisible(true);
+    }//GEN-LAST:event_itmLogoutActionPerformed
 
     private void itmExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmExitActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_itmExitActionPerformed
 
     private void itmCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCalendarActionPerformed
         FrmCalendar frmCalendar = new FrmCalendar();
         this.setVisible(false);
         frmCalendar.setVisible(true);
-        
-    
     }//GEN-LAST:event_itmCalendarActionPerformed
 
     private void itmAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAddAppointmentActionPerformed
@@ -252,7 +252,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmCancelAppointment;
     private javax.swing.JMenu itmDeleteDoctor;
     private javax.swing.JMenuItem itmExit;
-    private javax.swing.JMenu itmLogout;
+    private javax.swing.JMenuItem itmLogout;
     private javax.swing.JMenuItem itmRescheduleAppointment;
     private javax.swing.JMenu itmSpecialty;
     private javax.swing.JMenuItem itmViewDoctor;
@@ -268,7 +268,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenu mnuMedical;
     // End of variables declaration//GEN-END:variables
 }
