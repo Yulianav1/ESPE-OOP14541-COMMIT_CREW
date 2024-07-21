@@ -68,6 +68,11 @@ ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemUser$2.clas
 ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReagendar$4.class
 ec\edu\espe\medicalappointmentsystem\util\EmailSender$1.class
+<<<<<<< HEAD
+=======
+ec\edu\espe\medicalappointmentsystem\view\FrmMenu$7.class
+ec\edu\espe\medicalappointmentsystem\view\FrmCalendario$1.class
+>>>>>>> 565fd31243dee268c5863679e4673ecfaea5f9bc
 ec\edu\espe\medicalappointmentsystem\util\IdValidator.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenu$1.class
 ec\edu\espe\medicalappointmentsystem\util\FileManager.class

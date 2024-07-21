@@ -22,33 +22,6 @@ public class AppointmentController {
                    .atZone(ZoneId.systemDefault())
                    .toLocalDate();
     }
-    public static void sendToDatabase(Appointment appointment) {
-        String uri = "mongodb+srv://alexisviterigithub:ajviteri2@ajviteri2.y5pwei7.mongodb.net/";
-        
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("oop");
-            MongoCollection<Document> collection = database.getCollection("student");
-
-            Document doc = new Document("id", appointment.getId())
-                    .append("dateAppointment", appointment.getDateAppointment().toString())
-                    .append("timeSlot", appointment.getTimeSlot())
-                    .append("doctor", new Document("id", appointment.getDoctor().getId())
-                            .append("name", appointment.getDoctor().getName())
-                            .append("specialty", appointment.getDoctor().getSpecialty())
-                            .append("schedule", appointment.getDoctor().getSchedule()))
-                    .append("patient", new Document("id", appointment.getPatient().getId())
-                            .append("name", appointment.getPatient().getName())
-                            .append("age", appointment.getPatient().getAge())
-                            .append("email", appointment.getPatient().getEmail()))
-                    .append("emailSent", appointment.getEmailSent()) // Usar getEmailSent()
-                    .append("hourToAppointment", appointment.getHourToAppointment() != null ? appointment.getHourToAppointment() : null);
-
-            collection.insertOne(doc);
-            System.out.println("Appointment inserted successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     public static int determinateSlot(String range){
         int slot=0;
         String range1="7:00 am - 8:30 am";

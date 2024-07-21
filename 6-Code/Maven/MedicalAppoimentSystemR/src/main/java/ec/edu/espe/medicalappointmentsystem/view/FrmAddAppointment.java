@@ -8,6 +8,7 @@ import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
 import ec.edu.espe.medicalappointmentsystem.model.Appointment;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
+import ec.edu.espe.medicalappointmentsystem.util.DataBase;
 import ec.edu.espe.medicalappointmentsystem.util.EmailValidator;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
@@ -464,7 +465,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         Patient patient = new Patient(numId,name,age,email,cellphone);
         Appointment appointment = new Appointment(dateAppointment,timeSlot, doctor, patient);
         
-        AppointmentController.sendToDatabase(appointment);
+        DataBase.sendToDatabase(appointment);
         FileManager.addAndSaveAppointment(appointment);
         JOptionPane.showMessageDialog(this, "Cita añadida correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         

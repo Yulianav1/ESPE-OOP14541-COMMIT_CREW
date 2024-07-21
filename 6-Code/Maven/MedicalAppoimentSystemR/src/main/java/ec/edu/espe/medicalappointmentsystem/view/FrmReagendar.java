@@ -43,7 +43,7 @@ public class FrmReagendar extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnReturn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,16 +137,16 @@ public class FrmReagendar extends javax.swing.JFrame {
         jButton2.setText("Actualizar Cita");
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 130, 40));
 
-        jButton1.setBackground(new java.awt.Color(33, 150, 243));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Volver");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnReturn.setBackground(new java.awt.Color(33, 150, 243));
+        btnReturn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnReturn.setForeground(new java.awt.Color(255, 255, 255));
+        btnReturn.setText("Volver");
+        btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnReturnActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 450, 120, 40));
+        jPanel1.add(btnReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 450, 120, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,9 +170,11 @@ public class FrmReagendar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox4ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
+        FrmMenu frmMenu = new FrmMenu();
+            this.setVisible(false);
+            frmMenu.setVisible(true);
+    }//GEN-LAST:event_btnReturnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,7 +212,7 @@ public class FrmReagendar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnReturn;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;

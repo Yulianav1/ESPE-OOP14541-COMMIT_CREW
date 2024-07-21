@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\USUARIO\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Doctor.java
 C:\Users\USUARIO\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmUpComingAppointments.java
 C:\Users\USUARIO\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment.java
@@ -27,3 +28,34 @@ C:\Users\USUARIO\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\
 C:\Users\USUARIO\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor.java
 C:\Users\USUARIO\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Receptionist.java
 C:\Users\USUARIO\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\util\FileManager.java
+=======
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\util\EmailValidator.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\MedicalAppointmentSystem.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmUpComingAppointments.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Calendar.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Clinic.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemUser.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Receptionist.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Reminder.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\util\FileManager.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\controller\DoctorController.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\Menu.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Specialty.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmMenu.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemSplash.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Appointment.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmReagendar.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmReport.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\util\IdValidator.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Patient.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmCalendario.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\util\DateValidator.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Doctor.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\util\EmailConfig.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\util\EmailSender.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\controller\AppointmentController.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemLogin.java
+C:\Commit crew\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment.java
+>>>>>>> 565fd31243dee268c5863679e4673ecfaea5f9bc
