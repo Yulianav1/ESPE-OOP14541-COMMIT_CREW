@@ -112,12 +112,6 @@ public class Appointment {
             int selectedId = input.nextInt();
             input.nextLine();
 
-            for (Doctor doctor : doctors) {
-                if (doctor.getId() == selectedId) {
-                    selectedDoctor = doctor;
-                    break;
-                }
-            }
 
             if (selectedDoctor == null) {
                 System.out.println("Doctor not found. Please enter a valid ID.");

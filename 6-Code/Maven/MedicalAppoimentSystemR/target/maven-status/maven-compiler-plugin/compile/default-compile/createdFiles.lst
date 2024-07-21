@@ -10,7 +10,6 @@ ec\edu\espe\medicalappointmentsystem\util\EmailSender.class
 ec\edu\espe\medicalappointmentsystem\view\Menu.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemLogin$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemSplash.class
-ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$11.class
 ec\edu\espe\medicalappointmentsystem\model\Reminder.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$10.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReport.class
@@ -38,6 +37,7 @@ ec\edu\espe\medicalappointmentsystem\util\EmailValidator.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$3.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemLogin.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemUser$3.class
+ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor$5.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemLogin$1.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$6.class
 ec\edu\espe\medicalappointmentsystem\view\FrmUpComingAppointments.class
@@ -50,6 +50,7 @@ ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$6.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$3.class
 ec\edu\espe\medicalappointmentsystem\model\Receptionist.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenu$5.class
+ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor$4.class
 ec\edu\espe\medicalappointmentsystem\util\EmailConfig.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$7.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReport$1.class
@@ -67,6 +68,7 @@ ec\edu\espe\medicalappointmentsystem\view\FrmCalendar$4.class
 ec\edu\espe\medicalappointmentsystem\util\DateValidator.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$4.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemUser$2.class
+ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor$6.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReagendar$4.class
 ec\edu\espe\medicalappointmentsystem\util\EmailSender$1.class

@@ -438,7 +438,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAppointmentActionPerformed
-        String numId = txtId.getText();
+        String Id = txtId.getText();
         String email = txtEmail.getText();
        // Date bornOndate= jDateChooser1;
         Date bornOnDate= DateAppointment.getDate();
@@ -446,14 +446,14 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         String cellphone= txtCellphone.getText();
         String specialty= cmbSpecialty.getSelectedItem().toString();
         String schedule = cmbTime.getSelectedItem().toString();
-        Doctor doctor = new Doctor(WIDTH, cmbDoctors.getSelectedItem().toString(), specialty, schedule); 
+        //Doctor doctor = new Doctor(WIDTH, cmbDoctors.getSelectedItem().toString(), specialty, schedule, education); 
         int age= IdValidator.calculateAge(bornOnDate);
         String timeSlot1= cmbTime.getSelectedItem().toString();
         int timeSlot= AppointmentController.determinateSlot(timeSlot1);
         LocalDate dateAppointment= AppointmentController.convertToLocalDate(DateAppointment.getDate());
         
         try {
-            IdValidator.idValidator(numId);
+            IdValidator.idValidator(Id);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Cédula Inválida", JOptionPane.ERROR_MESSAGE);
             txtId.setText("");
@@ -469,11 +469,11 @@ public class FrmAddAppointment extends javax.swing.JFrame {
             txtEmail.requestFocus(); 
             return; 
         }
-        Patient patient = new Patient(numId,name,age,email,cellphone);
-        Appointment appointment = new Appointment(dateAppointment,timeSlot, doctor, patient);
+        Patient patient = new Patient(Id,name,age,email,cellphone);
+        //Appointment appointment = new Appointment(dateAppointment,timeSlot, doctor, patient);
         
-        DataBase.sendToDatabase(appointment);
-        FileManager.addAndSaveAppointment(appointment);
+        //DataBase.sendToDatabase(appointment);
+        //FileManager.addAndSaveAppointment(appointment);
         JOptionPane.showMessageDialog(this, "Cita añadida correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         
     }//GEN-LAST:event_btnAddAppointmentActionPerformed

@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-    public class Menu {
+
+public class Menu {
 
     public static void menu(String[] args) {
         Reminder.putReminder();
@@ -24,18 +25,20 @@ import java.io.UnsupportedEncodingException;
         } catch (UnsupportedEncodingException e) {
             System.err.println("No se pudo establecer la codificación UTF-8 para la salida estándar.");
             e.printStackTrace();
-        }        
+        }
         Scanner input = new Scanner(System.in);
         List<Doctor> doctors = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();
         List<Appointment> appointments = FileManager.loadAppointments();
         DoctorController doctorController = new DoctorController();
 
-        Doctor doctor1 = new Doctor(1, "Dr. Samantha Villagomez", "Pediatra", "Martes-Jueves 7h-14h");
-        Doctor doctor2 = new Doctor(2, "Dr. Stalin Aguilar", "Medico General", "Lunes-Miércoles 9h-17h");
+        /*Doctor doctor1 = new Doctor(1, "Dr. Samantha Villagomez", "Pediatra", "Martes-Jueves 7h-14h", "Universidad de Los Andes");
+        Doctor doctor2 = new Doctor(2, "Dr. Stalin Aguilar", "Medico General", "Lunes-Miércoles 9h-17h", "Universidad de Los Andes");
+
         doctors.add(doctor1);
         doctors.add(doctor2);
-
+        */ 
+        
         Calendar myCalendar = new Calendar();
 
         for (Appointment appointment : appointments) {

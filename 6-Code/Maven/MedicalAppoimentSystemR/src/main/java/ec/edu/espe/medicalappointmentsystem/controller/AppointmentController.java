@@ -11,34 +11,54 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import static ec.edu.espe.medicalappointmentsystem.controller.DoctorController.accessToCollections;
+import static ec.edu.espe.medicalappointmentsystem.controller.DoctorController.insertOneData;
+import static ec.edu.espe.medicalappointmentsystem.controller.DoctorController.openConnectionToMongo;
 import org.bson.Document;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
 public class AppointmentController {
+    /* *****Aquí hace falta meter lo del id de la cita y luego pedir los datos que se guardarán para la cita
+     ******* independientemente (solo nombre y cédula del paciente, especialidad, doctor, fecha y hora)
+    
+    public static boolean create(Appointment appointment) {
+
+        String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+
+        MongoDatabase dataBase = openConnectionToMongo(uri);
+        Document dataOfDoctor = new Document().append("id", doctor.getId()).append("Nombre", doctor.getName()).append("Especialidad", doctor.getSpecialty()).append("Horario ", doctor.getSchedule()).append("Teléfono", doctor.getCellphone()).append("email", doctor.getEmail()).append("Education", doctor.getEducation());
+
+        String collection = "Doctor";
+        MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
+        insertOneData(dataOfDoctor, mongoCollection);
+        return false;
+    } */
+
     public static LocalDate convertToLocalDate(Date date) {
         return date.toInstant()
-                   .atZone(ZoneId.systemDefault())
-                   .toLocalDate();
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
-    public static int determinateSlot(String range){
-        int slot=0;
-        String range1="7:00 am - 8:30 am";
-        String range2="8:30 am - 11:00 am";
-        String range3="11:00 am - 12:30 pm";
-        String range4="12:30 pm - 1:00 pm";
-        String range5="1:00 pm - 2:30 pm";
-        if (range.equals(range1)){
-            slot=1;
-        }else if(range.equals(range2)){
-            slot=2;
-        }else if(range.equals(range3)){
-            slot=3;
-        }else if(range.equals(range4)){
-            slot=4;
-        }else if(range.equals(range5)){
-            slot=5;
+
+    public static int determinateSlot(String range) {
+        int slot = 0;
+        String range1 = "7:00 am - 8:30 am";
+        String range2 = "8:30 am - 11:00 am";
+        String range3 = "11:00 am - 12:30 pm";
+        String range4 = "12:30 pm - 1:00 pm";
+        String range5 = "1:00 pm - 2:30 pm";
+        if (range.equals(range1)) {
+            slot = 1;
+        } else if (range.equals(range2)) {
+            slot = 2;
+        } else if (range.equals(range3)) {
+            slot = 3;
+        } else if (range.equals(range4)) {
+            slot = 4;
+        } else if (range.equals(range5)) {
+            slot = 5;
         }
         return slot;
     }
@@ -54,10 +74,10 @@ public class AppointmentController {
             Appointment appointment = new Appointment(formattedDate, timeSlot, selectedDoctor, patient);
             FileManager.addAndSaveAppointment(appointment);
             System.out.println("Cita creada exitosamente.");
-            return appointment;  
+            return appointment;
         } else {
             System.out.println("No se pudo crear la cita. Los datos del paciente no eran válidos.");
-            return null; 
+            return null;
         }
     }
 
@@ -72,7 +92,7 @@ public class AppointmentController {
                 System.out.println("Doctor: " + apt.getDoctor().getName());
                 System.out.println("Especialidad: " + apt.getDoctor().getSpecialty());
                 System.out.println("Fecha: " + apt.getDateAppointment());
-                System.out.println("Hora: " + getTimeSlotString(apt.getTimeSlot())); 
+                System.out.println("Hora: " + getTimeSlotString(apt.getTimeSlot()));
                 System.out.println("Paciente: " + apt.getPatient().getName());
                 System.out.println("-------------------");
             }
@@ -100,12 +120,18 @@ public class AppointmentController {
 
     private static String getTimeSlotString(int timeSlot) {
         switch (timeSlot) {
-            case 1: return "7:00 am - 8:30 am";
-            case 2: return "8:30 am - 10:00 am";
-            case 3: return "10:00 am - 11:30 am";
-            case 4: return "11:30 am - 1:00 pm";
-            case 5: return "1:00 pm - 2:30 pm";
-            default: return "Hora no válida";
+            case 1:
+                return "7:00 am - 8:30 am";
+            case 2:
+                return "8:30 am - 10:00 am";
+            case 3:
+                return "10:00 am - 11:30 am";
+            case 4:
+                return "11:30 am - 1:00 pm";
+            case 5:
+                return "1:00 pm - 2:30 pm";
+            default:
+                return "Hora no válida";
         }
     }
 }
