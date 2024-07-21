@@ -9,24 +9,17 @@ public class Patient {
     private String name;
     private int age;
     private String email;
-    private String celphone;
+    private String cellphone;
     
     public Patient() {
     }
 
-    public Patient(String id, String name, int age, String email, String celphone) {
+    public Patient(String id, String name, int age, String email, String cellphone) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
-        this.celphone = celphone;
-    }
-
-    public Patient(String id, String name, int age, String email) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.email = email;
+        this.cellphone = cellphone;
     }
 
     @Override
@@ -140,7 +133,7 @@ public static Patient inputPatientData(Scanner input) {
         }
 
         System.out.println("==========================================");
-        return new Patient(id, name, age, email);
+        return new Patient(id, name, age, email, email);
     } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
         return null;
@@ -174,14 +167,14 @@ public static Patient inputPatientData(Scanner input) {
     /**
      * @return the celphone
      */
-    public String getCelphone() {
-        return celphone;
+    public String getCellphone() {
+        return cellphone;
     }
 
     /**
      * @param celphone the celphone to set
      */
-    public void setCelphone(String celphone) {
-        this.celphone = celphone;
+    public void setCellphone(String celphone) {
+        this.cellphone = celphone;
     }
 }

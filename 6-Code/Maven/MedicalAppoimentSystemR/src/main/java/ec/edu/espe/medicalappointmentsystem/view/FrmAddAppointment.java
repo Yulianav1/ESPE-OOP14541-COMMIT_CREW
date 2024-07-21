@@ -5,14 +5,13 @@
 package ec.edu.espe.medicalappointmentsystem.view;
 
 import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
-import ec.edu.espe.medicalappointmentsystem.model.Appointment;
-import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
-import ec.edu.espe.medicalappointmentsystem.util.DataBase;
 import ec.edu.espe.medicalappointmentsystem.util.EmailValidator;
-import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -69,7 +68,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         btnAddAppointment = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         cmbTime = new javax.swing.JComboBox<>();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        birthDateChooser = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -281,7 +280,8 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                                         .addComponent(jLabel12)
                                         .addGap(26, 26, 26)
                                         .addComponent(txtCellphone))
-                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(birthDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -305,11 +305,6 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                                     .addComponent(cmbSpecialty, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmbDoctors, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(66, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(219, 219, 219)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(391, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,7 +326,8 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addComponent(birthDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12)
@@ -359,11 +355,6 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(196, 196, 196)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(353, Short.MAX_VALUE)))
         );
 
         jScrollPane1.setViewportView(jPanel2);
@@ -413,7 +404,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCellphoneActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        
+
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
@@ -422,15 +413,15 @@ public class FrmAddAppointment extends javax.swing.JFrame {
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         Object origin = null;
-       if ("FrmMenu".equals(origin)) {
-        FrmMenu frmMenu = new FrmMenu();
-        this.setVisible(false);
-        frmMenu.setVisible(true);
-    } else if ("FrmMenuDoctor".equals(origin)) {
-        FrmMenuDoctor frmMenuDoctor = new FrmMenuDoctor();
-        this.setVisible(false);
-        frmMenuDoctor.setVisible(true);
-    }
+        if ("FrmMenu".equals(origin)) {
+            FrmMenu frmMenu = new FrmMenu();
+            this.setVisible(false);
+            frmMenu.setVisible(true);
+        } else if ("FrmMenuDoctor".equals(origin)) {
+            FrmMenuDoctor frmMenuDoctor = new FrmMenuDoctor();
+            this.setVisible(false);
+            frmMenuDoctor.setVisible(true);
+        }
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
@@ -438,22 +429,27 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAppointmentActionPerformed
-        String Id = txtId.getText();
+        //patient info 
+        Date birthDate = birthDateChooser.getDate();
+        LocalDate localBirthDate = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDate currentDate = LocalDate.now();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        
+
+        String id = txtId.getText();
+        String name = txtName.getText();
+        String bornOnDate = localBirthDate.format(formatter);
+        int age = Period.between(localBirthDate, currentDate).getYears();
         String email = txtEmail.getText();
-       // Date bornOndate= jDateChooser1;
-        Date bornOnDate= DateAppointment.getDate();
-        String name= txtName.getText();
-        String cellphone= txtCellphone.getText();
-        String specialty= cmbSpecialty.getSelectedItem().toString();
-        String schedule = cmbTime.getSelectedItem().toString();
-        //Doctor doctor = new Doctor(WIDTH, cmbDoctors.getSelectedItem().toString(), specialty, schedule, education); 
-        int age= IdValidator.calculateAge(bornOnDate);
-        String timeSlot1= cmbTime.getSelectedItem().toString();
-        int timeSlot= AppointmentController.determinateSlot(timeSlot1);
-        LocalDate dateAppointment= AppointmentController.convertToLocalDate(DateAppointment.getDate());
+        String cellphone = txtCellphone.getText();
+        
+        Patient patient = new Patient (id, name, age, email, cellphone);
         
         try {
-            IdValidator.idValidator(Id);
+            IdValidator.idValidator(id);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Cédula Inválida", JOptionPane.ERROR_MESSAGE);
             txtId.setText("");
@@ -465,23 +461,45 @@ public class FrmAddAppointment extends javax.swing.JFrame {
             EmailValidator.emailValidator(email);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Correo Electrónico Inválido", JOptionPane.ERROR_MESSAGE);
-            txtEmail.setText(""); 
-            txtEmail.requestFocus(); 
-            return; 
+            txtEmail.setText("");
+            txtEmail.requestFocus();
+            return;
         }
-        Patient patient = new Patient(Id,name,age,email,cellphone);
-        //Appointment appointment = new Appointment(dateAppointment,timeSlot, doctor, patient);
         
+        //**********PatientController.create(patient);
+        
+        //Appointment info
+        
+        String idApp;
+        //fecha y time slot
+        String doctor = cmbDoctors.getSelectedItem().toString();
+        
+        
+        
+        String specialty = cmbSpecialty.getSelectedItem().toString();
+        
+
+        String schedule = cmbTime.getSelectedItem().toString();
+        //Doctor doctor = new Doctor(WIDTH, cmbDoctors.getSelectedItem().toString(), specialty, schedule, education); 
+        //int age= IdValidator.calculateAge(bornOnDate);
+        String timeSlot1 = cmbTime.getSelectedItem().toString();
+        int timeSlot = AppointmentController.determinateSlot(timeSlot1);
+        LocalDate dateAppointment = AppointmentController.convertToLocalDate(DateAppointment.getDate());
+
+        
+        
+        //Appointment appointment = new Appointment(dateAppointment,timeSlot, doctor, patient);
+
         //DataBase.sendToDatabase(appointment);
         //FileManager.addAndSaveAppointment(appointment);
         JOptionPane.showMessageDialog(this, "Cita añadida correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
+
     }//GEN-LAST:event_btnAddAppointmentActionPerformed
 
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -493,27 +511,23 @@ public static void main(String args[]) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -527,13 +541,13 @@ public static void main(String args[]) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateAppointment;
+    private com.toedter.calendar.JDateChooser birthDateChooser;
     private javax.swing.JButton btnAddAppointment;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnHome;
     private javax.swing.JComboBox<String> cmbDoctors;
     private javax.swing.JComboBox<String> cmbSpecialty;
     private javax.swing.JComboBox<String> cmbTime;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -58,7 +58,7 @@ import ec.edu.espe.medicalappointmentsystem.util.DateValidator;
             String body = "Estimado(a) " + patient.getName() + ",\n\n" +
                     "Este es un recordatorio de su cita médica.\n\n" +
                     "Detalles de la cita:\n" +
-                    "ID de la cita: " + appointment.getId() + "\n" +
+                    "ID de la cita: " + appointment.getIdApp() + "\n" +
                     "Fecha: " + appointment.getDateAppointment() + "\n" +
                     "Hora: " + appointment.getHourToAppointment() + "\n" +
                     "Doctor: " + doctor.getName() + "\n" +

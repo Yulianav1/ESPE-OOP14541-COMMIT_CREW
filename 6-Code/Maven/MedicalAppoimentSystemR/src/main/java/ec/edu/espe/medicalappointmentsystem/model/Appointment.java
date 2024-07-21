@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Appointment {
-    private String id;
+    private String idApp;
     private LocalDate dateAppointment;
     private int timeSlot;
     private Doctor doctor;
@@ -20,7 +20,7 @@ public class Appointment {
     }
 
     public Appointment(LocalDate dateAppointment, int timeSlot, Doctor doctor, Patient patient) {
-        this.id = UUID.randomUUID().toString(); // Generar un ID único
+        this.idApp = UUID.randomUUID().toString(); // Generar un ID único
         this.dateAppointment = dateAppointment;
         this.timeSlot = timeSlot;
         this.doctor = doctor;
@@ -30,7 +30,7 @@ public class Appointment {
     @Override
     public String toString() {
         return "Appointment{" +
-                "id='" + id + '\'' +
+                "id='" + idApp + '\'' +
                 ", dateAppointment='" + dateAppointment + '\'' +
                 ", timeSlot=" + timeSlot +
                 ", doctor=" + doctor +
@@ -57,12 +57,12 @@ public class Appointment {
         this.emailSent = emailSent;
     }
 
-    public String getId() {
-        return id;
+    public String getIdApp() {
+        return idApp;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdApp(String id) {
+        this.idApp = idApp;
     }
 
     public LocalDate getDateAppointment() {

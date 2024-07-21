@@ -28,13 +28,72 @@ public class AppointmentController {
         String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
 
         MongoDatabase dataBase = openConnectionToMongo(uri);
-        Document dataOfDoctor = new Document().append("id", doctor.getId()).append("Nombre", doctor.getName()).append("Especialidad", doctor.getSpecialty()).append("Horario ", doctor.getSchedule()).append("Teléfono", doctor.getCellphone()).append("email", doctor.getEmail()).append("Education", doctor.getEducation());
+        Document dataOfDoctor = new Document().append("id", patient.getId()).append("Nombre", patient.getName()).append("Edad", patient.getAge()).append("Email ", patient.getEmail()).append("Teléfono", patient.getCellphone());
 
-        String collection = "Doctor";
+        String collection = "Appointment";
         MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
         insertOneData(dataOfDoctor, mongoCollection);
         return false;
-    } */
+    }
+       
+    //Abir conexión con mongoDB
+    public static MongoDatabase openConnectionToMongo(String uri) {
+        MongoClient mongoClient = MongoClients.create(uri);
+        MongoDatabase dataBase = mongoClient.getDatabase("Medical_Appointment");
+
+        return dataBase;
+    }
+
+    //Acceso a colecciones
+    public static MongoCollection<Document> accessToCollections(MongoDatabase dataBase, String collection) {
+        MongoCollection<Document> mongoCollection = dataBase.getCollection(collection);
+        return mongoCollection;
+    }
+
+    //Tipo de ingreso de datos
+    public static void insertOneData(Document data, MongoCollection<Document> mongoCollection) {
+        mongoCollection.insertOne(data);
+    }
+
+    public static void insertMoreThanOneData(List<Document> listOfData, MongoCollection<Document> mongoCollection) {
+        mongoCollection.insertMany(listOfData);
+    }
+
+    //Obtención de datos
+    public static void getAllCollection(MongoCollection<Document> mongoCollection) {
+        //Si solo busco en base a un solo dato 
+        Document findDocument = new Document("male", true);
+        //Si quiero todo el documento:
+        //Document findDocument = new Document();
+
+        MongoCursor<Document> resultDocument = mongoCollection.find(findDocument).iterator();
+
+        System.out.println("***************************************");
+        System.out.println("People male");
+        System.out.println("***************************************");
+        while (resultDocument.hasNext()) {
+            System.out.println(resultDocument.next().getString("name"));
+        }
+
+        //return resultDocument;
+    }
+
+    //Actualización de documentos
+    public static void editDocuments(String key, String data, String newData, MongoCollection<Document> mongoCollection) {
+        Document findDocument = new Document(key, data);
+
+        Document updateDocument = new Document("$set", new Document(key, newData));
+
+        mongoCollection.findOneAndUpdate(findDocument, updateDocument);
+    }
+
+    //Eliminar documentos
+    public static void deleteDocuments(String key, String data, MongoCollection<Document> mongoCollection) {
+        //TODO: Combinar con método de obtención de datos
+        Document findDocument = new Document("male", true);
+        mongoCollection.findOneAndDelete(findDocument);
+    }
+    */
 
     public static LocalDate convertToLocalDate(Date date) {
         return date.toInstant()
@@ -88,7 +147,7 @@ public class AppointmentController {
             System.out.println("Sin citas registradas.");
         } else {
             for (Appointment apt : appointments) {
-                System.out.println("Appointment ID: " + apt.getId());
+                System.out.println("Appointment ID: " + apt.getIdApp());
                 System.out.println("Doctor: " + apt.getDoctor().getName());
                 System.out.println("Especialidad: " + apt.getDoctor().getSpecialty());
                 System.out.println("Fecha: " + apt.getDateAppointment());
