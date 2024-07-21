@@ -4,6 +4,7 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
+import ec.edu.espe.medicalappointmentsystem.view.FrmAddAppointment;
 import javax.swing.ImageIcon;
 
 /**
@@ -17,7 +18,7 @@ public class FrmMenuDoctor extends javax.swing.JFrame {
      */
     public FrmMenuDoctor() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/images/background.png")).getImage());
+        //setIconImage(new ImageIcon(getClass().getResource("/images/background.png")).getImage());
     }
 
     /**

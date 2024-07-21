@@ -421,9 +421,16 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNameActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        Object origin = null;
+       if ("FrmMenu".equals(origin)) {
         FrmMenu frmMenu = new FrmMenu();
         this.setVisible(false);
         frmMenu.setVisible(true);
+    } else if ("FrmMenuDoctor".equals(origin)) {
+        FrmMenuDoctor frmMenuDoctor = new FrmMenuDoctor();
+        this.setVisible(false);
+        frmMenuDoctor.setVisible(true);
+    }
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
