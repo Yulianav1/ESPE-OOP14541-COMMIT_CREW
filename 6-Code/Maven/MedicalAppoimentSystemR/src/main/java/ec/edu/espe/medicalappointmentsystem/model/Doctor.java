@@ -13,6 +13,8 @@ public class Doctor {
     private String email;
     private String cellphone;
 
+    public Doctor() {
+    }
     public Doctor(String id, String name, String specialty, String schedule, String education, String email, String cellphone) {
         this.id = id;
         this.name = name;
@@ -66,8 +68,8 @@ public class Doctor {
         return schedule;
     }
 
-    public void setSchedule(String schedule) {
-        this.setSchedule(schedule);
+    public void setSchedule() {
+        this.setSchedule();
     }
 
 

@@ -45,6 +45,7 @@ public class FrmMenu extends javax.swing.JFrame {
         itmAddAppointment = new javax.swing.JMenuItem();
         itmRescheduleAppointment = new javax.swing.JMenuItem();
         itmCancelAppointment = new javax.swing.JMenuItem();
+        itmPrintAppointment = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         itmCalendar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -92,6 +93,7 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuBar1.add(mnuMedical);
 
         jMenu1.setText("Cita");
+        jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         itmAddAppointment.setText("Añadir cita");
         itmAddAppointment.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +113,14 @@ public class FrmMenu extends javax.swing.JFrame {
 
         itmCancelAppointment.setText("Cancelar cita");
         jMenu1.add(itmCancelAppointment);
+
+        itmPrintAppointment.setText("Imprimir cita");
+        itmPrintAppointment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmPrintAppointmentActionPerformed(evt);
+            }
+        });
+        jMenu1.add(itmPrintAppointment);
 
         jMenuBar1.add(jMenu1);
 
@@ -209,6 +219,12 @@ public class FrmMenu extends javax.swing.JFrame {
         frmReagendar.setVisible(true);
     }//GEN-LAST:event_itmRescheduleAppointmentActionPerformed
 
+    private void itmPrintAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmPrintAppointmentActionPerformed
+        FrmPrint FrmPrint = new FrmPrint();
+        this.setVisible(false);
+        FrmPrint.setVisible(true);
+    }//GEN-LAST:event_itmPrintAppointmentActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -253,6 +269,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu itmDeleteDoctor;
     private javax.swing.JMenuItem itmExit;
     private javax.swing.JMenuItem itmLogout;
+    private javax.swing.JMenuItem itmPrintAppointment;
     private javax.swing.JMenuItem itmRescheduleAppointment;
     private javax.swing.JMenu itmSpecialty;
     private javax.swing.JMenuItem itmViewDoctor;

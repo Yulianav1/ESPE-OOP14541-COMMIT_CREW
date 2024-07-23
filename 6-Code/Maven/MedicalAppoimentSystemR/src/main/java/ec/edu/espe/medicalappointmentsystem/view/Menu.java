@@ -19,7 +19,7 @@ import java.io.UnsupportedEncodingException;
 public class Menu {
 
     public static void menu(String[] args) {
-        Reminder.putReminder();
+        //Reminder.putReminder();
         try {
             System.setOut(new PrintStream(System.out, true, "UTF-8"));
         } catch (UnsupportedEncodingException e) {

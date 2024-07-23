@@ -5,26 +5,33 @@ import ec.edu.espe.medicalappointmentsystem.model.Appointment;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
-import java.util.List;
-import java.util.Scanner;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCursor;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
+
+import static com.mongodb.client.model.Sorts.descending;
 
 public class AppointmentController {
     
-     public static boolean create(Appointment appointment) {
+    public static boolean create(Appointment appointment) {
         String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
 
         try {
-            MongoDatabase dataBase = openConnectionToMongo(uri);
+            MongoDatabase database = openConnectionToMongo(uri);
             Document dataOfAppointment = new Document("idApp", appointment.getIdApp())
                     .append("dateAppointment", appointment.getDateAppointment().toString())
                     .append("timeSlot", appointment.getTimeSlot())
@@ -39,7 +46,7 @@ public class AppointmentController {
                     .append("hourToAppointment", appointment.getHourToAppointment());
 
             String collection = "Appointment";
-            MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
+            MongoCollection<Document> mongoCollection = accessToCollections(database, collection);
             insertOneData(dataOfAppointment, mongoCollection);
             return true;
         } catch (Exception e) {
@@ -48,21 +55,15 @@ public class AppointmentController {
         }
     }
        
-    //Abir conexión con mongoDB
     public static MongoDatabase openConnectionToMongo(String uri) {
         MongoClient mongoClient = MongoClients.create(uri);
-        MongoDatabase dataBase = mongoClient.getDatabase("Medical_Appointment");
-
-        return dataBase;
+        return mongoClient.getDatabase("Medical_Appointment");
     }
 
-    //Acceso a colecciones
-    public static MongoCollection<Document> accessToCollections(MongoDatabase dataBase, String collection) {
-        MongoCollection<Document> mongoCollection = dataBase.getCollection(collection);
-        return mongoCollection;
+    public static MongoCollection<Document> accessToCollections(MongoDatabase database, String collection) {
+        return database.getCollection(collection);
     }
 
-    //Tipo de ingreso de datos
     public static void insertOneData(Document data, MongoCollection<Document> mongoCollection) {
         mongoCollection.insertOne(data);
     }
@@ -71,38 +72,27 @@ public class AppointmentController {
         mongoCollection.insertMany(listOfData);
     }
 
-    //Obtención de datos
     public static void getAllCollection(MongoCollection<Document> mongoCollection) {
-        //Si solo busco en base a un solo dato 
-        Document findDocument = new Document("male", true);
-        //Si quiero todo el documento:
-        //Document findDocument = new Document();
+        Document findDocument = new Document(); // Obtiene todos los documentos
 
         MongoCursor<Document> resultDocument = mongoCollection.find(findDocument).iterator();
 
         System.out.println("***************************************");
-        System.out.println("People male");
+        System.out.println("All appointments:");
         System.out.println("***************************************");
         while (resultDocument.hasNext()) {
-            System.out.println(resultDocument.next().getString("name"));
+            System.out.println(resultDocument.next().toJson());
         }
-
-        //return resultDocument;
     }
 
-    //Actualización de documentos
     public static void editDocuments(String key, String data, String newData, MongoCollection<Document> mongoCollection) {
         Document findDocument = new Document(key, data);
-
         Document updateDocument = new Document("$set", new Document(key, newData));
-
         mongoCollection.findOneAndUpdate(findDocument, updateDocument);
     }
 
-    //Eliminar documentos
     public static void deleteDocuments(String key, String data, MongoCollection<Document> mongoCollection) {
-        //TODO: Combinar con método de obtención de datos
-        Document findDocument = new Document("male", true);
+        Document findDocument = new Document(key, data);
         mongoCollection.findOneAndDelete(findDocument);
     }
 
@@ -114,21 +104,25 @@ public class AppointmentController {
 
     public static int determinateSlot(String range) {
         int slot = 0;
-        String range1 = "7:00 am - 8:30 am";
-        String range2 = "8:30 am - 11:00 am";
-        String range3 = "11:00 am - 12:30 pm";
-        String range4 = "12:30 pm - 1:00 pm";
-        String range5 = "1:00 pm - 2:30 pm";
-        if (range.equals(range1)) {
-            slot = 1;
-        } else if (range.equals(range2)) {
-            slot = 2;
-        } else if (range.equals(range3)) {
-            slot = 3;
-        } else if (range.equals(range4)) {
-            slot = 4;
-        } else if (range.equals(range5)) {
-            slot = 5;
+        switch (range) {
+            case "7:00 am - 8:30 am":
+                slot = 1;
+                break;
+            case "8:30 am - 10:00 am":
+                slot = 2;
+                break;
+            case "10:00 am - 11:30 am":
+                slot = 3;
+                break;
+            case "11:30 am - 1:00 pm":
+                slot = 4;
+                break;
+            case "1:00 pm - 2:30 pm":
+                slot = 5;
+                break;
+            default:
+                slot = 0; // Hora no válida
+                break;
         }
         return slot;
     }
@@ -141,7 +135,6 @@ public class AppointmentController {
         String idApp = UUID.randomUUID().toString();
 
         if (patient != null) {
-            LocalDate formattedDate = LocalDate.parse(appointmentDate.toString());
             Appointment appointment = new Appointment(idApp, appointmentDate, timeSlot, selectedDoctor, patient);
             FileManager.addAndSaveAppointment(appointment);
             System.out.println("Cita creada exitosamente.");
@@ -152,7 +145,6 @@ public class AppointmentController {
         }
     }
     
-
     public static void viewAppointments() {
         List<Appointment> appointments = FileManager.loadAppointments();
         System.out.println("Viendo las citas:");
@@ -206,4 +198,43 @@ public class AppointmentController {
                 return "Hora no válida";
         }
     }
+
+    public static List<Appointment> loadAppointments() {
+    List<Appointment> appointments = new ArrayList<>();
+    String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+    String databaseName = "Medical_Appointment";
+    String collectionName = "Appointment";
+
+    try (MongoClient mongoClient = MongoClients.create(uri)) {
+        MongoDatabase database = mongoClient.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        // Contar documentos en la colección
+        long count = collection.countDocuments();
+        System.out.println("Número de citas en la colección: " + count);
+
+        // Recuperar documentos
+        FindIterable<Document> appointmentsIterable = collection.find();
+        System.out.println("Número de citas recuperadas: " + appointmentsIterable.spliterator().estimateSize());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule()); // Registra el módulo para manejar LocalDate
+        objectMapper.findAndRegisterModules(); // Registra otros módulos disponibles automáticamente
+
+        for (Document doc : appointmentsIterable) {
+            try {
+                Appointment appointment = objectMapper.convertValue(doc, Appointment.class);
+                appointments.add(appointment);
+            } catch (Exception e) {
+                System.err.println("Error al convertir el documento: " + doc.toJson());
+                e.printStackTrace(); // Imprimir error específico de conversión
+            }
+        }
+
+    } catch (Exception e) {
+        System.err.println("Error inesperado al cargar las citas.");
+        e.printStackTrace();
+    }
+    return appointments;
+}
 }
