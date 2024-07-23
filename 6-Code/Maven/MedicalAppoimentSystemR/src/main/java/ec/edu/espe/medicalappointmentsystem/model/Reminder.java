@@ -5,6 +5,8 @@
 package ec.edu.espe.medicalappointmentsystem.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mongodb.client.FindIterable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import ec.edu.espe.medicalappointmentsystem.util.EmailConfig;
@@ -21,7 +23,10 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.result.UpdateResult;
+import static ec.edu.espe.medicalappointmentsystem.controller.AppointmentController.loadAppointments;
 import java.util.ArrayList;
+import org.bson.types.ObjectId;
 
 /**
  * Reminder Model
@@ -40,48 +45,82 @@ public class Reminder {
     }
 
     public static void putReminder() {
-        try (MongoClient mongoClient = MongoClients.create("mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/")) {
-            MongoDatabase database = mongoClient.getDatabase("Medical_Appointment");
-            MongoCollection<Document> collection = database.getCollection("Appointment");
+    try {
+        List<Appointment> appointments = loadAppointments();
 
-            List<Document> appointments = collection.find().into(new ArrayList<>());
+        EmailSender emailSender = new EmailSender(new EmailConfig("smtp.gmail.com", 587, "alexisviterigithub@gmail.com", "djdkbbjlijjeghcv"));
 
-            EmailSender emailSender = new EmailSender(new EmailConfig("smtp.gmail.com", 587, "alexisviterigithub@gmail.com", "djdkbbjlijjeghcv"));
-
-            for (Document doc : appointments) {
-                Appointment appointment = new ObjectMapper().convertValue(doc, Appointment.class);
-                Patient patient = appointment.getPatient();
-                if (checkDays(appointment.getDateAppointment()) && checkShipment(appointment.getEmailSent())) {
-                    Doctor doctor = appointment.getDoctor();
-                    String to = patient.getEmail();
-                    appointment.setHourToAppointment(DateValidator.getAppointmentTime(appointment.getTimeSlot()));
-                    String subject = "Recordatorio de Cita Médica";
-                    String body = "Estimado(a) " + patient.getName() + ",\n\n" +
-                            "Este es un recordatorio de su cita médica.\n\n" +
-                            "Detalles de la cita:\n" +
-                            "ID de la cita: " + appointment.getIdApp() + "\n" +
-                            "Fecha: " + appointment.getDateAppointment() + "\n" +
-                            "Hora: " + appointment.getHourToAppointment() + "\n" +
-                            "Doctor: " + doctor.getName() + "\n" +
-                            "Especialidad: " + doctor.getSpecialty() + "\n\n" +
-                            "Por favor, asegúrese de llegar a tiempo.\n\n" +
-                            "Saludos cordiales,\n" +
-                            "Su equipo médico";
-                    emailSender.sendMail(to, subject, body);
-                    System.out.println("Correo enviado a: " + to);
-                    appointment.setEmailSent(true);
-
-                    // Actualizar el campo emailSent en la base de datos
-                    collection.updateOne(eq("_id", doc.getObjectId("_id")), new Document("$set", new Document("emailSent", true)));
-                } else {
-                    System.out.print(".");
+        for (Appointment appointment : appointments) {
+            Patient patient = appointment.getPatient();
+            if (checkDays(appointment.getDateAppointment()) && checkShipment(appointment.getEmailSent())) {
+                Doctor doctor = appointment.getDoctor();
+                String to = patient.getEmail();
+                appointment.setHourToAppointment(DateValidator.getAppointmentTime(appointment.getTimeSlot()));
+                String subject = "Recordatorio de Cita Médica";
+                String body = "Estimado(a) " + patient.getName() + ",\n\n" +
+                        "Este es un recordatorio de su cita médica.\n\n" +
+                        "Detalles de la cita:\n" +
+                        "ID de la cita: " + appointment.getIdApp() + "\n" +
+                        "Fecha: " + appointment.getDateAppointment() + "\n" +
+                        "Hora: " + appointment.getHourToAppointment() + "\n" +
+                        "Doctor: " + doctor.getName() + "\n" +
+                        "Especialidad: " + doctor.getSpecialty() + "\n\n" +
+                        "Por favor, asegúrese de llegar a tiempo.\n\n" +
+                        "Saludos cordiales,\n" +
+                        "Su equipo médico";
+                emailSender.sendMail(to, subject, body);
+                System.out.println("Correo enviado a: " + to);
+                
+                // Verifica que appointmentId no sea null
+                if (appointment.getIdApp() == null || appointment.getIdApp().isEmpty()) {
+                    System.err.println("ID de cita inválido: " + appointment.getIdApp());
+                    continue;
                 }
+
+                appointment.setEmailSent(true);
+                updateEmailSentStatus(appointment.getIdApp(), true);
+            } else {
+                System.out.print(".");
             }
-        } catch (Exception e) {
-            System.err.println("Error inesperado al procesar las citas.");
-            e.printStackTrace();
         }
+    } catch (Exception e) {
+        System.err.println("Error inesperado al procesar las citas.");
+        e.printStackTrace();
     }
+}
+
+    public static boolean isValidObjectId(String id) {
+    try {
+        new ObjectId(id);
+        return true;
+    } catch (IllegalArgumentException e) {
+        return false;
+    }
+}
+
+    
+    public static void updateEmailSentStatus(String appointmentId, boolean emailSent) {
+    if (!isValidObjectId(appointmentId)) {
+        System.err.println("ID de cita inválido: " + appointmentId);
+        return;
+    }
+
+    String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+    String databaseName = "Medical_Appointment";
+    String collectionName = "Appointment";
+
+    try (MongoClient mongoClient = MongoClients.create(uri)) {
+        MongoDatabase database = mongoClient.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        collection.updateOne(eq("_id", new ObjectId(appointmentId)), new Document("$set", new Document("emailSent", emailSent)));
+    } catch (Exception e) {
+        System.err.println("Error inesperado al actualizar el estado de emailSent.");
+        e.printStackTrace();
+    }
+}
+
+
 
     public static boolean checkDays(LocalDate appointmentDate) {
         LocalDate today = LocalDate.now();

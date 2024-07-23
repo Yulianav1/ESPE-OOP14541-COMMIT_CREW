@@ -146,7 +146,7 @@ public class AppointmentController {
     }
     
     public static void viewAppointments() {
-        List<Appointment> appointments = FileManager.loadAppointments();
+        List<Appointment> appointments = FileManager.loadAppointments1();
         System.out.println("Viendo las citas:");
         if (appointments.isEmpty()) {
             System.out.println("Sin citas registradas.");

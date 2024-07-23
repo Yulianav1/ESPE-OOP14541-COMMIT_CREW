@@ -125,7 +125,7 @@ public class FrmMedicalAppointmentSystemSplash extends javax.swing.JFrame {
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         FrmMedicalAppointmentSystemUser frmUser = new FrmMedicalAppointmentSystemUser();
         this.setVisible(false);
-        Reminder.putReminder();
+        
         frmUser.setVisible(true);
     }//GEN-LAST:event_btnStartActionPerformed
 

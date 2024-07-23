@@ -29,7 +29,7 @@ public class Menu {
         Scanner input = new Scanner(System.in);
         List<Doctor> doctors = new ArrayList<>();
         List<Patient> patients = new ArrayList<>();
-        List<Appointment> appointments = FileManager.loadAppointments();
+        List<Appointment> appointments = FileManager.loadAppointments1();
         DoctorController doctorController = new DoctorController();
 
         /*Doctor doctor1 = new Doctor(1, "Dr. Samantha Villagomez", "Pediatra", "Martes-Jueves 7h-14h", "Universidad de Los Andes");

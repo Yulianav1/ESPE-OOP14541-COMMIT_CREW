@@ -165,16 +165,16 @@ public static Patient inputPatientData(Scanner input) {
     }
 
     /**
-     * @return the celphone
+     * @return the cellphone
      */
     public String getCellphone() {
         return cellphone;
     }
 
     /**
-     * @param celphone the celphone to set
+     * @param cellphone the cellphone to set
      */
-    public void setCellphone(String celphone) {
-        this.cellphone = celphone;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 }

@@ -4,6 +4,7 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
+import ec.edu.espe.medicalappointmentsystem.model.Reminder;
 import ec.edu.espe.medicalappointmentsystem.view.FrmAddAppointment;
 import javax.swing.ImageIcon;
 
@@ -18,6 +19,7 @@ public class FrmMenu extends javax.swing.JFrame {
      */
     public FrmMenu() {
         initComponents();
+        Reminder.putReminder();
         //setIconImage(new ImageIcon(getClass().getResource("/images/background.png")).getImage());
     }
 

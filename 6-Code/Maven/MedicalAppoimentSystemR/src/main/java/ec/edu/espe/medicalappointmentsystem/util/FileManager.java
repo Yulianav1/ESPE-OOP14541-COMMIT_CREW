@@ -41,7 +41,7 @@ public class FileManager {
         }
     }
 
-    public static List<Appointment> loadAppointments() {
+    public static List<Appointment> loadAppointments1() {
         List<Appointment> appointments = new ArrayList<>();
         File file = new File("appointments.json");
         if (file.exists() && file.length() > 0) {
@@ -58,13 +58,13 @@ public class FileManager {
     }
 
     public static void addAndSaveAppointment(Appointment appointment) {
-        List<Appointment> appointments = loadAppointments();
+        List<Appointment> appointments = loadAppointments1();
         appointments.add(appointment);
         saveAppointments(appointments);
     }
 
     public static void markEmailSent(Appointment appointment) {
-        List<Appointment> appointments = loadAppointments();
+        List<Appointment> appointments = loadAppointments1();
         for (Appointment app : appointments) {
             if (app.getIdApp().equals(appointment.getIdApp())) {
                 app.setEmailSent(true); // Marcar como enviado

@@ -6,7 +6,6 @@ package ec.edu.espe.medicalappointmentsystem.view;
 
 import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
 import ec.edu.espe.medicalappointmentsystem.model.Appointment;
-import static ec.edu.espe.medicalappointmentsystem.util.FileManager.loadAppointments;
 import ec.edu.espe.medicalappointmentsystem.util.Printer;
 import java.time.LocalDate;
 import java.util.List;
