@@ -4,16 +4,34 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import static com.mongodb.client.model.Filters.eq;
 import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
+import ec.edu.espe.medicalappointmentsystem.controller.PatientController;
+import ec.edu.espe.medicalappointmentsystem.model.Appointment;
+import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
+import ec.edu.espe.medicalappointmentsystem.util.DataBase;
 import ec.edu.espe.medicalappointmentsystem.util.EmailValidator;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
+import org.bson.Document;
 
 /**
  *
@@ -24,8 +42,28 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     /**
      * Creates new form FrmAddAppointment
      */
+    private void initializeComponents() {
+        fillSpecialtyCombo();
+        fillTimeCombo();
+
+        cmbSpecialty.addActionListener(e -> {
+            String selectedSpecialty = (String) cmbSpecialty.getSelectedItem();
+            if (selectedSpecialty != null) {
+                fillDoctorCombo(selectedSpecialty);
+            }
+        });
+
+        DateAppointment.addPropertyChangeListener("date", evt -> {
+            if (cmbDoctors.getSelectedItem() != null) {
+                fillAvailableTimeSlots(cmbDoctors.getSelectedItem().toString());
+            }
+        });
+    }
+
     public FrmAddAppointment() {
         initComponents();
+        initializeComponents();
+
     }
 
     /**
@@ -244,7 +282,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        cmbTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00 am - 8:30 am", "8:30 am - 11:00 am", "11:00 am - 12:30 pm", "12:30 pm - 1:00 pm", "1:00 pm - 2:30 pm" }));
+        cmbTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00 am - 8:00 am", "8:00 am - 9:00 am", "10:00 am - 11:00 am", "11:00 am - 12:00 pm", "12:00 pm - 13:00 pm", "14:30 pm - 15:30 pm" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -428,74 +466,215 @@ public class FrmAddAppointment extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtIdActionPerformed
 
-    private void btnAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAppointmentActionPerformed
-        //patient info 
-        Date birthDate = birthDateChooser.getDate();
-        LocalDate localBirthDate = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    private void fillSpecialtyCombo() {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                MongoCollection<Document> doctorCollection = DataBase.getDoctorCollection();
+                List<String> specialties = doctorCollection.distinct("Especialidad", String.class).into(new ArrayList<>());
 
-        LocalDate currentDate = LocalDate.now();
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        
-        
+                cmbSpecialty.removeAllItems();
+                for (String specialty : specialties) {
+                    cmbSpecialty.addItem(specialty);
+                }
 
-        String id = txtId.getText();
-        String name = txtName.getText();
-        String bornOnDate = localBirthDate.format(formatter);
-        int age = Period.between(localBirthDate, currentDate).getYears();
-        String email = txtEmail.getText();
-        String cellphone = txtCellphone.getText();
-        
-        Patient patient = new Patient (id, name, age, email, cellphone);
-        
+                if (!specialties.isEmpty()) {
+                    fillDoctorCombo(specialties.get(0));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al cargar especialidades: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+    private void fillDoctorCombo(String specialty) {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                MongoCollection<Document> doctorCollection = DataBase.getDoctorCollection();
+                FindIterable<Document> doctors = doctorCollection.find(eq("Especialidad", specialty));
+
+                cmbDoctors.removeAllItems();
+                boolean doctorsAdded = false;
+                for (Document doc : doctors) {
+                    String doctorName = doc.getString("Nombre");
+                    if (doctorName != null && !doctorName.isEmpty()) {
+                        cmbDoctors.addItem(doctorName);
+                        doctorsAdded = true;
+                    }
+                }
+
+                if (doctorsAdded && cmbDoctors.getItemCount() > 0) {
+                    cmbDoctors.setSelectedIndex(0);
+                    fillAvailableTimeSlots(cmbDoctors.getItemAt(0));
+                } else {
+                    System.err.println("No se encontraron doctores para la especialidad: " + specialty);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al cargar doctores: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+// Método para llenar el combo de horarios basados en el doctor seleccionado
+    private void fillTimeCombo() {
+        cmbDoctors.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedDoctor = cmbDoctors.getSelectedItem().toString();
+                fillAvailableTimeSlots(selectedDoctor);
+            }
+        });
+    }
+
+    private List<String> getTimeSlotsFromWorkingHours(String workingHours) {
+        List<String> timeSlots = new ArrayList<>();
+        if (workingHours == null || workingHours.isEmpty()) {
+            System.err.println("Error: horario de trabajo es nulo o vacío");
+            return timeSlots;
+        }
         try {
-            IdValidator.idValidator(id);
+            String[] parts = workingHours.split(" ");
+            if (parts.length < 3) {
+                System.err.println("Error: formato de horario incorrecto");
+                return timeSlots;
+            }
+            String[] hours = parts[2].split("-");
+            LocalTime startTime = LocalTime.parse(hours[0]);
+            LocalTime endTime = LocalTime.parse(hours[1]);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            while (startTime.isBefore(endTime)) {
+                timeSlots.add(startTime.format(formatter));
+                startTime = startTime.plusHours(1);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al procesar horarios: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return timeSlots;
+    }
+
+    private void fillAvailableTimeSlots(String doctorName) {
+        if (doctorName == null || doctorName.isEmpty()) {
+            System.err.println("Error: nombre de doctor es nulo o vacío");
+            return;
+        }
+        MongoCollection<Document> doctorCollection = DataBase.getDoctorCollection();
+        Document doctor = doctorCollection.find(eq("Nombre", doctorName)).first();
+
+        if (doctor != null) {
+            String workingHours = doctor.getString("Horario");
+            if (workingHours != null) {
+                List<String> availableTimeSlots = getTimeSlotsFromWorkingHours(workingHours);
+                cmbTime.setModel(new DefaultComboBoxModel<>(availableTimeSlots.toArray(new String[0])));
+            } else {
+                System.err.println("Error: horario no encontrado para el doctor " + doctorName);
+            }
+        } else {
+            System.err.println("Error: doctor no encontrado: " + doctorName);
+        }
+    }
+
+    private boolean validateInputs() {
+        if (txtName.getText().isEmpty() || txtId.getText().isEmpty() || txtEmail.getText().isEmpty() || txtCellphone.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        try {
+            IdValidator.idValidator(txtId.getText());
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Cédula Inválida", JOptionPane.ERROR_MESSAGE);
             txtId.setText("");
             txtId.requestFocus();
-            return;
+            return false;
         }
 
         try {
-            EmailValidator.emailValidator(email);
+            EmailValidator.emailValidator(txtEmail.getText());
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Correo Electrónico Inválido", JOptionPane.ERROR_MESSAGE);
             txtEmail.setText("");
             txtEmail.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private Patient createPatient() {
+        String id = txtId.getText();
+        String name = txtName.getText();
+        LocalDate localBirthDate = birthDateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int age = Period.between(localBirthDate, LocalDate.now()).getYears();
+        String email = txtEmail.getText();
+        String cellphone = txtCellphone.getText();
+
+        return new Patient(id, name, age, email, cellphone);
+    }
+
+    private Appointment createAppointment(Patient patient) {
+        LocalDate dateAppointment = AppointmentController.convertToLocalDate(DateAppointment.getDate());
+        String selectedTimeString = (String) cmbTime.getSelectedItem();
+        LocalTime selectedTime = LocalTime.parse(selectedTimeString, DateTimeFormatter.ofPattern("HH:mm"));
+        int timeSlot = selectedTime.getHour();
+        String doctorName = cmbDoctors.getSelectedItem().toString();
+        String specialty = cmbSpecialty.getSelectedItem().toString();
+        String idApp = UUID.randomUUID().toString();
+
+        return new Appointment(idApp, dateAppointment, timeSlot, new Doctor(doctorName, specialty), patient);
+    }
+
+    private boolean confirmAppointment(Appointment appointment) {
+        String message = String.format("¿Está seguro de querer guardar la cita para ---> %s a nombre de %s con el día y hora %s %s",
+                appointment.getDoctor().getSpecialty(),
+                appointment.getPatient().getName(),
+                appointment.getDateAppointment(),
+                cmbTime.getSelectedItem());
+        return JOptionPane.showConfirmDialog(this, message) == 0;
+    }
+
+    private void saveAppointmentAndPatient(Appointment appointment, Patient patient) {
+        try {
+            if (AppointmentController.create(appointment)) {
+                if (PatientController.create(patient)) {
+                    JOptionPane.showMessageDialog(this, "Cita y paciente añadidos correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    // Aquí podrías limpiar los campos o cerrar el formulario si es necesario
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al añadir el paciente.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al añadir la cita.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void btnAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAppointmentActionPerformed
+        if (!validateInputs()) {
             return;
         }
-        
-        //**********PatientController.create(patient);
-        
-        //Appointment info
-        
-        String idApp;
-        //fecha y time slot
-        String doctor = cmbDoctors.getSelectedItem().toString();
-        
-        
-        
-        String specialty = cmbSpecialty.getSelectedItem().toString();
-        
 
-        String schedule = cmbTime.getSelectedItem().toString();
-        //Doctor doctor = new Doctor(WIDTH, cmbDoctors.getSelectedItem().toString(), specialty, schedule, education); 
-        //int age= IdValidator.calculateAge(bornOnDate);
-        String timeSlot1 = cmbTime.getSelectedItem().toString();
-        int timeSlot = AppointmentController.determinateSlot(timeSlot1);
-        LocalDate dateAppointment = AppointmentController.convertToLocalDate(DateAppointment.getDate());
+        try {
+            Patient patient = createPatient();
+            Appointment appointment = createAppointment(patient);
 
-        
-        
-        //Appointment appointment = new Appointment(dateAppointment,timeSlot, doctor, patient);
-
-        //DataBase.sendToDatabase(appointment);
-        //FileManager.addAndSaveAppointment(appointment);
-        JOptionPane.showMessageDialog(this, "Cita añadida correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
+            if (appointment != null && confirmAppointment(appointment)) {
+                saveAppointmentAndPatient(appointment, patient);
+            } else {
+                System.out.println("La creación de la cita fue cancelada o hubo un error.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al crear la cita: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+/*
     }//GEN-LAST:event_btnAddAppointmentActionPerformed
-
+*/
     /**
      * @param args the command line arguments
      */

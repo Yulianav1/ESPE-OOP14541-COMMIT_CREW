@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Appointment {
+
     private String idApp;
     private LocalDate dateAppointment;
     private int timeSlot;
@@ -19,83 +20,66 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(LocalDate dateAppointment, int timeSlot, Doctor doctor, Patient patient) {
-        this.idApp = UUID.randomUUID().toString(); // Generar un ID único
+    public Appointment(String idApp, LocalDate dateAppointment, int timeSlot, Doctor doctor, Patient patient) {
+        this.idApp = idApp;
         this.dateAppointment = dateAppointment;
         this.timeSlot = timeSlot;
         this.doctor = doctor;
         this.patient = patient;
+        this.emailSent = false; // Inicializar a false o según tu lógica
+        this.hourToAppointment = null; // Inicializar como null o según tu lógica
     }
 
     @Override
     public String toString() {
-        return "Appointment{" +
-                "id='" + idApp + '\'' +
-                ", dateAppointment='" + dateAppointment + '\'' +
-                ", timeSlot=" + timeSlot +
-                ", doctor=" + doctor +
-                ", patient=" + patient +
-                ", emailSent=" + emailSent +
-                ", hourToAppointment=" + hourToAppointment +
-                '}';
-    }
-
-    public String getHourToAppointment() {
-        return hourToAppointment;
-    }
-
-    public void setHourToAppointment(String hourToAppointment) {
-        this.hourToAppointment = hourToAppointment;
-    }
-    
-
-    public boolean getEmailSent() {
-        return emailSent;
-    }
-
-    public void setEmailSent(boolean emailSent) {
-        this.emailSent = emailSent;
+        return "Appointment{"
+                + "id='" + idApp + '\''
+                + ", dateAppointment='" + dateAppointment + '\''
+                + ", timeSlot=" + timeSlot
+                + ", doctor=" + doctor
+                + ", patient=" + patient
+                + ", emailSent=" + emailSent
+                + ", hourToAppointment=" + hourToAppointment
+                + '}';
     }
 
     public String getIdApp() {
         return idApp;
     }
 
-    public void setIdApp(String id) {
-        this.idApp = idApp;
-    }
-
     public LocalDate getDateAppointment() {
         return dateAppointment;
-    }
-
-    public void setDateAppointment(LocalDate dateAppointment) {
-        this.dateAppointment = dateAppointment;
     }
 
     public int getTimeSlot() {
         return timeSlot;
     }
 
-    public void setTimeSlot(int timeSlot) {
-        this.timeSlot = timeSlot;
-    }
-
     public Doctor getDoctor() {
         return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
     }
 
     public Patient getPatient() {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public boolean getEmailSent() {
+        return emailSent;
     }
+
+    public String getHourToAppointment() {
+        return hourToAppointment;
+    }
+
+    public void setEmailSent(boolean emailSent) {
+        this.emailSent = emailSent;
+    }
+
+    public void setHourToAppointment(String hourToAppointment) {
+        this.hourToAppointment = hourToAppointment;
+    }
+    
+    /*
 
     public static Doctor inputDoctorData(List<Doctor> doctors) {
         Scanner input = new Scanner(System.in);
@@ -111,7 +95,6 @@ public class Appointment {
             System.out.println("Enter doctor's ID:");
             int selectedId = input.nextInt();
             input.nextLine();
-
 
             if (selectedDoctor == null) {
                 System.out.println("Doctor not found. Please enter a valid ID.");
@@ -135,5 +118,5 @@ public class Appointment {
             System.out.println("Error: No se seleccionó un doctor válido.");
             return null;
         }
-    }
+    } */
 }

@@ -1,3 +1,4 @@
+package ec.edu.espe.medicalappointmentsystem.controller;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -12,22 +13,30 @@ import org.bson.Document;
  *
  * @author Domenica Villagomez, CommitCrew, DCCO-ESPE
  */
-
 public class PatientController {
-    
-    public static boolean create(Patient patient) {
 
+    public static boolean create(Patient patient) {
         String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
 
-        MongoDatabase dataBase = openConnectionToMongo(uri);
-        Document dataOfDoctor = new Document().append("id", patient.getId()).append("Nombre", patient.getName()).append("Edad", patient.getAge()).append("Email ", patient.getEmail()).append("Teléfono", patient.getCellphone());
+        try {
+            MongoDatabase dataBase = openConnectionToMongo(uri);
+            Document dataOfPatient = new Document()
+                    .append("id", patient.getId())
+                    .append("Nombre", patient.getName())
+                    .append("Edad", patient.getAge())
+                    .append("Email", patient.getEmail()) 
+                    .append("Teléfono", patient.getCellphone());
 
-        String collection = "Patient";
-        MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
-        insertOneData(dataOfDoctor, mongoCollection);
-        return false;
+            String collection = "Patient";
+            MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
+            insertOneData(dataOfPatient, mongoCollection);
+            return true; 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; 
+        }
     }
-       
+
     //Abir conexión con mongoDB
     public static MongoDatabase openConnectionToMongo(String uri) {
         MongoClient mongoClient = MongoClients.create(uri);
@@ -86,5 +95,5 @@ public class PatientController {
         mongoCollection.findOneAndDelete(findDocument);
     }
     
-    
+
 }

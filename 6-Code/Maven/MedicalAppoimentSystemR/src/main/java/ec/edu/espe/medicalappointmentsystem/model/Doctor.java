@@ -22,10 +22,14 @@ public class Doctor {
         this.email = email;
         this.cellphone = cellphone;
     }
-
     
+        public Doctor(String name, String specialty) {
+        this.name = name;
+        this.specialty = specialty;
+    }
 
-    public Doctor() {
+
+    public Doctor(String name1, String specialty1, String workingHours) {
     }
 
     @Override
@@ -66,30 +70,6 @@ public class Doctor {
         this.setSchedule(schedule);
     }
 
-    public static Doctor inputDoctorData() {
-        try (Scanner input = new Scanner(System.in)) {
-            System.out.println("==========================================");
-            System.out.println("|       Ingrese los datos del Doctor       |");
-            System.out.println("==========================================");
-
-            System.out.print("| Ingrese el ID del doctor: ");
-            int id = input.nextInt();
-            input.nextLine();
-
-            System.out.print("| Ingrese el nombre del doctor: ");
-            String name = input.nextLine();
-
-            System.out.print("| Ingrese la especialidad del doctor: ");
-            String specialty = input.nextLine();
-
-            System.out.print("| Ingrese el horario del doctor: ");
-            String schedule = input.nextLine();
-
-            System.out.println("==========================================");
-
-            return new Doctor();
-        }
-    }
 
     public void printDoctorInfo() {
         System.out.println("==========================================");

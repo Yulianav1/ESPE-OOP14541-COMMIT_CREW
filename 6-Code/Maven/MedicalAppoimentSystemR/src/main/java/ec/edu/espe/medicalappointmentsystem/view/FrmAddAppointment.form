@@ -489,12 +489,13 @@
             <Component class="javax.swing.JComboBox" name="cmbTime">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="7:00 am - 8:30 am"/>
-                    <StringItem index="1" value="8:30 am - 11:00 am"/>
-                    <StringItem index="2" value="11:00 am - 12:30 pm"/>
-                    <StringItem index="3" value="12:30 pm - 1:00 pm"/>
-                    <StringItem index="4" value="1:00 pm - 2:30 pm"/>
+                  <StringArray count="6">
+                    <StringItem index="0" value="7:00 am - 8:00 am"/>
+                    <StringItem index="1" value="8:00 am - 9:00 am"/>
+                    <StringItem index="2" value="10:00 am - 11:00 am"/>
+                    <StringItem index="3" value="11:00 am - 12:00 pm"/>
+                    <StringItem index="4" value="12:00 pm - 13:00 pm"/>
+                    <StringItem index="5" value="14:30 pm - 15:30 pm"/>
                   </StringArray>
                 </Property>
               </Properties>

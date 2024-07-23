@@ -19,6 +19,7 @@ ec\edu\espe\medicalappointmentsystem\util\FileManager$1.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmCalendar$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$5.class
+ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$11.class
 ec\edu\espe\medicalappointmentsystem\view\FrmCalendar.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenu$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$2.class
@@ -48,6 +49,7 @@ ec\edu\espe\medicalappointmentsystem\view\FrmReagendar$2.class
 ec\edu\espe\medicalappointmentsystem\model\Appointment.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$6.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$3.class
+ec\edu\espe\medicalappointmentsystem\controller\PatientController.class
 ec\edu\espe\medicalappointmentsystem\model\Receptionist.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenu$5.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor$4.class

@@ -10,30 +10,42 @@ import java.util.Scanner;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import static ec.edu.espe.medicalappointmentsystem.controller.DoctorController.accessToCollections;
-import static ec.edu.espe.medicalappointmentsystem.controller.DoctorController.insertOneData;
-import static ec.edu.espe.medicalappointmentsystem.controller.DoctorController.openConnectionToMongo;
 import org.bson.Document;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 public class AppointmentController {
-    /* *****Aquí hace falta meter lo del id de la cita y luego pedir los datos que se guardarán para la cita
-     ******* independientemente (solo nombre y cédula del paciente, especialidad, doctor, fecha y hora)
     
-    public static boolean create(Appointment appointment) {
-
+     public static boolean create(Appointment appointment) {
         String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
 
-        MongoDatabase dataBase = openConnectionToMongo(uri);
-        Document dataOfDoctor = new Document().append("id", patient.getId()).append("Nombre", patient.getName()).append("Edad", patient.getAge()).append("Email ", patient.getEmail()).append("Teléfono", patient.getCellphone());
+        try {
+            MongoDatabase dataBase = openConnectionToMongo(uri);
+            Document dataOfAppointment = new Document("idApp", appointment.getIdApp())
+                    .append("dateAppointment", appointment.getDateAppointment().toString())
+                    .append("timeSlot", appointment.getTimeSlot())
+                    .append("doctor", new Document("name", appointment.getDoctor().getName())
+                                         .append("specialty", appointment.getDoctor().getSpecialty()))
+                    .append("patient", new Document("id", appointment.getPatient().getId())
+                                         .append("name", appointment.getPatient().getName())
+                                         .append("age", appointment.getPatient().getAge())
+                                         .append("email", appointment.getPatient().getEmail())
+                                         .append("cellphone", appointment.getPatient().getCellphone()))
+                    .append("emailSent", appointment.getEmailSent())
+                    .append("hourToAppointment", appointment.getHourToAppointment());
 
-        String collection = "Appointment";
-        MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
-        insertOneData(dataOfDoctor, mongoCollection);
-        return false;
+            String collection = "Appointment";
+            MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
+            insertOneData(dataOfAppointment, mongoCollection);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
        
     //Abir conexión con mongoDB
@@ -93,7 +105,6 @@ public class AppointmentController {
         Document findDocument = new Document("male", true);
         mongoCollection.findOneAndDelete(findDocument);
     }
-    */
 
     public static LocalDate convertToLocalDate(Date date) {
         return date.toInstant()
@@ -121,16 +132,17 @@ public class AppointmentController {
         }
         return slot;
     }
-
+    
     public static Appointment addAppointment(List<Doctor> doctors, List<Patient> patients, Scanner input) {
         LocalDate appointmentDate = DateValidator.getValidAppointmentDate();
         int timeSlot = DateValidator.getValidAppointmentTime();
         Doctor selectedDoctor = inputDoctorData(doctors, input);
         Patient patient = Patient.inputPatientData(input);
+        String idApp = UUID.randomUUID().toString();
 
         if (patient != null) {
             LocalDate formattedDate = LocalDate.parse(appointmentDate.toString());
-            Appointment appointment = new Appointment(formattedDate, timeSlot, selectedDoctor, patient);
+            Appointment appointment = new Appointment(idApp, appointmentDate, timeSlot, selectedDoctor, patient);
             FileManager.addAndSaveAppointment(appointment);
             System.out.println("Cita creada exitosamente.");
             return appointment;
@@ -139,6 +151,7 @@ public class AppointmentController {
             return null;
         }
     }
+    
 
     public static void viewAppointments() {
         List<Appointment> appointments = FileManager.loadAppointments();

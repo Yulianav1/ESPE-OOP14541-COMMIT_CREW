@@ -107,7 +107,7 @@ public class DoctorController {
         doctorList.add(doctor);
         FileManager.saveDoctorsToFile(doctorList, FILE_NAME);
     }
-
+/*
     public void addDoctor() {
         Scanner scanner = new Scanner(System.in);
         int id = 0;
@@ -187,7 +187,7 @@ public class DoctorController {
                         throw new IllegalArgumentException("Opción no válida para horario.");
                 }
 
-                Doctor newDoctor = new Doctor();
+                Doctor newDoctor = new Doctor(name, specialty, workingHours);
                 addDoctor(newDoctor);
                 System.out.println("Doctor agregado exitosamente!");
 
@@ -202,7 +202,8 @@ public class DoctorController {
             System.out.println("Error inesperado: " + e.getMessage());
         }
     }
-
+*/
+    
     public void viewDoctors() {
         if (doctorList.isEmpty()) {
             System.out.println("No hay doctores registrados.");

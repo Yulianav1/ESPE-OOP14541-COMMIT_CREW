@@ -91,7 +91,7 @@ public class Menu {
                     break;
 
                 case 3:
-                    doctorController.addDoctor();
+                    //doctorController.addDoctor();
                     break;
 
                 case 4:

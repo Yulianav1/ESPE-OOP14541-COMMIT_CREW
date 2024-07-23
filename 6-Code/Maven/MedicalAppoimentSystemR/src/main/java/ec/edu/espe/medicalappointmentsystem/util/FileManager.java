@@ -66,7 +66,7 @@ public class FileManager {
     public static void markEmailSent(Appointment appointment) {
         List<Appointment> appointments = loadAppointments();
         for (Appointment app : appointments) {
-            if (app.getId().equals(appointment.getId())) {
+            if (app.getIdApp().equals(appointment.getIdApp())) {
                 app.setEmailSent(true); // Marcar como enviado
                 break;
             }
