@@ -199,6 +199,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
 
         jLabel12.setText("Número de Teléfono");
 
+        txtCellphone.setText("0");
         txtCellphone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCellphoneActionPerformed(evt);
@@ -283,6 +284,11 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         );
 
         cmbTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00 am - 8:00 am", "8:00 am - 9:00 am", "10:00 am - 11:00 am", "11:00 am - 12:00 pm", "12:00 pm - 13:00 pm", "14:30 pm - 15:30 pm" }));
+        cmbTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTimeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -309,17 +315,21 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel11))
-                                .addGap(38, 38, 38)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel12)
-                                        .addGap(26, 26, 26)
-                                        .addComponent(txtCellphone))
-                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(birthDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(38, 38, 38)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel12)
+                                                .addGap(26, 26, 26)
+                                                .addComponent(txtCellphone, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(birthDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(27, 27, 27)
+                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -354,10 +364,10 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -415,7 +425,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -437,8 +447,21 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         frmMenu.setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    public void cmbTimeActionPerformed(java.awt.event.ActionEvent evt) {
+    
+}
+
     private void txtCellphoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCellphoneActionPerformed
-        // TODO add your handling code here:
+        String phoneNumber = txtCellphone.getText();
+
+    if (phoneNumber.length() == 9 && phoneNumber.matches("\\d+")) {
+       
+        JOptionPane.showMessageDialog(this, "Número de teléfono válido.");
+    } else {
+        
+        JOptionPane.showMessageDialog(this, "El número de teléfono debe tener exactamente 9 dígitos y solo contener números.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     }//GEN-LAST:event_txtCellphoneActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
@@ -470,7 +493,11 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             try {
                 MongoCollection<Document> doctorCollection = DataBase.getDoctorCollection();
-                List<String> specialties = doctorCollection.distinct("Especialidad", String.class).into(new ArrayList<>());
+                List
+
+<String> specialties = doctorCollection.distinct("Especialidad", String.class  
+
+).into(new ArrayList<>());
 
                 cmbSpecialty.removeAllItems();
                 for (String specialty : specialties) {
@@ -516,11 +543,11 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         });
     }
 
-// Método para llenar el combo de horarios basados en el doctor seleccionado
+
     private void fillTimeCombo() {
         cmbDoctors.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+public void actionPerformed(ActionEvent e) {
                 String selectedDoctor = cmbDoctors.getSelectedItem().toString();
                 fillAvailableTimeSlots(selectedDoctor);
             }
@@ -672,6 +699,9 @@ public class FrmAddAppointment extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al crear la cita: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+   
+
+    
 /*
     }//GEN-LAST:event_btnAddAppointmentActionPerformed
 */
@@ -690,23 +720,27 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-                }
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
 
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
 
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
