@@ -6,31 +6,30 @@ package ec.edu.espe.medicalappointmentsystem.view;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
 import ec.edu.espe.medicalappointmentsystem.controller.PatientController;
 import ec.edu.espe.medicalappointmentsystem.model.Appointment;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
-import ec.edu.espe.medicalappointmentsystem.util.DataBase;
 import ec.edu.espe.medicalappointmentsystem.util.EmailValidator;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
+import ec.edu.espe.medicalappointmentsystem.util.MongoDBConnection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 import org.bson.Document;
 
 /**
@@ -54,8 +53,12 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         });
 
         DateAppointment.addPropertyChangeListener("date", evt -> {
-            if (cmbDoctors.getSelectedItem() != null) {
-                fillAvailableTimeSlots(cmbDoctors.getSelectedItem().toString());
+            String selectedDoctor = (String) cmbDoctors.getSelectedItem();
+            Date selectedDate = DateAppointment.getDate();
+            if (selectedDoctor != null && selectedDate != null) {
+                fillAvailableTimeSlots(selectedDoctor, selectedDate);
+            } else {
+                cmbTime.removeAllItems();
             }
         });
     }
@@ -447,20 +450,17 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         frmMenu.setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    public void cmbTimeActionPerformed(java.awt.event.ActionEvent evt) {
-    
-}
 
     private void txtCellphoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCellphoneActionPerformed
         String phoneNumber = txtCellphone.getText();
 
-    if (phoneNumber.length() == 9 && phoneNumber.matches("\\d+")) {
-       
-        JOptionPane.showMessageDialog(this, "Número de teléfono válido.");
-    } else {
-        
-        JOptionPane.showMessageDialog(this, "El número de teléfono debe tener exactamente 9 dígitos y solo contener números.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        if (phoneNumber.length() == 9 && phoneNumber.matches("\\d+")) {
+
+            JOptionPane.showMessageDialog(this, "Número de teléfono válido.");
+        } else {
+
+            JOptionPane.showMessageDialog(this, "El número de teléfono debe tener exactamente 9 dígitos y solo contener números.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_txtCellphoneActionPerformed
 
@@ -492,12 +492,10 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     private void fillSpecialtyCombo() {
         SwingUtilities.invokeLater(() -> {
             try {
-                MongoCollection<Document> doctorCollection = DataBase.getDoctorCollection();
-                List
+                MongoDatabase database = MongoDBConnection.getDatabase();
+                MongoCollection<Document> doctorCollection = database.getCollection("Doctor");
 
-<String> specialties = doctorCollection.distinct("Especialidad", String.class  
-
-).into(new ArrayList<>());
+                List<String> specialties = doctorCollection.distinct("Especialidad", String.class).into(new ArrayList<>());
 
                 cmbSpecialty.removeAllItems();
                 for (String specialty : specialties) {
@@ -505,6 +503,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                 }
 
                 if (!specialties.isEmpty()) {
+                    cmbSpecialty.setSelectedIndex(0);
                     fillDoctorCombo(specialties.get(0));
                 }
             } catch (Exception e) {
@@ -517,24 +516,30 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     private void fillDoctorCombo(String specialty) {
         SwingUtilities.invokeLater(() -> {
             try {
-                MongoCollection<Document> doctorCollection = DataBase.getDoctorCollection();
+                MongoDatabase database = MongoDBConnection.getDatabase();
+                MongoCollection<Document> doctorCollection = database.getCollection("Doctor");
                 FindIterable<Document> doctors = doctorCollection.find(eq("Especialidad", specialty));
 
-                cmbDoctors.removeAllItems();
-                boolean doctorsAdded = false;
+                DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
                 for (Document doc : doctors) {
                     String doctorName = doc.getString("Nombre");
                     if (doctorName != null && !doctorName.isEmpty()) {
-                        cmbDoctors.addItem(doctorName);
-                        doctorsAdded = true;
+                        model.addElement(doctorName);
                     }
                 }
 
-                if (doctorsAdded && cmbDoctors.getItemCount() > 0) {
+                cmbDoctors.setModel(model);
+
+                if (model.getSize() > 0) {
                     cmbDoctors.setSelectedIndex(0);
-                    fillAvailableTimeSlots(cmbDoctors.getItemAt(0));
+                    Date selectedDate = DateAppointment.getDate();
+                    if (selectedDate != null) {
+                        fillAvailableTimeSlots((String) cmbDoctors.getSelectedItem(), selectedDate);
+                    } else {
+                        cmbTime.removeAllItems();
+                    }
                 } else {
-                    System.err.println("No se encontraron doctores para la especialidad: " + specialty);
+                    cmbTime.removeAllItems();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -543,64 +548,79 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         });
     }
 
-
     private void fillTimeCombo() {
         cmbDoctors.addActionListener(new ActionListener() {
             @Override
-public void actionPerformed(ActionEvent e) {
-                String selectedDoctor = cmbDoctors.getSelectedItem().toString();
-                fillAvailableTimeSlots(selectedDoctor);
+            public void actionPerformed(ActionEvent e) {
+                String selectedDoctor = (String) cmbDoctors.getSelectedItem();
+                Date selectedDate = DateAppointment.getDate();
+                if (selectedDoctor != null && selectedDate != null) {
+                    fillAvailableTimeSlots(selectedDoctor, selectedDate);
+                } else {
+                    cmbTime.removeAllItems();
+                }
+            }
+        });
+
+        DateAppointment.addPropertyChangeListener("date", evt -> {
+            String selectedDoctor = (String) cmbDoctors.getSelectedItem();
+            Date selectedDate = DateAppointment.getDate();
+            if (selectedDoctor != null && selectedDate != null) {
+                fillAvailableTimeSlots(selectedDoctor, selectedDate);
             }
         });
     }
 
-    private List<String> getTimeSlotsFromWorkingHours(String workingHours) {
-        List<String> timeSlots = new ArrayList<>();
-        if (workingHours == null || workingHours.isEmpty()) {
-            System.err.println("Error: horario de trabajo es nulo o vacío");
-            return timeSlots;
-        }
-        try {
-            String[] parts = workingHours.split(" ");
-            if (parts.length < 3) {
-                System.err.println("Error: formato de horario incorrecto");
-                return timeSlots;
-            }
-            String[] hours = parts[2].split("-");
-            LocalTime startTime = LocalTime.parse(hours[0]);
-            LocalTime endTime = LocalTime.parse(hours[1]);
+    private void fillAvailableTimeSlots(String doctorName, Date date) {
+        List<String> availableTimeSlots = getAvailableTimeSlots(doctorName, date);
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            while (startTime.isBefore(endTime)) {
-                timeSlots.add(startTime.format(formatter));
-                startTime = startTime.plusHours(1);
+        SwingUtilities.invokeLater(() -> {
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(availableTimeSlots.toArray(new String[0]));
+            cmbTime.setModel(model);
+            if (model.getSize() > 0) {
+                cmbTime.setSelectedIndex(0);
             }
-        } catch (Exception e) {
-            System.err.println("Error al procesar horarios: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return timeSlots;
+        });
     }
 
-    private void fillAvailableTimeSlots(String doctorName) {
-        if (doctorName == null || doctorName.isEmpty()) {
-            System.err.println("Error: nombre de doctor es nulo o vacío");
-            return;
-        }
-        MongoCollection<Document> doctorCollection = DataBase.getDoctorCollection();
-        Document doctor = doctorCollection.find(eq("Nombre", doctorName)).first();
+    private List<String> getAvailableTimeSlots(String doctorName, Date date) {
+        List<String> allTimeSlots = getTimeSlotsFromWorkingHours();
+        List<String> availableTimeSlots = new ArrayList<>(allTimeSlots);
 
-        if (doctor != null) {
-            String workingHours = doctor.getString("Horario");
-            if (workingHours != null) {
-                List<String> availableTimeSlots = getTimeSlotsFromWorkingHours(workingHours);
-                cmbTime.setModel(new DefaultComboBoxModel<>(availableTimeSlots.toArray(new String[0])));
-            } else {
-                System.err.println("Error: horario no encontrado para el doctor " + doctorName);
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        try {
+            MongoDatabase database = MongoDBConnection.getDatabase();
+            MongoCollection<Document> appointmentCollection = database.getCollection("Appointment");
+
+            for (String timeSlot : allTimeSlots) {
+                Document query = new Document("doctor.name", doctorName)
+                        .append("dateAppointment", Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                        .append("timeSlot", timeSlot);
+
+                if (appointmentCollection.countDocuments(query) > 0) {
+                    availableTimeSlots.remove(timeSlot);
+                }
             }
-        } else {
-            System.err.println("Error: doctor no encontrado: " + doctorName);
+        } catch (Exception e) {
+            System.err.println("Error al verificar las citas existentes: " + e.getMessage());
+            e.printStackTrace();
         }
+
+        return availableTimeSlots;
+    }
+
+    private List<String> getTimeSlotsFromWorkingHours() {
+        List<String> timeSlots = new ArrayList<>();
+        LocalTime startTime = LocalTime.of(7, 0);
+        LocalTime endTime = LocalTime.of(16, 0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        while (startTime.isBefore(endTime)) {
+            timeSlots.add(startTime.format(formatter));
+            startTime = startTime.plusHours(1);
+        }
+        return timeSlots;
     }
 
     private boolean validateInputs() {
@@ -644,13 +664,12 @@ public void actionPerformed(ActionEvent e) {
     private Appointment createAppointment(Patient patient) {
         LocalDate dateAppointment = AppointmentController.convertToLocalDate(DateAppointment.getDate());
         String selectedTimeString = (String) cmbTime.getSelectedItem();
-        LocalTime selectedTime = LocalTime.parse(selectedTimeString, DateTimeFormatter.ofPattern("HH:mm"));
-        int timeSlot = selectedTime.getHour();
+
         String doctorName = cmbDoctors.getSelectedItem().toString();
         String specialty = cmbSpecialty.getSelectedItem().toString();
         String idApp = UUID.randomUUID().toString();
 
-        return new Appointment(idApp, dateAppointment, timeSlot, new Doctor(doctorName, specialty), patient);
+        return new Appointment(idApp, dateAppointment, selectedTimeString, new Doctor(doctorName, specialty), patient);
     }
 
     private boolean confirmAppointment(Appointment appointment) {
@@ -667,7 +686,6 @@ public void actionPerformed(ActionEvent e) {
             if (AppointmentController.create(appointment)) {
                 if (PatientController.create(patient)) {
                     JOptionPane.showMessageDialog(this, "Cita y paciente añadidos correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    // Aquí podrías limpiar los campos o cerrar el formulario si es necesario
                 } else {
                     JOptionPane.showMessageDialog(this, "Error al añadir el paciente.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -688,9 +706,34 @@ public void actionPerformed(ActionEvent e) {
         try {
             Patient patient = createPatient();
             Appointment appointment = createAppointment(patient);
+            System.out.println("Detalles de la cita a crear:");
+            System.out.println("ID: " + appointment.getIdApp());
+            System.out.println("Fecha: " + appointment.getDateAppointment());
+            System.out.println("Hora: " + appointment.getTimeSlot());
+            System.out.println("Doctor: " + appointment.getDoctor().getName());
+            System.out.println("Especialidad: " + appointment.getDoctor().getSpecialty());
+            System.out.println("Paciente: " + appointment.getPatient().getName());
 
             if (appointment != null && confirmAppointment(appointment)) {
-                saveAppointmentAndPatient(appointment, patient);
+                if (AppointmentController.create(appointment)) {
+                    if (PatientController.exists(patient.getId())) {
+                        if (PatientController.update(patient)) {
+                            JOptionPane.showMessageDialog(this, "Cita añadida y datos del paciente actualizados correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            clearFields();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Error al actualizar los datos del paciente.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        if (PatientController.create(patient)) {
+                            JOptionPane.showMessageDialog(this, "Cita y paciente añadidos correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            clearFields();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Error al añadir el paciente.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al añadir la cita.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
                 System.out.println("La creación de la cita fue cancelada o hubo un error.");
             }
@@ -699,10 +742,52 @@ public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(this, "Error al crear la cita: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-   
 
-    
-/*
+    private void clearFields() {
+        txtName.setText("");
+        txtId.setText("");
+        txtEmail.setText("");
+        txtCellphone.setText("");
+        birthDateChooser.setDate(null);
+        DateAppointment.setDate(null);
+        cmbSpecialty.setSelectedIndex(0);
+        cmbDoctors.setSelectedIndex(0);
+        cmbTime.setSelectedIndex(0);
+    }
+
+    private void cmbTimeActionPerformed(java.awt.event.ActionEvent evt) {
+        String selectedTime = (String) cmbTime.getSelectedItem();
+        String selectedDoctor = (String) cmbDoctors.getSelectedItem();
+        LocalDate selectedDate = DateAppointment.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if (selectedTime != null && selectedDoctor != null && selectedDate != null) {
+            if (isTimeSlotOccupied(selectedDoctor, selectedDate, selectedTime)) {
+                JOptionPane.showMessageDialog(this, "Este horario ya está ocupado. Por favor, seleccione otro.", "Horario Ocupado", JOptionPane.WARNING_MESSAGE);
+                cmbTime.setSelectedIndex(-1); // Deselecciona el item
+            } else {
+                // hay que añadir código adicional si el horario está disponible
+            }
+        }
+    }
+
+    private boolean isTimeSlotOccupied(String doctorName, LocalDate date, String time) {
+        try {
+            MongoDatabase database = MongoDBConnection.getDatabase();
+            MongoCollection<Document> appointmentCollection = database.getCollection("appointments");
+
+            Date mongoDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Document query = new Document("doctor.name", doctorName)
+                    .append("dateAppointment", mongoDate)
+                    .append("timeSlot", time);
+
+            return appointmentCollection.countDocuments(query) > 0;
+        } catch (Exception e) {
+            System.err.println("Error al verificar la disponibilidad del horario: " + e.getMessage());
+            return false; // O manejar el error de otra manera según tus necesidades
+        }
+    }
+
+    /*
     }//GEN-LAST:event_btnAddAppointmentActionPerformed
 */
     /**
@@ -720,27 +805,23 @@ public void actionPerformed(ActionEvent e) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAddAppointment.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmAddAppointment.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

@@ -49,10 +49,10 @@ public class Reminder {
         List<Appointment> appointments = loadAppointments();
 
         EmailSender emailSender = new EmailSender(new EmailConfig("smtp.gmail.com", 587, "alexisviterigithub@gmail.com", "djdkbbjlijjeghcv"));
-
+        
         for (Appointment appointment : appointments) {
             Patient patient = appointment.getPatient();
-            if (checkDays(appointment.getDateAppointment()) && checkShipment(appointment.getEmailSent())) {
+            /*if (checkDays(appointment.getDateAppointment()) && checkShipment(appointment.getEmailSent())) {
                 Doctor doctor = appointment.getDoctor();
                 String to = patient.getEmail();
                 appointment.setHourToAppointment(DateValidator.getAppointmentTime(appointment.getTimeSlot()));
@@ -81,7 +81,7 @@ public class Reminder {
                 updateEmailSentStatus(appointment.getIdApp(), true);
             } else {
                 System.out.print(".");
-            }
+            } */
         }
     } catch (Exception e) {
         System.err.println("Error inesperado al procesar las citas.");

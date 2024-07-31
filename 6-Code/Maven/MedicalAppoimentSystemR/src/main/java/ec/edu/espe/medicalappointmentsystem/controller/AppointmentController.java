@@ -26,35 +26,38 @@ import java.util.UUID;
 import static com.mongodb.client.model.Sorts.descending;
 
 public class AppointmentController {
-    
+
     public static boolean create(Appointment appointment) {
         String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
 
-        try {
-            MongoDatabase database = openConnectionToMongo(uri);
-            Document dataOfAppointment = new Document("idApp", appointment.getIdApp())
-                    .append("dateAppointment", appointment.getDateAppointment().toString())
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("Medical_Appointment");
+            MongoCollection<Document> collection = database.getCollection("Appointment");
+
+            Date appointmentDate = Date.from(appointment.getDateAppointment().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+            Document doc = new Document("idApp", appointment.getIdApp())
+                    .append("dateAppointment", appointmentDate)
                     .append("timeSlot", appointment.getTimeSlot())
                     .append("doctor", new Document("name", appointment.getDoctor().getName())
-                                         .append("specialty", appointment.getDoctor().getSpecialty()))
+                            .append("specialty", appointment.getDoctor().getSpecialty()))
                     .append("patient", new Document("id", appointment.getPatient().getId())
-                                         .append("name", appointment.getPatient().getName())
-                                         .append("age", appointment.getPatient().getAge())
-                                         .append("email", appointment.getPatient().getEmail())
-                                         .append("cellphone", appointment.getPatient().getCellphone()))
-                    .append("emailSent", appointment.getEmailSent())
-                    .append("hourToAppointment", appointment.getHourToAppointment());
+                            .append("name", appointment.getPatient().getName())
+                            .append("age", appointment.getPatient().getAge())
+                            .append("email", appointment.getPatient().getEmail())
+                            .append("cellphone", appointment.getPatient().getCellphone()));
 
-            String collection = "Appointment";
-            MongoCollection<Document> mongoCollection = accessToCollections(database, collection);
-            insertOneData(dataOfAppointment, mongoCollection);
+            collection.insertOne(doc);
+            System.out.println("Intentando insertar documento: " + doc.toJson());
+            collection.insertOne(doc);
+            System.out.println("Documento insertado con éxito.");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-       
+
     public static MongoDatabase openConnectionToMongo(String uri) {
         MongoClient mongoClient = MongoClients.create(uri);
         return mongoClient.getDatabase("Medical_Appointment");
@@ -126,42 +129,6 @@ public class AppointmentController {
         }
         return slot;
     }
-    
-    public static Appointment addAppointment(List<Doctor> doctors, List<Patient> patients, Scanner input) {
-        LocalDate appointmentDate = DateValidator.getValidAppointmentDate();
-        int timeSlot = DateValidator.getValidAppointmentTime();
-        Doctor selectedDoctor = inputDoctorData(doctors, input);
-        Patient patient = Patient.inputPatientData(input);
-        String idApp = UUID.randomUUID().toString();
-
-        if (patient != null) {
-            Appointment appointment = new Appointment(idApp, appointmentDate, timeSlot, selectedDoctor, patient);
-            FileManager.addAndSaveAppointment(appointment);
-            System.out.println("Cita creada exitosamente.");
-            return appointment;
-        } else {
-            System.out.println("No se pudo crear la cita. Los datos del paciente no eran válidos.");
-            return null;
-        }
-    }
-    
-    public static void viewAppointments() {
-        List<Appointment> appointments = FileManager.loadAppointments1();
-        System.out.println("Viendo las citas:");
-        if (appointments.isEmpty()) {
-            System.out.println("Sin citas registradas.");
-        } else {
-            for (Appointment apt : appointments) {
-                System.out.println("Appointment ID: " + apt.getIdApp());
-                System.out.println("Doctor: " + apt.getDoctor().getName());
-                System.out.println("Especialidad: " + apt.getDoctor().getSpecialty());
-                System.out.println("Fecha: " + apt.getDateAppointment());
-                System.out.println("Hora: " + getTimeSlotString(apt.getTimeSlot()));
-                System.out.println("Paciente: " + apt.getPatient().getName());
-                System.out.println("-------------------");
-            }
-        }
-    }
 
     private static Doctor inputDoctorData(List<Doctor> doctors, Scanner input) {
         System.out.println("Seleccionar un doctor:");
@@ -200,41 +167,41 @@ public class AppointmentController {
     }
 
     public static List<Appointment> loadAppointments() {
-    List<Appointment> appointments = new ArrayList<>();
-    String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
-    String databaseName = "Medical_Appointment";
-    String collectionName = "Appointment";
+        List<Appointment> appointments = new ArrayList<>();
+        String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+        String databaseName = "Medical_Appointment";
+        String collectionName = "Appointment";
 
-    try (MongoClient mongoClient = MongoClients.create(uri)) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
-        MongoCollection<Document> collection = database.getCollection(collectionName);
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase(databaseName);
+            MongoCollection<Document> collection = database.getCollection(collectionName);
 
-        // Contar documentos en la colección
-        long count = collection.countDocuments();
-        System.out.println("Número de citas en la colección: " + count);
+            // Contar documentos en la colección
+            long count = collection.countDocuments();
+            System.out.println("Número de citas en la colección: " + count);
 
-        // Recuperar documentos
-        FindIterable<Document> appointmentsIterable = collection.find();
-        System.out.println("Número de citas recuperadas: " + appointmentsIterable.spliterator().estimateSize());
+            // Recuperar documentos
+            FindIterable<Document> appointmentsIterable = collection.find();
+            System.out.println("Número de citas recuperadas: " + appointmentsIterable.spliterator().estimateSize());
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule()); // Registra el módulo para manejar LocalDate
-        objectMapper.findAndRegisterModules(); // Registra otros módulos disponibles automáticamente
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule()); // Registra el módulo para manejar LocalDate
+            objectMapper.findAndRegisterModules(); // Registra otros módulos disponibles automáticamente
 
-        for (Document doc : appointmentsIterable) {
-            try {
-                Appointment appointment = objectMapper.convertValue(doc, Appointment.class);
-                appointments.add(appointment);
-            } catch (Exception e) {
-                System.err.println("Error al convertir el documento: " + doc.toJson());
-                e.printStackTrace(); // Imprimir error específico de conversión
+            for (Document doc : appointmentsIterable) {
+                try {
+                    Appointment appointment = objectMapper.convertValue(doc, Appointment.class);
+                    appointments.add(appointment);
+                } catch (Exception e) {
+                    System.err.println("Error al convertir el documento: " + doc.toJson());
+                    e.printStackTrace(); // Imprimir error específico de conversión
+                }
             }
-        }
 
-    } catch (Exception e) {
-        System.err.println("Error inesperado al cargar las citas.");
-        e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error inesperado al cargar las citas.");
+            e.printStackTrace();
+        }
+        return appointments;
     }
-    return appointments;
-}
 }

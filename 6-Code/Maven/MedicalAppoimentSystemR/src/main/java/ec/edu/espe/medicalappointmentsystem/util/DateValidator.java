@@ -101,20 +101,5 @@ public class DateValidator {
         }
         return timeSlot;
     }
-    public static String getAppointmentTime(int timeSlot){
-        switch(timeSlot){
-            case 1:
-                return  "7:00 am - 8:30 am";  
-            case 2:
-                return  "8:30 am - 10:00 am";
-            case 3:
-                return  "10:00 am - 11:30 am";
-            case 4:
-                return  "11:30 am - 1:00 pm";
-            case 5:
-                return  "1:00 pm - 2:30 pm";
-            default:
-                throw new IllegalArgumentException("Intervalo de tiempo inválido.");
-        }
-    }
+    
 }

@@ -5,9 +5,14 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.model.Updates;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
+import java.net.URI;
 import java.util.List;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -15,25 +20,27 @@ import org.bson.Document;
  */
 public class PatientController {
 
-    public static boolean create(Patient patient) {
-        String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+    private static final String URI = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+    private static final String DATABASE_NAME = "Medical_Appointment";
+    private static final String COLLECTION_NAME = "Patient";
 
-        try {
-            MongoDatabase dataBase = openConnectionToMongo(uri);
+    public static boolean create(Patient patient) {
+        try (MongoClient mongoClient = MongoClients.create(URI)) {
+            MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
+            MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
+
             Document dataOfPatient = new Document()
                     .append("id", patient.getId())
                     .append("Nombre", patient.getName())
                     .append("Edad", patient.getAge())
-                    .append("Email", patient.getEmail()) 
+                    .append("Email", patient.getEmail())
                     .append("Teléfono", patient.getCellphone());
 
-            String collection = "Patient";
-            MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
-            insertOneData(dataOfPatient, mongoCollection);
-            return true; 
+            collection.insertOne(dataOfPatient);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false; 
+            return false;
         }
     }
 
@@ -94,6 +101,40 @@ public class PatientController {
         Document findDocument = new Document("male", true);
         mongoCollection.findOneAndDelete(findDocument);
     }
-    
+
+    public static boolean exists(String patientId) {
+        try (MongoClient mongoClient = MongoClients.create(URI)) {
+            MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
+            MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
+
+            Document patient = collection.find(Filters.eq("id", patientId)).first();
+            return patient != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean update(Patient patient) {
+        try (MongoClient mongoClient = MongoClients.create(URI)) {
+            MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
+            MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
+
+            Bson filter = Filters.eq("id", patient.getId());
+            Bson updates = Updates.combine(
+                    Updates.set("Nombre", patient.getName()),
+                    Updates.set("Edad", patient.getAge()),
+                    Updates.set("Email", patient.getEmail()),
+                    Updates.set("Teléfono", patient.getCellphone())
+            );
+            UpdateOptions options = new UpdateOptions().upsert(true);
+
+            collection.updateOne(filter, updates, options);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

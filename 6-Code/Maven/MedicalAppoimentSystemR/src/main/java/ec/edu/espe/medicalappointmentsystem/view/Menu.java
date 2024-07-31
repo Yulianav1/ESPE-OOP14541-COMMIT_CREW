@@ -38,18 +38,18 @@ public class Menu {
         doctors.add(doctor1);
         doctors.add(doctor2);
         */ 
-        
+        /*
         Calendar myCalendar = new Calendar();
 
         for (Appointment appointment : appointments) {
             LocalDate appointmentDate = appointment.getDateAppointment();
             int dayIndex = appointmentDate.getDayOfYear() - LocalDate.now().getDayOfYear();
             if (dayIndex >= 0 && dayIndex < 365) {
-                int timeSlot = appointment.getTimeSlot();
+                String timeSlot = appointment.getTimeSlot();
                 myCalendar.setAppointment(dayIndex, timeSlot, appointment);
             }
-        }
-
+        } */
+/*
         int choice;
         do {
             System.out.println("====================================================");
@@ -71,7 +71,7 @@ public class Menu {
                     System.out.println("Error: Entrada inválida. Ingrese un número del 1 al 6.");
                 }
             }
-
+            
             switch (choice) {
                 case 1:
                     Appointment appointment = AppointmentController.addAppointment(doctors, patients, input);
@@ -111,7 +111,7 @@ public class Menu {
                     break;
             }
         } while (choice != 6);
-    }
+    } 
 
     public static void viewCalendar(Calendar myCalendar) {
         System.out.println("==========================================");
@@ -130,6 +130,7 @@ public class Menu {
             }
             System.out.println("--------------------------------------");
         }
-    }
-
+        */
+    } 
 }
+    
