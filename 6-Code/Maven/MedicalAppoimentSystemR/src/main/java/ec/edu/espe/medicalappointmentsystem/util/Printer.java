@@ -17,6 +17,7 @@ import ec.edu.espe.medicalappointmentsystem.model.Appointment;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
 
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 
 public class Printer {
 
@@ -25,14 +26,14 @@ public class Printer {
             System.out.println("La cita es nula.");
             return;
         }
-
+        
         Patient patient = appointment.getPatient();
         if (patient == null) {
             System.out.println("El paciente de la cita es nulo.");
             return;
         }
 
-        String pdfPath = "appointment"+appointment.getPatient().getName()+".pdf";
+        String pdfPath = "appointment_" + patient.getName().replaceAll("[^a-zA-Z0-9]", "_") + ".pdf";
         try {
             PdfWriter writer = new PdfWriter(pdfPath);
             PdfDocument pdf = new PdfDocument(writer);
@@ -48,26 +49,34 @@ public class Printer {
             // Crear tabla
             float[] columnWidths = {1, 2};
             Table table = new Table(columnWidths);
-            
+
             // Encabezados
             table.addCell(new Cell().add(new Paragraph("Campo").setBold()));
             table.addCell(new Cell().add(new Paragraph("Valor").setBold()));
 
+            // Crear un SimpleDateFormat para formatear la fecha
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            
             // Datos de la cita
-            table.addCell("Fecha:");
-            table.addCell(appointment.getDateAppointment().toString());
+            table.addCell(new Paragraph("Fecha:"));
+            String formattedDate = appointment.getDateAppointment() != null ? dateFormat.format(appointment.getDateAppointment()) : "No disponible";
+            table.addCell(new Paragraph(formattedDate));
 
-            table.addCell("Paciente:");
-            table.addCell(patient.getName());
+            table.addCell(new Paragraph("Paciente:"));
+            String patientName = patient.getName() != null ? patient.getName() : "No disponible";
+            table.addCell(new Paragraph(patientName));
 
-            table.addCell("Cedula:");
-            table.addCell(patient.getId());
+            table.addCell(new Paragraph("Cédula:"));
+            String patientId = patient.getId() != null ? patient.getId() : "No disponible";
+            table.addCell(new Paragraph(patientId));
 
-            table.addCell("Doctor:");
-            table.addCell(appointment.getDoctor().getName());
+            table.addCell(new Paragraph("Doctor:"));
+            String doctorName = appointment.getDoctor() != null ? appointment.getDoctor().getName() : "No disponible";
+            table.addCell(new Paragraph(doctorName));
 
-            table.addCell("Hora:");
-            table.addCell(appointment.getDoctor().getSchedule());
+            table.addCell(new Paragraph("Hora:"));
+            String timeSlot = appointment.getTimeSlot() != null ? appointment.getTimeSlot() : "No disponible";
+            table.addCell(new Paragraph(timeSlot));  // Cambiado de doctorSchedule a timeSlot
 
             // Agregar tabla al documento
             document.add(table);

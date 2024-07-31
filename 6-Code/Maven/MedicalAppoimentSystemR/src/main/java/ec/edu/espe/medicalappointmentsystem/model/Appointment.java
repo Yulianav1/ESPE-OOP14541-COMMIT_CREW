@@ -3,6 +3,7 @@
     import ec.edu.espe.medicalappointmentsystem.util.DateValidator;
     import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
     import java.time.LocalDate;
+import java.util.Date;
     import java.util.List;
     import java.util.Scanner;
     import java.util.UUID;
@@ -10,7 +11,7 @@
     public class Appointment {
 
         private String idApp;
-        private LocalDate dateAppointment;
+        private Date dateAppointment;
         private String timeSlot;
         private Doctor doctor;
         private Patient patient;
@@ -20,7 +21,7 @@
         public Appointment() {
         }
 
-        public Appointment(String idApp, LocalDate dateAppointment, String timeSlot, Doctor doctor, Patient patient) {
+        public Appointment(String idApp, Date dateAppointment, String timeSlot, Doctor doctor, Patient patient) {
             this.idApp = idApp;
             this.dateAppointment = dateAppointment;
             this.timeSlot = timeSlot;
@@ -47,7 +48,7 @@
             return idApp;
         }
 
-        public LocalDate getDateAppointment() {
+        public Date getDateAppointment() {
             return dateAppointment;
         }
 

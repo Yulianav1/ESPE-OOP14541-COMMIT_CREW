@@ -34,10 +34,9 @@ public class AppointmentController {
             MongoDatabase database = mongoClient.getDatabase("Medical_Appointment");
             MongoCollection<Document> collection = database.getCollection("Appointment");
 
-            Date appointmentDate = Date.from(appointment.getDateAppointment().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
             Document doc = new Document("idApp", appointment.getIdApp())
-                    .append("dateAppointment", appointmentDate)
+                    .append("dateAppointment", appointment.getDateAppointment())
                     .append("timeSlot", appointment.getTimeSlot())
                     .append("doctor", new Document("name", appointment.getDoctor().getName())
                             .append("specialty", appointment.getDoctor().getSpecialty()))

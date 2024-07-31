@@ -1,5 +1,8 @@
 package ec.edu.espe.medicalappointmentsystem.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -8,6 +11,7 @@ import com.mongodb.client.MongoDatabase;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.util.FileManager;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.bson.Document;
@@ -26,7 +30,7 @@ public class DoctorController {
         String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
 
         MongoDatabase dataBase = openConnectionToMongo(uri);
-        Document dataOfDoctor = new Document().append("id", doctor.getId()).append("Nombre", doctor.getName()).append("Especialidad", doctor.getSpecialty()).append("Horario ", doctor.getSchedule()).append("Education", doctor.getEducation()).append("email", doctor.getEmail()).append("Teléfono", doctor.getCellphone());
+        Document dataOfDoctor = new Document().append("id", doctor.getId()).append("name", doctor.getName()).append("specialty", doctor.getSpecialty()).append("schedule ", doctor.getSchedule()).append("education", doctor.getEducation()).append("email", doctor.getEmail()).append("cellphone", doctor.getCellphone());
 
         String collection = "Doctor";
         MongoCollection<Document> mongoCollection = accessToCollections(dataBase, collection);
@@ -217,5 +221,63 @@ public class DoctorController {
             }
         }
     }
+    public static List<Doctor> loadDoctors() {
+        List<Doctor> doctors = new ArrayList<>();
+        String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+        String databaseName = "Medical_Appointment";
+        String collectionName = "Doctor";
 
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase(databaseName);
+            MongoCollection<Document> collection = database.getCollection(collectionName);
+
+            // Recuperar documentos de la colección
+            FindIterable<Document> doctorsIterable = collection.find();
+            System.out.println("Número de doctores recuperados: " + doctorsIterable.spliterator().estimateSize());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+
+            for (Document doc : doctorsIterable) {
+                try {
+                    Doctor doctor = objectMapper.convertValue(doc, Doctor.class);
+
+                    // Contar citas asociadas al doctor por nombre
+                    String doctorName = doctor.getName();
+                    int appointmentsCount = countAppointmentsForDoctorByName(doctorName);
+                    doctor.setAppointmentsCount(appointmentsCount);
+
+                    doctors.add(doctor);
+                } catch (Exception e) {
+                    System.err.println("Error al convertir el documento: " + doc.toJson());
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error inesperado al cargar los doctores.");
+            e.printStackTrace();
+        }
+        return doctors;
+    }
+
+    private static int countAppointmentsForDoctorByName(String doctorName) {
+        int count = 0;
+        String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+        String databaseName = "Medical_Appointment";
+        String collectionName = "Appointment";
+
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase(databaseName);
+            MongoCollection<Document> collection = database.getCollection(collectionName);
+
+            // Contar documentos en la colección que coincidan con el nombre del doctor
+            Document filter = new Document("doctor.name", doctorName);
+            count = (int) collection.countDocuments(filter);
+        } catch (Exception e) {
+            System.err.println("Error inesperado al contar citas para el doctor con nombre " + doctorName);
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

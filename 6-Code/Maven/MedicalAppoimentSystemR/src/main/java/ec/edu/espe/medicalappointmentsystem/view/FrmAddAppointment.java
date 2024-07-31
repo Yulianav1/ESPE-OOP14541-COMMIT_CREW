@@ -495,7 +495,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                 MongoDatabase database = MongoDBConnection.getDatabase();
                 MongoCollection<Document> doctorCollection = database.getCollection("Doctor");
 
-                List<String> specialties = doctorCollection.distinct("Especialidad", String.class).into(new ArrayList<>());
+                List<String> specialties = doctorCollection.distinct("specialty", String.class).into(new ArrayList<>());
 
                 cmbSpecialty.removeAllItems();
                 for (String specialty : specialties) {
@@ -518,11 +518,11 @@ public class FrmAddAppointment extends javax.swing.JFrame {
             try {
                 MongoDatabase database = MongoDBConnection.getDatabase();
                 MongoCollection<Document> doctorCollection = database.getCollection("Doctor");
-                FindIterable<Document> doctors = doctorCollection.find(eq("Especialidad", specialty));
+                FindIterable<Document> doctors = doctorCollection.find(eq("specialty", specialty));
 
                 DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
                 for (Document doc : doctors) {
-                    String doctorName = doc.getString("Nombre");
+                    String doctorName = doc.getString("name");
                     if (doctorName != null && !doctorName.isEmpty()) {
                         model.addElement(doctorName);
                     }
@@ -662,7 +662,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
     }
 
     private Appointment createAppointment(Patient patient) {
-        LocalDate dateAppointment = AppointmentController.convertToLocalDate(DateAppointment.getDate());
+        Date dateAppointment = DateAppointment.getDate();
         String selectedTimeString = (String) cmbTime.getSelectedItem();
 
         String doctorName = cmbDoctors.getSelectedItem().toString();

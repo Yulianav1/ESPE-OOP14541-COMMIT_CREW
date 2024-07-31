@@ -162,6 +162,11 @@ public class FrmMenu extends javax.swing.JFrame {
         itmSpecialty.add(jMenu11);
 
         jMenuItem9.setText("Doctores");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         itmSpecialty.add(jMenuItem9);
 
         jMenuBar1.add(itmSpecialty);
@@ -226,6 +231,13 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setVisible(false);
         FrmPrint.setVisible(true);
     }//GEN-LAST:event_itmPrintAppointmentActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        FrmReport FrmReport = new FrmReport();
+        this.setVisible(false);
+        FrmReport.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments

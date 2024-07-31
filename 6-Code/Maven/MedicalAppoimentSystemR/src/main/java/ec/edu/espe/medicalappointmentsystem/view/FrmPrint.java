@@ -8,6 +8,9 @@ import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
 import ec.edu.espe.medicalappointmentsystem.model.Appointment;
 import ec.edu.espe.medicalappointmentsystem.util.Printer;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -40,14 +43,24 @@ public class FrmPrint extends javax.swing.JFrame {
         System.out.println("Número de citas recuperadas: " + appointments.size());
 
         // Recorrer la lista de citas y agregarlas al modelo de la tabla
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Recorrer la lista de citas y agregarlas al modelo de la tabla
         for (Appointment appointment : appointments) {
+            // Convertir Date a LocalDate
+            LocalDate localDate = appointment.getDateAppointment().toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate();
+
+            // Formatear la fecha
+            String formattedDate = localDate.format(formatter);
+
             // Asegúrate de que los datos se obtengan correctamente
             Object[] row = {
-                appointment.getDateAppointment(),
+                formattedDate,  // Usar la fecha formateada
                 appointment.getPatient().getName(),
                 appointment.getPatient().getId(),
                 appointment.getDoctor().getName(),
-                appointment.getDoctor().getSchedule()
+                appointment.getTimeSlot()
             };
             model.addRow(row); // Agrega la fila al modelo
         }
@@ -195,11 +208,19 @@ private void printAppointment(Appointment appointment) {
         int row = jTableAppointments.getSelectedRow(); // Obtén la fila seleccionada
     if (row != -1) {
         // Obtén los datos de la fila seleccionada
-        LocalDate date = (LocalDate) model.getValueAt(row, 0); // Suponiendo que la primera columna es LocalDate
+        String dateString = (String) model.getValueAt(row, 0); 
         String patientName = (String) model.getValueAt(row, 1);
         String patientId = (String) model.getValueAt(row, 2);
         String doctorName = (String) model.getValueAt(row, 3);
-        String doctorSchedule = (String) model.getValueAt(row, 4);
+        String timeSlot = (String) model.getValueAt(row, 4);
+        
+        // Convertir la cadena de fecha a LocalDate
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
+        // Convertir LocalDate a Date
+        ZoneId zoneId = ZoneId.systemDefault(); // O usa otro ZoneId si es necesario
+        Date date = Date.from(localDate.atStartOfDay(zoneId).toInstant());
+
         
         // Aquí deberías buscar la cita correspondiente en tu lista de citas
         for (Appointment appointment : AppointmentController.loadAppointments()) {
@@ -207,7 +228,7 @@ private void printAppointment(Appointment appointment) {
                 appointment.getPatient().getName().equals(patientName) &&
                 appointment.getPatient().getId().equals(patientId) &&
                 appointment.getDoctor().getName().equals(doctorName) &&
-                appointment.getDoctor().getSchedule().equals(doctorSchedule)) {
+                appointment.getTimeSlot().equals(timeSlot)) {
                 selectedAppointment = appointment;
                 break;
             }
