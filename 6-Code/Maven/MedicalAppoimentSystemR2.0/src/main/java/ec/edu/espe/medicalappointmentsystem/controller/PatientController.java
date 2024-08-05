@@ -136,5 +136,32 @@ public class PatientController {
             return false;
         }
     }
+public static Patient getPatientById(String patientId) {
+    try (MongoClient mongoClient = MongoClients.create(URI)) {
+        MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
+        MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
+
+        Document query = new Document("id", patientId);
+        Document document = collection.find(query).first();
+
+        if (document != null) {
+            return new Patient(
+                document.getString("id"),
+                document.getString("Nombre"),
+                document.getInteger("Edad"),
+                document.getString("Email"),
+                document.getString("Teléfono")
+            );
+        } else {
+            return null;
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+    public static Patient getId(String cedula) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

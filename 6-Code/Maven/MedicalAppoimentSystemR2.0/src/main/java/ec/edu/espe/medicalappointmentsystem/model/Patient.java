@@ -11,7 +11,7 @@ public class Patient {
     private String email;
     private String cellphone;
     
-    public Patient() {
+    public Patient(String string, String string1, Integer integer, String string2, String string3, String string4) {
     }
 
     public Patient(String id, String name, int age, String email, String cellphone) {
