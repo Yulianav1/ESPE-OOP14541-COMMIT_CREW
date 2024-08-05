@@ -51,12 +51,14 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         itmAddPatient = new javax.swing.JMenuItem();
         itmReportPatient = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         itmCalendar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         itmAddDoctor = new javax.swing.JMenuItem();
         itmViewDoctor = new javax.swing.JMenuItem();
-        itmDeleteDoctor = new javax.swing.JMenu();
+        itmUpdateDoctor = new javax.swing.JMenuItem();
+        itmDeleteDoctor = new javax.swing.JMenuItem();
         itmSpecialty = new javax.swing.JMenu();
         jMenu11 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -147,6 +149,9 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         jMenu2.add(itmReportPatient);
 
+        jMenuItem3.setText("Ver Pacientes");
+        jMenu2.add(jMenuItem3);
+
         jMenuBar1.add(jMenu2);
 
         jMenu10.setText("Calendario");
@@ -172,9 +177,27 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu5.add(itmAddDoctor);
 
         itmViewDoctor.setText("Ver Doctores");
+        itmViewDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmViewDoctorActionPerformed(evt);
+            }
+        });
         jMenu5.add(itmViewDoctor);
 
-        itmDeleteDoctor.setText("Eliminar Doctor");
+        itmUpdateDoctor.setText("Actualizar Datos");
+        itmUpdateDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmUpdateDoctorActionPerformed(evt);
+            }
+        });
+        jMenu5.add(itmUpdateDoctor);
+
+        itmDeleteDoctor.setText("Eliminar Doctores");
+        itmDeleteDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmDeleteDoctorActionPerformed(evt);
+            }
+        });
         jMenu5.add(itmDeleteDoctor);
 
         jMenuBar1.add(jMenu5);
@@ -274,6 +297,24 @@ public class FrmMenu extends javax.swing.JFrame {
         frmReportPatient.setVisible(true);
     }//GEN-LAST:event_itmReportPatientActionPerformed
 
+    private void itmViewDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmViewDoctorActionPerformed
+        FrmViewDoctor frmViewDoctor = new FrmViewDoctor();
+        this.setVisible(false);
+        frmViewDoctor.setVisible(true);
+    }//GEN-LAST:event_itmViewDoctorActionPerformed
+
+    private void itmDeleteDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmDeleteDoctorActionPerformed
+        FrmDeleteDoctor frmDeleteDoctor = new FrmDeleteDoctor();
+        this.setVisible(false);
+        frmDeleteDoctor.setVisible(true);
+    }//GEN-LAST:event_itmDeleteDoctorActionPerformed
+
+    private void itmUpdateDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmUpdateDoctorActionPerformed
+        FrmUpdateDoctor frmUpdateDoctor = new FrmUpdateDoctor();
+        this.setVisible(false);
+        frmUpdateDoctor.setVisible(true);
+    }//GEN-LAST:event_itmUpdateDoctorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -316,13 +357,14 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmAddPatient;
     private javax.swing.JMenuItem itmCalendar;
     private javax.swing.JMenuItem itmCancelAppointment;
-    private javax.swing.JMenu itmDeleteDoctor;
+    private javax.swing.JMenuItem itmDeleteDoctor;
     private javax.swing.JMenuItem itmExit;
     private javax.swing.JMenuItem itmLogout;
     private javax.swing.JMenuItem itmPrintAppointment;
     private javax.swing.JMenuItem itmReportPatient;
     private javax.swing.JMenuItem itmRescheduleAppointment;
     private javax.swing.JMenu itmSpecialty;
+    private javax.swing.JMenuItem itmUpdateDoctor;
     private javax.swing.JMenuItem itmViewDoctor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -337,6 +379,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu mnuMedical;
     // End of variables declaration//GEN-END:variables

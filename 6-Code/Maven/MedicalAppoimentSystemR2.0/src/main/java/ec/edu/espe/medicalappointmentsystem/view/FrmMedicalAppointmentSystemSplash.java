@@ -16,6 +16,7 @@ public class FrmMedicalAppointmentSystemSplash extends javax.swing.JFrame {
     /**
      * Creates new form FrmMedicalAppointmentSystemSplash
      */
+
     public FrmMedicalAppointmentSystemSplash() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/images/Logo.png")).getImage());
@@ -125,7 +126,7 @@ public class FrmMedicalAppointmentSystemSplash extends javax.swing.JFrame {
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         FrmMedicalAppointmentSystemUser frmUser = new FrmMedicalAppointmentSystemUser();
         this.setVisible(false);
-        
+
         frmUser.setVisible(true);
     }//GEN-LAST:event_btnStartActionPerformed
 

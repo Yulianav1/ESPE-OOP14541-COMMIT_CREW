@@ -14,7 +14,7 @@ public class Doctor {
     private String education;
     private String email;
     private String cellphone;
-    private int appointmentsCount; // Nuevo atributo
+    private int appointmentsCount;
 
     public Doctor() {
     }
@@ -36,8 +36,13 @@ public class Doctor {
         this.appointmentsCount = 0; // Inicializar el conteo en 0
     }
 
-    public Doctor(String name1, String specialty1, String workingHours) {
-        // Considera agregar el constructor con inicialización para appointmentsCount
+    public Doctor(String id, String name, String specialty, String cellphone, String email, String schedule) {
+        this.id = id;
+        this.name = name;
+        this.specialty = specialty;
+        this.cellphone = cellphone;
+        this.email = email;
+        this.schedule = schedule;
     }
 
     @Override

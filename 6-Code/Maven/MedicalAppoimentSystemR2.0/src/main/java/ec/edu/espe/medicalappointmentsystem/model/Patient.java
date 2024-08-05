@@ -11,13 +11,18 @@ public class Patient {
     private String email;
     private String cellphone;
     
-    public Patient(String string, String string1, Integer integer, String string2, String string3, String string4) {
-    }
 
     public Patient(String id, String name, int age, String email, String cellphone) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.email = email;
+        this.cellphone = cellphone;
+    }
+    
+      public Patient(String id, String name, String email, String cellphone) {
+        this.id = id;
+        this.name = name;
         this.email = email;
         this.cellphone = cellphone;
     }

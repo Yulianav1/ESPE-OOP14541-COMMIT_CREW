@@ -44,6 +44,8 @@ public class FrmMenuDoctor extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        itmViewPatient = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,6 +115,13 @@ public class FrmMenuDoctor extends javax.swing.JFrame {
         jMenu4.add(jMenuItem7);
 
         jMenuBar1.add(jMenu4);
+
+        jMenu3.setText("Paciente");
+
+        itmViewPatient.setText("Ver Pacientes");
+        jMenu3.add(itmViewPatient);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -203,9 +212,11 @@ public class FrmMenuDoctor extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmExit;
     private javax.swing.JMenuItem itmLogout;
     private javax.swing.JMenuItem itmReagendar;
+    private javax.swing.JMenuItem itmViewPatient;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem5;
