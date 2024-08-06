@@ -10,7 +10,8 @@ public class Patient {
     private int age;
     private String email;
     private String cellphone;
-    
+     public Patient() {
+    }
 
     public Patient(String id, String name, int age, String email, String cellphone) {
         this.id = id;

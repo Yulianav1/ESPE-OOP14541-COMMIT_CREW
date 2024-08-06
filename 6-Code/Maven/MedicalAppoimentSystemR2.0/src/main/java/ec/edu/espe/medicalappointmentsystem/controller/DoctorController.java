@@ -280,4 +280,9 @@ public class DoctorController {
         }
         return count;
     }
+    public static Doctor getDoctorByName(String name) {
+        // Implementa la lógica para buscar el doctor por nombre
+        return null;
+        // Implementa la lógica para buscar el doctor por nombre
+    }
 }

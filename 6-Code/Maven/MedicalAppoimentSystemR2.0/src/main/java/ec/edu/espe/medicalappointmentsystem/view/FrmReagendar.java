@@ -3,18 +3,69 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ec.edu.espe.medicalappointmentsystem.view;
+import ec.edu.espe.medicalappointmentsystem.controller.DoctorController;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.JSeparator;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Date;
+import java.util.List;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
+import ec.edu.espe.medicalappointmentsystem.model.Appointment;
+import ec.edu.espe.medicalappointmentsystem.model.Doctor;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
+import ec.edu.espe.medicalappointmentsystem.controller.DoctorController;
+import javax.swing.DefaultComboBoxModel;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+
 
 /**
  *
  * @author Alexis Viteri DCO-ESPE
  */
 public class FrmReagendar extends javax.swing.JFrame {
-
+    private Appointment selectedAppointment; 
     /**
      * Creates new form FrmReagendar
      */
     public FrmReagendar() {
         initComponents();
+        loadAppointmentsTable();
+        jDateChooser1.addPropertyChangeListener(evt -> {
+        if ("date".equals(evt.getPropertyName())) {
+            loadAppointmentsTable();
+        }
+    });
     }
 
     /**
@@ -32,7 +83,6 @@ public class FrmReagendar extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
@@ -44,6 +94,8 @@ public class FrmReagendar extends javax.swing.JFrame {
         jComboBox4 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         btnReturn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableAppointments = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,39 +129,36 @@ public class FrmReagendar extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Seleccione el dia de la cita a cambiar");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 250, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 250, -1));
 
         jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 300, -1));
+        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 300, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Seleccione el horario de la cita a cambiar:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 280, -1));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00 am - 8:30 am", "8:30 am - 11:00 am", "11:00 am - 12:30 pm", "12:30 pm - 1:00 pm", "1:00 pm - 2:30 pm" }));
-        jPanel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 260, -1));
+        jLabel2.setText("Seleccione la cita:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 280, -1));
 
         jSeparator2.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator2.setForeground(new java.awt.Color(51, 102, 255));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 800, 10));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 800, 10));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Seleccione el dia de la nueva cita");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 250, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 250, -1));
 
         jDateChooser2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 300, -1));
+        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 300, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Seleccione el horario de la nueva cita:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, 250, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 250, -1));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00 am - 8:30 am", "8:30 am - 11:00 am", "11:00 am - 12:30 pm", "12:30 pm - 1:00 pm", "1:00 pm - 2:30 pm" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, 260, -1));
+        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 390, 260, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Especilidad:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 250, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 250, -1));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medicina General", "Cardiología", "Pediatría", "Ginecología" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -117,11 +166,11 @@ public class FrmReagendar extends javax.swing.JFrame {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, -1, -1));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Doctor:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, 250, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, 250, -1));
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dra. Samantha Villagómez", "Dr. Stalyn Ango", "Dra. Addyson Peralta", "Dra. Luisa Saad Galarza" }));
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
@@ -129,13 +178,18 @@ public class FrmReagendar extends javax.swing.JFrame {
                 jComboBox4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 340, -1, -1));
+        jPanel1.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, -1, -1));
 
         jButton2.setBackground(new java.awt.Color(33, 150, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Actualizar Cita");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 130, 40));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, 130, 40));
 
         btnReturn.setBackground(new java.awt.Color(33, 150, 243));
         btnReturn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -146,7 +200,43 @@ public class FrmReagendar extends javax.swing.JFrame {
                 btnReturnActionPerformed(evt);
             }
         });
-        jPanel1.add(btnReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 450, 120, 40));
+        jPanel1.add(btnReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 540, 120, 40));
+
+        jTableAppointments.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Paciente", "Cedula", "Doctor", "Hora"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableAppointments.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTableAppointments.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jTableAppointments.setGridColor(new java.awt.Color(204, 255, 255));
+        jTableAppointments.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jTableAppointments.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableAppointments.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableAppointments.setShowHorizontalLines(true);
+        jTableAppointments.setUpdateSelectionOnSort(false);
+        jTableAppointments.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableAppointmentsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableAppointments);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 430, 180));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,15 +246,58 @@ public class FrmReagendar extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        String selectedSpecialty = (String) jComboBox1.getSelectedItem();
+    System.out.println("Specialty selected: " + selectedSpecialty); // Depuración
+    updateDoctorComboBox(selectedSpecialty);
     }//GEN-LAST:event_jComboBox1ActionPerformed
+private void updateDoctorComboBox(String specialty) {
+    List<Doctor> doctors = DoctorController.loadDoctors();
+    DefaultComboBoxModel<String> doctorModel = new DefaultComboBoxModel<>();
+    
+    System.out.println("Actualizando doctores para la especialidad: " + specialty); // Depuración
+    
+    for (Doctor doctor : doctors) {
+        System.out.println("Doctor: " + doctor.getName() + ", Especialidad: " + doctor.getSpecialty()); // Depuración
+        if (doctor.getSpecialty().equals(specialty)) {
+            doctorModel.addElement(doctor.getName());
+        }
+    }
+    
+    if (doctorModel.getSize() == 0) {
+        doctorModel.addElement("No hay doctores disponibles");
+    }
+    
+    jComboBox4.setModel(doctorModel);
+    
+    // Actualizar horarios disponibles
+    DefaultComboBoxModel<String> timeModel = new DefaultComboBoxModel<>();
+    timeModel.removeAllElements(); // Limpia el modelo antes de agregar nuevos elementos
+
+    if ("Medicina General".equals(specialty)) {
+        timeModel.addElement("7:00 am - 8:30 am");
+        timeModel.addElement("8:30 am - 11:00 am");
+    } else if ("Cardiología".equals(specialty)) {
+        timeModel.addElement("11:00 am - 12:30 pm");
+        timeModel.addElement("12:30 pm - 1:00 pm");
+    } else if ("Pediatría".equals(specialty)) {
+        timeModel.addElement("9:00 am - 10:30 am");
+        timeModel.addElement("10:30 am - 12:00 pm");
+    } else if ("Ginecología".equals(specialty)) {
+        timeModel.addElement("1:00 pm - 2:30 pm");
+        timeModel.addElement("2:30 pm - 4:00 pm");
+    }
+    // Agrega más especialidades y horarios si es necesario
+    jComboBox2.setModel(timeModel);
+}
 
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         // TODO add your handling code here:
@@ -175,6 +308,102 @@ public class FrmReagendar extends javax.swing.JFrame {
             this.setVisible(false);
             frmMenu.setVisible(true);
     }//GEN-LAST:event_btnReturnActionPerformed
+
+    private void jTableAppointmentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAppointmentsMouseClicked
+        int row = jTableAppointments.rowAtPoint(evt.getPoint()); // Obtén la fila seleccionada usando el punto del evento
+        if (row != -1) {
+            DefaultTableModel model = (DefaultTableModel) jTableAppointments.getModel();
+            // Obtén los datos de la fila seleccionada
+            String patientName = (String) model.getValueAt(row, 0);
+            String patientId = (String) model.getValueAt(row, 1);
+            String doctorName = (String) model.getValueAt(row, 2);
+            String timeSlot = (String) model.getValueAt(row, 3);
+
+            // Aquí deberías buscar la cita correspondiente en tu lista de citas
+            for (Appointment appointment : AppointmentController.loadAppointments()) {
+                if (appointment.getPatient().getName().equals(patientName) &&
+                    appointment.getPatient().getId().equals(patientId) &&
+                    appointment.getDoctor().getName().equals(doctorName) &&
+                    appointment.getTimeSlot().equals(timeSlot)) {
+                    selectedAppointment = appointment;
+                    System.out.println("Cita seleccionada: " + selectedAppointment); // Depuración
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_jTableAppointmentsMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    if (selectedAppointment == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione una cita de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    Date newDate = jDateChooser2.getDate();
+    String newTime = (String) jComboBox2.getSelectedItem();
+    String newDoctor = (String) jComboBox4.getSelectedItem();
+
+    if (newDate == null || newTime == null || newDoctor == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Crear la nueva cita con los datos proporcionados
+    Appointment newAppointment = new Appointment();
+    newAppointment.setIdApp(selectedAppointment.getIdApp());
+    newAppointment.setDateAppointment(newDate);
+    newAppointment.setTimeSlot(newTime);
+    
+    // Obtener el doctor seleccionado (necesitas implementar este método en DoctorController)
+    Doctor selectedDoctor = DoctorController.getDoctorByName(newDoctor); 
+    if (selectedDoctor == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró el doctor seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    newAppointment.setDoctor(selectedDoctor);
+    newAppointment.setPatient(selectedAppointment.getPatient());
+
+    // Inicializar MongoDB
+    String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
+    MongoDatabase database = AppointmentController.openConnectionToMongo(uri);
+    MongoCollection<Document> collection = AppointmentController.accessToCollections(database, "Appointment");
+    
+    // Crear el controlador con la colección de citas
+    AppointmentController appointmentController = new AppointmentController(collection);
+    
+    // Actualizar la cita en la base de datos
+    boolean result = appointmentController.editAppointment(newAppointment);
+
+    if (result) {
+        JOptionPane.showMessageDialog(this, "Cita actualizada con éxito.");
+        loadAppointmentsTable(); // Método para recargar la tabla de citas
+    } else {
+        JOptionPane.showMessageDialog(this, "Error al actualizar la cita.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
+   private void loadAppointmentsTable() {
+    DefaultTableModel model = (DefaultTableModel) jTableAppointments.getModel();
+    model.setRowCount(0);
+
+    Date selectedDate = jDateChooser1.getDate();
+    if (selectedDate != null) {
+        // Llamada al método estático loadAppointments() para obtener la lista de citas
+        List<Appointment> appointments = AppointmentController.loadAppointments();
+        for (Appointment appointment : appointments) {
+            // Filtra por fecha
+            if (appointment.getDateAppointment().equals(selectedDate)) {
+                model.addRow(new Object[]{
+                    appointment.getPatient().getName(),
+                    appointment.getPatient().getId(),
+                    appointment.getDoctor().getName(),
+                    appointment.getTimeSlot()
+                });
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
 
     /**
      * @param args the command line arguments
@@ -216,7 +445,6 @@ public class FrmReagendar extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
@@ -229,6 +457,8 @@ public class FrmReagendar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTable jTableAppointments;
     // End of variables declaration//GEN-END:variables
 }

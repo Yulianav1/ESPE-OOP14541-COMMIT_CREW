@@ -119,6 +119,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu1.add(itmRescheduleAppointment);
 
         itmCancelAppointment.setText("Cancelar cita");
+        itmCancelAppointment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmCancelAppointmentActionPerformed(evt);
+            }
+        });
         jMenu1.add(itmCancelAppointment);
 
         itmPrintAppointment.setText("Imprimir cita");
@@ -314,6 +319,12 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setVisible(false);
         frmUpdateDoctor.setVisible(true);
     }//GEN-LAST:event_itmUpdateDoctorActionPerformed
+
+    private void itmCancelAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCancelAppointmentActionPerformed
+       FrmDeleteAppointment frmDeleteAppointment = new FrmDeleteAppointment();
+        this.setVisible(false);
+        frmDeleteAppointment.setVisible(true);
+    }//GEN-LAST:event_itmCancelAppointmentActionPerformed
 
     /**
      * @param args the command line arguments

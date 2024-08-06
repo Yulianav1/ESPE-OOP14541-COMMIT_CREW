@@ -31,6 +31,30 @@ import java.util.Date;
             this.hourToAppointment = null; 
         }
 
+    public boolean isEmailSent() {
+        return emailSent;
+    }
+
+    public void setIdApp(String idApp) {
+        this.idApp = idApp;
+    }
+
+    public void setDateAppointment(Date dateAppointment) {
+        this.dateAppointment = dateAppointment;
+    }
+
+    public void setTimeSlot(String timeSlot) {
+        this.timeSlot = timeSlot;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
         @Override
         public String toString() {
             return "Appointment{"

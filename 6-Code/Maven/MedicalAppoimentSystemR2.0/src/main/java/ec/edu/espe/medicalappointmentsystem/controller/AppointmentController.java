@@ -87,11 +87,49 @@ public class AppointmentController {
         }
     }
 
-    public static void editDocuments(String key, String data, String newData, MongoCollection<Document> mongoCollection) {
-        Document findDocument = new Document(key, data);
-        Document updateDocument = new Document("$set", new Document(key, newData));
-        mongoCollection.findOneAndUpdate(findDocument, updateDocument);
+    private MongoCollection<Document> appointmentCollection;
+
+    // Constructor para inyectar la colección de citas
+    public AppointmentController(MongoCollection<Document> appointmentCollection) {
+        this.appointmentCollection = appointmentCollection;
     }
+
+
+    // Método para actualizar una cita
+    public boolean editAppointment(Appointment appointment) {
+    try {
+        // Definir el filtro para encontrar el documento de la cita
+        Document filter = new Document("idApp", appointment.getIdApp());
+
+        // Convertir doctor y paciente a documentos BSON
+        Document doctorDoc = new Document("name", appointment.getDoctor().getName())
+                .append("specialty", appointment.getDoctor().getSpecialty());
+
+        Document patientDoc = new Document("id", appointment.getPatient().getId())
+                .append("name", appointment.getPatient().getName())
+                .append("age", appointment.getPatient().getAge())
+                .append("email", appointment.getPatient().getEmail())
+                .append("cellphone", appointment.getPatient().getCellphone());
+
+        // Definir el documento de actualización con todos los campos necesarios
+        Document updateDocument = new Document("$set", new Document()
+            .append("dateAppointment", appointment.getDateAppointment())
+            .append("timeSlot", appointment.getTimeSlot())
+            .append("doctor", doctorDoc)
+            .append("patient", patientDoc)
+            .append("emailSent", appointment.getEmailSent())
+            .append("hourToAppointment", appointment.getHourToAppointment())
+        );
+
+        // Realizar la actualización
+        appointmentCollection.findOneAndUpdate(filter, updateDocument);
+
+        return true;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 
     public static void deleteDocuments(String key, String data, MongoCollection<Document> mongoCollection) {
         Document findDocument = new Document(key, data);
@@ -164,7 +202,22 @@ public class AppointmentController {
                 return "Hora no válida";
         }
     }
+    public static void deleteAppointment(String idApp, MongoCollection<Document> mongoCollection) {
+    
+    Document findDocument = new Document("idApp", idApp);
 
+    // Eliminar el documento correspondiente en la colección
+   
+    Document deletedDocument = mongoCollection.findOneAndDelete(findDocument);
+
+    // Verificar si el documento fue encontrado y eliminado exitosamente
+    if (deletedDocument != null) {
+        System.out.println("Documento eliminado con éxito: " + deletedDocument.toJson());
+    } else {
+        System.out.println("No se encontró ningún documento con idApp: " + idApp);
+    }
+}
+    
     public static List<Appointment> loadAppointments() {
         List<Appointment> appointments = new ArrayList<>();
         String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
