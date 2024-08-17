@@ -4,50 +4,51 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import static ec.edu.espe.medicalappointmentsystem.controller.AppointmentController.loadAppointments;
+import com.toedter.calendar.JDateChooser;
+import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
+import ec.edu.espe.medicalappointmentsystem.model.Appointment;
+import ec.edu.espe.medicalappointmentsystem.model.Doctor;
+import ec.edu.espe.medicalappointmentsystem.model.Patient;
+import ec.edu.espe.medicalappointmentsystem.util.MongoDBConnection;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.bson.Document;
 
 /**
  *
- * @author usuar
+ * @author Yuliana Valencia DCCO-ESPE
  */
 public class FrmCalendar extends javax.swing.JFrame {
 
-    private MongoDBConnection mongoDBConnection;
-    private MongoDatabase database;
-
     /**
-     * Creates new form FrmAddDoctor
+     * Creates new form FrmPrint
      */
+    private DefaultTableModel model;
+    private JDateChooser dateChooser;
+    private Appointment selectedAppointment;
+    private javax.swing.JTextField txtDoctorId;
+
+
     public FrmCalendar() {
+
         initComponents();
-        mongoDBConnection = new MongoDBConnection();
-        database = mongoDBConnection.getDatabase();
+
+        model = (DefaultTableModel) jTableAppointments.getModel();
+        dateChooser = DateAppointment;
 
     }
 
-    public FrmCalendar(FrmMenu aThis) {
-        initComponents();
-        mongoDBConnection = new MongoDBConnection();
-        database = mongoDBConnection.getDatabase();
+  
 
-    }
-
-    public FrmCalendar(FrmMenu aThis, Object par1) {
-        initComponents();
-        mongoDBConnection = new MongoDBConnection();
-        database = mongoDBConnection.getDatabase();
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,35 +59,87 @@ public class FrmCalendar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCalendar1 = new com.toedter.calendar.JCalendar();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableAppointments = new javax.swing.JTable();
+        ButtonCarry = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        btnHome10 = new javax.swing.JButton();
+        btnReturn = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        DateAppointment = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
-        cmbClinic = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        cmdStatusAppointment = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        cmdDoctorSelect = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        birthDateChooser = new com.toedter.calendar.JDateChooser();
-        btnCarry = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableAppointment = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTableAppointments.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Paciente", "Cedula", "Hora"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableAppointments.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTableAppointments.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jTableAppointments.setGridColor(new java.awt.Color(204, 255, 255));
+        jTableAppointments.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jTableAppointments.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTableAppointments.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableAppointments.setShowHorizontalLines(true);
+        jTableAppointments.setUpdateSelectionOnSort(false);
+        jTableAppointments.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableAppointmentsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableAppointments);
+        if (jTableAppointments.getColumnModel().getColumnCount() > 0) {
+            jTableAppointments.getColumnModel().getColumn(0).setResizable(false);
+            jTableAppointments.getColumnModel().getColumn(1).setResizable(false);
+            jTableAppointments.getColumnModel().getColumn(2).setResizable(false);
+        }
+        jTableAppointments.getAccessibleContext().setAccessibleParent(jTableAppointments);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 580, 220));
+
+        ButtonCarry.setBackground(new java.awt.Color(33, 150, 255));
+        ButtonCarry.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ButtonCarry.setForeground(new java.awt.Color(255, 255, 255));
+        ButtonCarry.setText("Cargar");
+        ButtonCarry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonCarryActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ButtonCarry, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 130, 40));
 
         jPanel4.setBackground(new java.awt.Color(33, 150, 243));
 
         jLabel16.setFont(new java.awt.Font("RomanD", 1, 24)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Medical Appointment System");
+        jLabel16.setText("Calendario");
 
-        btnHome10.setText("Home");
-        btnHome10.addActionListener(new java.awt.event.ActionListener() {
+        btnReturn.setText("Home");
+        btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHome10ActionPerformed(evt);
+                btnReturnActionPerformed(evt);
             }
         });
 
@@ -94,220 +147,106 @@ public class FrmCalendar extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(btnHome10)
-                .addGap(65, 65, 65)
-                .addComponent(jLabel16)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(347, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnHome10)
-                    .addComponent(jLabel16))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 90));
 
         jLabel17.setFont(new java.awt.Font("RomanD", 1, 18)); // NOI18N
         jLabel17.setText("Calendario");
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.add(DateAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 180, -1));
 
-        jLabel2.setText("Establecimiento:");
+        jLabel2.setText("Fecha:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 70, 20));
 
-        cmbClinic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clinica 1", "Clinica 2" }));
-        cmbClinic.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbClinicActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Estado:");
-
-        cmdStatusAppointment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Sin reservas", "Reservadas" }));
-        cmdStatusAppointment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdStatusAppointmentActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Personal:");
-
-        cmdDoctorSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doctor1", "Doctor 2" }));
-        cmdDoctorSelect.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdDoctorSelectActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Fecha:");
-
-        btnCarry.setText("Cargar");
-        btnCarry.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarryActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbClinic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(birthDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(56, 56, 56)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmdDoctorSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmdStatusAppointment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCarry)
-                        .addGap(59, 59, 59))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(cmbClinic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(cmdStatusAppointment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(cmdDoctorSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(birthDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnCarry)))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-
-        jTableAppointment.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Horario", "Nombre", "Cedula", "Telefono"
-            }
-        ));
-        jScrollPane1.setViewportView(jTableAppointment);
-        jTableAppointment.getAccessibleContext().setAccessibleDescription("");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 53, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(245, 245, 245))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel17)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbClinicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClinicActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbClinicActionPerformed
+    private void jTableAppointmentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAppointmentsMouseClicked
+   
 
-    private void cmdStatusAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdStatusAppointmentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmdStatusAppointmentActionPerformed
+   
 
-    private void btnCarryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarryActionPerformed
-        loadAppointments();
-    }//GEN-LAST:event_btnCarryActionPerformed
+    }//GEN-LAST:event_jTableAppointmentsMouseClicked
+private void showAppointmentsForDate(LocalDate date) {
+    try {
+        // Limpia la tabla antes de agregar nuevos datos
+        model.setRowCount(0);
 
-    private void btnHome10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHome10ActionPerformed
+        // Obtener las citas desde el controlador
+        List<Appointment> appointments = AppointmentController.loadAppointments();
+        System.out.println("Número de citas recuperadas: " + appointments.size());
+
+        // Recorrer la lista de citas y agregarlas al modelo de la tabla
+        for (Appointment appointment : appointments) {
+            // Convertir Date a LocalDate
+            LocalDate appointmentDate = appointment.getDateAppointment().toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate();
+
+            // Verificar si la cita es para la fecha seleccionada
+            if (appointmentDate.equals(date)) {
+                Object[] row = {
+                    appointmentDate,  // Usar la fecha
+                    appointment.getPatient().getName(),
+                    appointment.getPatient().getId(),
+                    appointment.getDoctor().getName(),
+                    appointment.getTimeSlot()
+                };
+                model.addRow(row); // Agrega la fila al modelo
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al cargar las citas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+    private void ButtonCarryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCarryActionPerformed
+  // Obtener la fecha seleccionada del JDateChooser
+    Date selectedDate = DateAppointment.getDate();
+    if (selectedDate != null) {
+        // Convertir Date a LocalDate
+        LocalDate localDate = selectedDate.toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Llamar al método que actualiza la tabla
+        showAppointmentsForDate(localDate);
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+    }//GEN-LAST:event_ButtonCarryActionPerformed
+
+    private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         FrmMenu frmMenu = new FrmMenu();
         this.setVisible(false);
         frmMenu.setVisible(true);
-    }//GEN-LAST:event_btnHome10ActionPerformed
+    }//GEN-LAST:event_btnReturnActionPerformed
 
-    private void cmdDoctorSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdDoctorSelectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmdDoctorSelectActionPerformed
-    private void loadAppointments() {
-        MongoCollection<Document> collection = database.getCollection("Appointment");
-
-        // Obtener la fecha seleccionada
-        String selectedDate = birthDateChooser.getDate().toString();  // Asegúrate de que datePicker es el componente correcto
-
-        List<Appointment> appointments = new ArrayList<>();
-        for (Document doc : collection.find(new Document("fecha", selectedDate))) {
-            String horario = doc.getString("horario");
-            String nombre = doc.getString("nombre");
-            String cedula = doc.getString("cedula");
-            String telefono = doc.getString("telefono");
-            appointments.add(new Appointment(horario, nombre, cedula, telefono));
-        }
-
-        // Limpiar la tabla antes de cargar los nuevos datos
-        DefaultTableModel model = (DefaultTableModel) jTableAppointment.getModel();  // Reemplaza 'yourTable' con el nombre de tu JTable
-        model.setRowCount(0);
-
-        // Agregar las citas a la tabla
-        for (Appointment appointment : appointments) {
-            model.addRow(new Object[]{appointment.getHorario(), appointment.getNombre(), appointment.getCedula(), appointment.getTelefono()});
-        }
-    }
-    
 
     /**
-     * @param args
+     * @param args the command line arguments
      */
     public static void main(String args[]) {
-        SwingUtilities.invokeLater(() -> {
-            FrmCalendar frame = new FrmCalendar();
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setVisible(true);
-        });
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -321,13 +260,13 @@ public class FrmCalendar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAddDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCalendar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAddDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCalendar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAddDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCalendar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAddDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCalendar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -339,83 +278,18 @@ public class FrmCalendar extends javax.swing.JFrame {
             }
         });
     }
-// Inicializar los componentes (debes definir estos componentes)
-    // Clase para la conexión con MongoDB
-
-    public class MongoDBConnection {
-
-        private static final String CONNECTION_STRING = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
-        private static final String DATABASE_NAME = "Medical_Appointment";
-
-        private MongoClient mongoClient;
-        private MongoDatabase database;
-
-        public MongoDBConnection() {
-            mongoClient = MongoClients.create(CONNECTION_STRING);
-            database = mongoClient.getDatabase(DATABASE_NAME);
-        }
-
-        public MongoDatabase getDatabase() {
-            return database;
-        }
-
-        public void close() {
-            if (mongoClient != null) {
-                mongoClient.close();
-            }
-        }
-    }
-
-   
-
-    // Clase para representar una cita
-    public class Appointment {
-
-        private String horario;
-        private String nombre;
-        private String cedula;
-        private String telefono;
-
-        public Appointment(String horario, String nombre, String cedula, String telefono) {
-            this.horario = horario;
-            this.nombre = nombre;
-            this.cedula = cedula;
-            this.telefono = telefono;
-        }
-
-        public String getHorario() {
-            return horario;
-        }
-
-        public String getNombre() {
-            return nombre;
-        }
-
-        public String getCedula() {
-            return cedula;
-        }
-
-        public String getTelefono() {
-            return telefono;
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser birthDateChooser;
-    private javax.swing.JButton btnCarry;
-    private javax.swing.JButton btnHome10;
-    private javax.swing.JComboBox<String> cmbClinic;
-    private javax.swing.JComboBox<String> cmdDoctorSelect;
-    private javax.swing.JComboBox<String> cmdStatusAppointment;
+    private javax.swing.JButton ButtonCarry;
+    private com.toedter.calendar.JDateChooser DateAppointment;
+    private javax.swing.JButton btnReturn;
+    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableAppointment;
+    private javax.swing.JTable jTableAppointments;
     // End of variables declaration//GEN-END:variables
 }

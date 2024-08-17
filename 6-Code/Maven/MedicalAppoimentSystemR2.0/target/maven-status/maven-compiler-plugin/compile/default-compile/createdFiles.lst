@@ -48,7 +48,6 @@ ec\edu\espe\medicalappointmentsystem\view\FrmReport$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$6.class
 ec\edu\espe\medicalappointmentsystem\view\FrmUpdateDoctor.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReportPatient.class
-ec\edu\espe\medicalappointmentsystem\view\FrmCalendar$Appointment.class
 ec\edu\espe\medicalappointmentsystem\model\Receptionist.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenu$5.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor$4.class
@@ -93,7 +92,6 @@ ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$8.class
 ec\edu\espe\medicalappointmentsystem\util\FileManager$1.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReportPatient$2.class
-ec\edu\espe\medicalappointmentsystem\view\FrmCalendar$6.class
 ec\edu\espe\medicalappointmentsystem\view\FrmDeleteDoctor.class
 ec\edu\espe\medicalappointmentsystem\view\FrmPrint.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddPatient$1.class
@@ -128,7 +126,6 @@ ec\edu\espe\medicalappointmentsystem\view\FrmMenu$11.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenu$8.class
 ec\edu\espe\medicalappointmentsystem\view\FrmViewDoctor.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReport$1.class
-ec\edu\espe\medicalappointmentsystem\view\FrmCalendar$MongoDBConnection.class
 ec\edu\espe\medicalappointmentsystem\view\FrmUpdateDoctor$4.class
 ec\edu\espe\medicalappointmentsystem\view\FrmViewPatient$3.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReportPatient$5.class

@@ -1,7 +1,5 @@
 package ec.edu.espe.medicalappointmentsystem.model;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -47,7 +45,7 @@ public class Doctor {
 
     @Override
     public String toString() {
-        return String.format("Doctor { ID: %d, Nombre: %s, Especialidad: %s, Horario: %s, Citas: %d }",
+        return String.format("Doctor { ID: %s, Nombre: %s, Especialidad: %s, Horario: %s, Citas: %d }",
                 getId(), getName(), getSpecialty(), getSchedule(), getAppointmentsCount());
     }
 
@@ -115,16 +113,5 @@ public class Doctor {
     public void setAppointmentsCount(int appointmentsCount) {
         this.appointmentsCount = appointmentsCount;
     }
-
-    public void printDoctorInfo() {
-        System.out.println("==========================================");
-        System.out.println("|          Información del Doctor         |");
-        System.out.println("==========================================");
-        System.out.printf("| ID:        %-30d |\n", getId());
-        System.out.printf("| Nombre:    %-30s |\n", getName());
-        System.out.printf("| Especialidad: %-30s |\n", getSpecialty());
-        System.out.printf("| Horario:   %-30s |\n", getSchedule());
-        System.out.printf("| Citas:     %-30d |\n", getAppointmentsCount()); // Imprimir conteo de citas
-        System.out.println("==========================================");
-    }
 }
+
