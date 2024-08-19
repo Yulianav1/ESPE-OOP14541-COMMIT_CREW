@@ -7,19 +7,10 @@ package ec.edu.espe.medicalappointmentsystem.view;
 import com.toedter.calendar.JDateChooser;
 import ec.edu.espe.medicalappointmentsystem.controller.AppointmentController;
 import ec.edu.espe.medicalappointmentsystem.model.Appointment;
-import ec.edu.espe.medicalappointmentsystem.model.Doctor;
-import ec.edu.espe.medicalappointmentsystem.model.Patient;
-import ec.edu.espe.medicalappointmentsystem.util.MongoDBConnection;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,20 +26,45 @@ public class FrmCalendar extends javax.swing.JFrame {
     private DefaultTableModel model;
     private JDateChooser dateChooser;
     private Appointment selectedAppointment;
-    private javax.swing.JTextField txtDoctorId;
-
 
     public FrmCalendar() {
-
         initComponents();
-
+        // Inicializar el modelo de la tabla y JDateChooser
         model = (DefaultTableModel) jTableAppointments.getModel();
         dateChooser = DateAppointment;
-
     }
 
-  
+    private void loadAppointmentsForDate(LocalDate date) {
+        try {
+            // Limpiar la tabla antes de agregar nuevos datos
+            model.setRowCount(0);
 
+            // Obtener todas las citas desde el controlador
+            List<Appointment> appointments = AppointmentController.loadAppointments();
+
+            // Recorrer la lista de citas y agregar las que coinciden con la fecha seleccionada
+            for (Appointment appointment : appointments) {
+                LocalDate appointmentDate = appointment.getDateAppointment().toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate();
+
+                if (appointmentDate.equals(date)) {
+                    // Crear una fila con los datos necesarios
+                    Object[] row = {
+                        appointment.getPatient().getName(),
+                        appointment.getPatient().getId(),
+                        appointment.getTimeSlot()
+                    };
+
+                    // Agregar la fila al modelo de la tabla
+                    model.addRow(row);
+                }
+            }
+        } catch (Exception e) {
+            // Manejar cualquier excepción que ocurra
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al cargar las citas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -172,10 +188,10 @@ public class FrmCalendar extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("RomanD", 1, 18)); // NOI18N
         jLabel17.setText("Calendario");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        jPanel1.add(DateAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 180, -1));
+        jPanel1.add(DateAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 180, -1));
 
         jLabel2.setText("Fecha:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 70, 20));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 40, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 510));
 
@@ -183,57 +199,50 @@ public class FrmCalendar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableAppointmentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAppointmentsMouseClicked
-   
+        int selectedRow = jTableAppointments.getSelectedRow();  // Obtener la fila seleccionada
 
-   
+        if (selectedRow >= 0) {
+            // Obtener los valores de la fila seleccionada
+            String patientName = (String) model.getValueAt(selectedRow, 0);
+            String patientId = (String) model.getValueAt(selectedRow, 1);
+            String timeSlot = (String) model.getValueAt(selectedRow, 2);
+
+            // Ahora puedes buscar la cita correspondiente en la lista de citas, si la tienes almacenada
+            List<Appointment> appointments = AppointmentController.loadAppointments();
+
+            for (Appointment appointment : appointments) {
+                if (appointment.getPatient().getName().equals(patientName)
+                        && appointment.getPatient().getId().equals(patientId)
+                        && appointment.getTimeSlot().equals(timeSlot)) {
+
+                    // Cita encontrada, la puedes almacenar en selectedAppointment para su posterior uso
+                    selectedAppointment = appointment;
+                    break;
+                }
+            }
+
+        }
+
 
     }//GEN-LAST:event_jTableAppointmentsMouseClicked
-private void showAppointmentsForDate(LocalDate date) {
-    try {
-        // Limpia la tabla antes de agregar nuevos datos
-        model.setRowCount(0);
-
-        // Obtener las citas desde el controlador
-        List<Appointment> appointments = AppointmentController.loadAppointments();
-        System.out.println("Número de citas recuperadas: " + appointments.size());
-
-        // Recorrer la lista de citas y agregarlas al modelo de la tabla
-        for (Appointment appointment : appointments) {
-            // Convertir Date a LocalDate
-            LocalDate appointmentDate = appointment.getDateAppointment().toInstant()
-                    .atZone(ZoneId.systemDefault()).toLocalDate();
-
-            // Verificar si la cita es para la fecha seleccionada
-            if (appointmentDate.equals(date)) {
-                Object[] row = {
-                    appointmentDate,  // Usar la fecha
-                    appointment.getPatient().getName(),
-                    appointment.getPatient().getId(),
-                    appointment.getDoctor().getName(),
-                    appointment.getTimeSlot()
-                };
-                model.addRow(row); // Agrega la fila al modelo
-            }
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al cargar las citas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
+  
 
     private void ButtonCarryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCarryActionPerformed
-  // Obtener la fecha seleccionada del JDateChooser
-    Date selectedDate = DateAppointment.getDate();
-    if (selectedDate != null) {
-        // Convertir Date a LocalDate
-        LocalDate localDate = selectedDate.toInstant()
-                .atZone(ZoneId.systemDefault()).toLocalDate();
+         // Obtener la fecha seleccionada del JDateChooser
+        Date selectedDate = dateChooser.getDate();
 
-        // Llamar al método que actualiza la tabla
-        showAppointmentsForDate(localDate);
-    } else {
-        JOptionPane.showMessageDialog(this, "Por favor, selecciona una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-    }
+        if (selectedDate != null) {
+            // Convertir Date a LocalDate
+            LocalDate localDate = selectedDate.toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate();
+
+            // Llamar al método que actualiza la tabla con las citas para la fecha seleccionada
+            loadAppointmentsForDate(localDate);
+        } else {
+            // Mostrar un mensaje de advertencia si no se selecciona una fecha
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_ButtonCarryActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
@@ -241,7 +250,6 @@ private void showAppointmentsForDate(LocalDate date) {
         this.setVisible(false);
         frmMenu.setVisible(true);
     }//GEN-LAST:event_btnReturnActionPerformed
-
 
     /**
      * @param args the command line arguments

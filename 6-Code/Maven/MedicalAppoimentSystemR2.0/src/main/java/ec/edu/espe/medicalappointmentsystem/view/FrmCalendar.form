@@ -221,7 +221,7 @@
         <Component class="com.toedter.calendar.JDateChooser" name="DateAppointment">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="210" y="170" width="180" height="-1"/>
+              <AbsoluteConstraints x="120" y="170" width="180" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -231,7 +231,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="110" y="170" width="70" height="20"/>
+              <AbsoluteConstraints x="60" y="170" width="40" height="20"/>
             </Constraint>
           </Constraints>
         </Component>
