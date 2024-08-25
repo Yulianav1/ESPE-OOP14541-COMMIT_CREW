@@ -5,6 +5,7 @@
 package ec.edu.espe.medicalappointmentsystem.view;
 
 import ec.edu.espe.medicalappointmentsystem.controller.AdminController;
+import ec.edu.espe.medicalappointmentsystem.controller.UserController;
 import javax.swing.JOptionPane;
 
 /**
@@ -150,21 +151,31 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-        
-    String username = txtUser.getText();
+        String username = txtUser.getText();
     String password = new String(pwfPassword.getPassword());
 
-    
-    AdminController userController = new AdminController();
+   
+    AdminController adminController = new AdminController();
+    UserController userController = new UserController();
 
-    
-    if (userController.authenticate(username, password)) {
+   
+    if (adminController.authenticate(username, password)) {
         JOptionPane.showMessageDialog(this, "Bienvenido, Administrador!");
 
         
         FrmMenu frmMenu = new FrmMenu();
         this.setVisible(false);
         frmMenu.setVisible(true);
+
+   
+    } else if (userController.authenticate(username, password)) {
+        JOptionPane.showMessageDialog(this, "Bienvenido, Doctor!");
+
+        
+        FrmMenuDoctor frmMenuDoctor = new FrmMenuDoctor();
+        this.setVisible(false);
+        frmMenuDoctor.setVisible(true);
+
     } else {
         JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
     }

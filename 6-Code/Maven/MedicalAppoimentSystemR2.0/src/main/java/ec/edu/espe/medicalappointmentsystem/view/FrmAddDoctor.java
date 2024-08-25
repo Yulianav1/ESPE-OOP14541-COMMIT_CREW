@@ -5,6 +5,7 @@
 package ec.edu.espe.medicalappointmentsystem.view;
 
 import ec.edu.espe.medicalappointmentsystem.controller.DoctorController;
+import ec.edu.espe.medicalappointmentsystem.controller.UserController;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.util.EmailValidator;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
@@ -467,39 +468,43 @@ public class FrmAddDoctor extends javax.swing.JFrame {
 
     private void btnAddDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDoctorActionPerformed
         String id = txtId.getText();
-        String name= txtName.getText();
-        String specialty = cmbSpecialty.getSelectedItem().toString();
-        String schedule = cmbWorkDays.getSelectedItem().toString() + cmbSchedule.getSelectedItem().toString();
-        String education = txtUniversity.getText();
-        String email = txtEmail.getText();
-        String cellphone= txtCellphone.getText();
-        
-        Doctor doctor = new Doctor(id, name, specialty, schedule, education, email, cellphone);
-        
-        try {
-            IdValidator.idValidator(id);
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Cédula Inválida", JOptionPane.ERROR_MESSAGE);
-            txtId.setText("");
-            txtId.requestFocus();
-            return;
-        }
+    String name = txtName.getText();
+    String specialty = cmbSpecialty.getSelectedItem().toString();
+    String schedule = cmbWorkDays.getSelectedItem().toString() + cmbSchedule.getSelectedItem().toString();
+    String education = txtUniversity.getText();
+    String email = txtEmail.getText();
+    String cellphone = txtCellphone.getText();
+    
+    Doctor doctor = new Doctor(id, name, specialty, schedule, education, email, cellphone);
+    
+    try {
+        IdValidator.idValidator(id);
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Cédula Inválida", JOptionPane.ERROR_MESSAGE);
+        txtId.setText("");
+        txtId.requestFocus();
+        return;
+    }
 
-        try {
-            EmailValidator.emailValidator(email);
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Correo Electrónico Inválido", JOptionPane.ERROR_MESSAGE);
-            txtEmail.setText(""); 
-            txtEmail.requestFocus(); 
-            return; 
-        }
-        
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro de querer guardar el doctor ---> " + doctor.getName() + " de la especialidad " + doctor.getSpecialty())== 0){
-            DoctorController.create(doctor);
-            JOptionPane.showMessageDialog(this, "Doctor añadido correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        
+    try {
+        EmailValidator.emailValidator(email);
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Correo Electrónico Inválido", JOptionPane.ERROR_MESSAGE);
+        txtEmail.setText(""); 
+        txtEmail.requestFocus(); 
+        return; 
+    }
+    
+   if (JOptionPane.showConfirmDialog(this, "¿Está seguro de querer guardar el doctor ---> " + doctor.getName() + " de la especialidad " + doctor.getSpecialty()) == 0) {
+    DoctorController.create(doctor);
+    
+    String generatedPassword = UserController.generatePassword();
+    String username = doctor.getEmail();  
+    
+    UserController.create(username, generatedPassword, doctor.getId());
+    
+    JOptionPane.showMessageDialog(this, "Doctor añadido correctamente! El usuario es: " + username + " y la contraseña es: " + generatedPassword, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+}
     }//GEN-LAST:event_btnAddDoctorActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
