@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ec.edu.espe.medicalappointmentsystem.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -13,65 +10,58 @@ import java.util.Collection;
  */
 public class Specialty {
     
-        
     private String specialtyName;
     private String description;
+    private ScheduleManager scheduleManager;
 
     public Specialty(String specialtyName, String description) {
         this.specialtyName = specialtyName;
         this.description = description;
+        this.scheduleManager = new ScheduleManager();
     }
-    public void displayAvailableSchedules(){
-        int received=0;
-        switch(received){
-            case 1 : {
-                System.out.println("Los horarios disponibles son: de 7:00 am a 8:30 am");
-            }break;
-            case 2 : {
-                System.out.println("Los horarios disponibles son: de 8:30 am a 10:00 am");
-            }break;
-            case 3 : {
-                System.out.println("Los horarios disponibles son: de 10:00 am a 11:30 am");
-            }break;
-            case 4 : {
-                System.out.println("Los horarios disponibles son: de 11:30 a 13:00 horas");
-            }break;
-            case 5 : {
-                System.out.println("Los horarios disponibles son: de 13:00 a 14:30 horas");
-            }break;
-        }
-    }
+
     @Override
     public String toString() {
         return "Specialty{" + "specialtyName=" + specialtyName + ", description=" + description + '}';
     }
     
-    /**
-     * @return the specialtyName
-     */
     public String getSpecialtyName() {
         return specialtyName;
     }
 
-    /**
-     * @param specialtyName the specialtyName to set
-     */
     public void setSpecialtyName(String specialtyName) {
         this.specialtyName = specialtyName;
     }
 
-    /**
-     * @return the description
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * @param description the description to set
-     */
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+    // Método para acceder a los horarios disponibles desde Specialty
+    public String getAvailableSchedule(int option) {
+        return scheduleManager.getAvailableSchedule(option);
+    }
+
+    // Clase interna para manejar los horarios
+    private class ScheduleManager {
+
+        private final Map<Integer, String> schedules;
+
+        public ScheduleManager() {
+            schedules = new HashMap<>();
+            schedules.put(1, "7:00 am a 8:30 am");
+            schedules.put(2, "8:30 am a 10:00 am");
+            schedules.put(3, "10:00 am a 11:30 am");
+            schedules.put(4, "11:30 am a 1:00 pm");
+            schedules.put(5, "1:00 pm a 2:30 pm");
+        }
+
+        public String getAvailableSchedule(int option) {
+            return schedules.getOrDefault(option, "Horario no disponible");
+        }
+    }
 }

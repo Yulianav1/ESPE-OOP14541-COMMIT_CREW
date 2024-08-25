@@ -2,85 +2,91 @@ package ec.edu.espe.medicalappointmentsystem.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.Scanner;
 
 public class DateValidator {
 
-    public static LocalDate getValidAppointmentDate() {
-        Scanner scanner = new Scanner(System.in);
-        int year;
-        int month;
-        int day;
-        LocalDate appointmentDate = null;
-        LocalDate currentDate = LocalDate.now();
+    private static final LocalDate CURRENT_DATE = LocalDate.now();
+    private static final Scanner SCANNER = new Scanner(System.in);
 
+    public static LocalDate getValidAppointmentDate() {
+        LocalDate appointmentDate = null;
+        int year = getValidYear();
+        int month = getValidMonth(year);
+        int day = getValidDay(year, month);
+
+        while (true) {
+            System.out.println("Ha ingresado la fecha: " + LocalDate.of(year, month, day) + ". ¿Desea confirmar esta fecha? (si/no): ");
+            String confirm = SCANNER.nextLine().trim().toLowerCase();
+            if (confirm.equals("si")) {
+                appointmentDate = LocalDate.of(year, month, day);
+                break;
+            } else if (confirm.equals("no")) {
+                return getValidAppointmentDate(); // Recursive call for new date
+            } else {
+                System.out.println("Entrada inválida. Por favor ingrese 'si' o 'no'.");
+            }
+        }
+
+        return appointmentDate;
+    }
+
+    private static int getValidYear() {
         while (true) {
             try {
                 System.out.println("Ingrese el año de la cita: ");
-                year = Integer.parseInt(scanner.nextLine());
-                if (year != currentDate.getYear() && year != currentDate.getYear() + 1) {
-                    throw new IllegalArgumentException("El año debe ser " + currentDate.getYear() + " o " + (currentDate.getYear() + 1) + ".");
+                int year = Integer.parseInt(SCANNER.nextLine());
+                if (year != CURRENT_DATE.getYear() && year != CURRENT_DATE.getYear() + 1) {
+                    throw new IllegalArgumentException("El año debe ser " + CURRENT_DATE.getYear() + " o " + (CURRENT_DATE.getYear() + 1) + ".");
                 }
-                break;
+                return year;
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Ingrese un número válido para el año.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
 
+    private static int getValidMonth(int year) {
         while (true) {
             try {
                 System.out.println("Ingrese el mes de la cita (1-12): ");
-                month = Integer.parseInt(scanner.nextLine());
+                int month = Integer.parseInt(SCANNER.nextLine());
                 if (month < 1 || month > 12) {
                     throw new IllegalArgumentException("El mes debe ser entre 1 y 12.");
                 }
-                if (year == currentDate.getYear() && month < currentDate.getMonthValue()) {
+                if (year == CURRENT_DATE.getYear() && month < CURRENT_DATE.getMonthValue()) {
                     throw new IllegalArgumentException("El mes no puede ser anterior al mes actual.");
                 }
-                break;
+                return month;
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Ingrese un mes válido.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
 
+    private static int getValidDay(int year, int month) {
         while (true) {
             try {
                 System.out.println("Ingrese el día de la cita: ");
-                day = Integer.parseInt(scanner.nextLine());
-                appointmentDate = LocalDate.of(year, month, day);
-                if (appointmentDate.isBefore(LocalDate.now())) {
+                int day = Integer.parseInt(SCANNER.nextLine());
+                LocalDate date = LocalDate.of(year, month, day);
+                if (date.isBefore(CURRENT_DATE)) {
                     throw new IllegalArgumentException("La fecha no puede ser anterior al día de hoy.");
                 }
-                break;
+                return day;
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Ingrese un día válido.");
             } catch (DateTimeParseException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
-
-        while (true) {
-            System.out.println("Ha ingresado la fecha: " + appointmentDate.toString() + ". ¿Desea confirmar esta fecha? (si/no): ");
-            String confirm = scanner.nextLine().trim().toLowerCase();
-            if (confirm.equals("si")) {
-                return appointmentDate;
-            } else if (confirm.equals("no")) {
-                return getValidAppointmentDate();
-            } else {
-                System.out.println("Entrada inválida. Por favor ingrese 'si' o 'no'.");
-            }
-        }
     }
 
     public static int getValidAppointmentTime() {
-        Scanner scanner = new Scanner(System.in);
-        int timeSlot;
-
         while (true) {
             try {
                 System.out.println("Seleccione el intervalo de tiempo de la cita (1-5): ");
@@ -89,22 +95,20 @@ public class DateValidator {
                 System.out.println("3. 10:00 am - 11:30 am");
                 System.out.println("4. 11:30 am - 1:00 pm");
                 System.out.println("5. 1:00 pm - 2:30 pm");
-                timeSlot = Integer.parseInt(scanner.nextLine());
+                int timeSlot = Integer.parseInt(SCANNER.nextLine());
                 if (timeSlot < 1 || timeSlot > 5) {
                     throw new IllegalArgumentException("El intervalo de tiempo debe ser entre 1 y 5.");
                 }
-                break;
+                return timeSlot;
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Ingrese un número válido para el intervalo de tiempo.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
-        return timeSlot;
     }
-    public static boolean isDateAfterToday(Date date) {
-        Date today = new Date(); 
-        return date.after(today); 
+
+    public static boolean isDateAfterToday(LocalDate date) {
+        return date.isAfter(CURRENT_DATE);
     }
-    
 }

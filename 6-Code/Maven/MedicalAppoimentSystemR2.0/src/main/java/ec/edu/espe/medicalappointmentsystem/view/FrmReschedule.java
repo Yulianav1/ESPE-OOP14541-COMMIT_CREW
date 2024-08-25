@@ -47,6 +47,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import ec.edu.espe.medicalappointmentsystem.controller.RescheduleController;
 import ec.edu.espe.medicalappointmentsystem.util.DateValidator;
+import java.time.LocalDate;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -348,19 +349,27 @@ public class FrmReschedule extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jDateToRescheduleAppointmentMouseClicked
 private void verifyDate() {
-    Date selectedDate = jDateToRescheduleAppointment.getDate();
+    java.util.Date selectedDate = jDateToRescheduleAppointment.getDate();
     if (selectedDate == null) {
         JOptionPane.showMessageDialog(this, "Por favor, seleccione una nueva fecha.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Verifica si la fecha es posterior a la fecha actual
-    if (DateValidator.isDateAfterToday(selectedDate)) {
+    LocalDate localDate = convertToLocalDate(selectedDate);
+
+    if (DateValidator.isDateAfterToday(localDate)) {
         System.out.println("veamos si por aqui pasa");
     } else {
         JOptionPane.showMessageDialog(this, "La fecha de la nueva cita debe ser posterior a la fecha actual.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+
+private LocalDate convertToLocalDate(java.util.Date date) {
+    return date.toInstant()
+               .atZone(java.time.ZoneId.systemDefault())
+               .toLocalDate();
+}
+
     private void loadAppointmentsTable() {
     DefaultTableModel model = (DefaultTableModel) jTableAppointments.getModel();
     model.setRowCount(0);
