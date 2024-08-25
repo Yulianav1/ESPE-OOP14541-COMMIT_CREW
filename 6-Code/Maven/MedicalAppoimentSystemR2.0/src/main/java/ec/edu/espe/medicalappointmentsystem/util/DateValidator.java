@@ -2,6 +2,7 @@ package ec.edu.espe.medicalappointmentsystem.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class DateValidator {
@@ -100,6 +101,10 @@ public class DateValidator {
             }
         }
         return timeSlot;
+    }
+    public static boolean isDateAfterToday(Date date) {
+        Date today = new Date(); 
+        return date.after(today); 
     }
     
 }

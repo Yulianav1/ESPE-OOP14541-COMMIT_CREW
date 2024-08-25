@@ -235,12 +235,15 @@ public class DoctorController {
             FindIterable<Document> doctorsIterable = collection.find();
             System.out.println("Número de doctores recuperados: " + doctorsIterable.spliterator().estimateSize());
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
+            
 
             for (Document doc : doctorsIterable) {
                 try {
-                    Doctor doctor = objectMapper.convertValue(doc, Doctor.class);
+                    Doctor doctor = new Doctor();
+                    doctor.setId(doc.getString("id"));
+                    doctor.setName(doc.getString("name"));
+                    doctor.setSpecialty(doc.getString("specialty"));
+                    doctor.setSchedule(doc.getString("schedule "));
 
                     // Contar citas asociadas al doctor por nombre
                     String doctorName = doctor.getName();

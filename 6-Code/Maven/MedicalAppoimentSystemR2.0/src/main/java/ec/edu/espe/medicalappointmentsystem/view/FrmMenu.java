@@ -272,7 +272,7 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_itmAddDoctorActionPerformed
 
     private void itmRescheduleAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmRescheduleAppointmentActionPerformed
-        FrmReagendar frmReagendar = new FrmReagendar();
+        FrmReschedule frmReagendar = new FrmReschedule();
         this.setVisible(false);
         frmReagendar.setVisible(true);
     }//GEN-LAST:event_itmRescheduleAppointmentActionPerformed
