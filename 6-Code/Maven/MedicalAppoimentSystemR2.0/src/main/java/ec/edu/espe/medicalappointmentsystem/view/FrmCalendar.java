@@ -29,38 +29,72 @@ public class FrmCalendar extends javax.swing.JFrame {
 
     public FrmCalendar() {
         initComponents();
-        // Inicializar el modelo de la tabla y JDateChooser
         model = (DefaultTableModel) jTableAppointments.getModel();
         dateChooser = DateAppointment;
+
+        dateChooser.getDateEditor().addPropertyChangeListener(evt -> {
+            if ("date".equals(evt.getPropertyName())) {
+                updateAppointmentTable();
+            }
+        });
     }
 
-    private void loadAppointmentsForDate(LocalDate date) {
+    private void updateAppointmentTable() {
+        Date selectedDate = dateChooser.getDate();
+        String selectedDoctor = (String) cmbDoctors.getSelectedItem();
+
+        if (selectedDate == null || selectedDoctor == null) {
+            return;
+        }
+
+        LocalDate date = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        loadAppointmentsForDate(date, selectedDoctor);
+    }
+
+    private void loadAppointmentsForDate(LocalDate date, String doctorName) {
         try {
-            // Limpiar la tabla antes de agregar nuevos datos
+
             model.setRowCount(0);
 
-            // Obtener todas las citas desde el controlador
             List<Appointment> appointments = AppointmentController.loadAppointments();
 
-            // Recorrer la lista de citas y agregar las que coinciden con la fecha seleccionada
+            if (appointments == null || appointments.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron citas en la base de datos.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("No se encontraron citas en la base de datos.");
+                return;
+            } else {
+                System.out.println("Citas encontradas: " + appointments.size());
+            }
+
+     
             for (Appointment appointment : appointments) {
                 LocalDate appointmentDate = appointment.getDateAppointment().toInstant()
                         .atZone(ZoneId.systemDefault()).toLocalDate();
 
-                if (appointmentDate.equals(date)) {
-                    // Crear una fila con los datos necesarios
+                
+                String dbDoctorName = appointment.getDoctor().getName().trim();
+
+                System.out.println("Verificando cita: Doctor - '" + dbDoctorName + "' en fecha " + appointmentDate);
+
+                
+                if (appointmentDate.equals(date) && dbDoctorName.equalsIgnoreCase(doctorName.trim())) {
+                    
                     Object[] row = {
                         appointment.getPatient().getName(),
                         appointment.getPatient().getId(),
                         appointment.getTimeSlot()
                     };
 
-                    // Agregar la fila al modelo de la tabla
                     model.addRow(row);
                 }
             }
+
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "No hay citas para la fecha y doctor seleccionados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("No hay citas para la fecha " + date + " y doctor " + doctorName);
+            }
         } catch (Exception e) {
-            // Manejar cualquier excepción que ocurra
+        
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al cargar las citas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -79,13 +113,13 @@ public class FrmCalendar extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableAppointments = new javax.swing.JTable();
-        ButtonCarry = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         btnReturn = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
         DateAppointment = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        cmbDoctors = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -135,23 +169,13 @@ public class FrmCalendar extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 580, 220));
 
-        ButtonCarry.setBackground(new java.awt.Color(33, 150, 255));
-        ButtonCarry.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ButtonCarry.setForeground(new java.awt.Color(255, 255, 255));
-        ButtonCarry.setText("Cargar");
-        ButtonCarry.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonCarryActionPerformed(evt);
-            }
-        });
-        jPanel1.add(ButtonCarry, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 130, 40));
-
         jPanel4.setBackground(new java.awt.Color(33, 150, 243));
 
-        jLabel16.setFont(new java.awt.Font("RomanD", 1, 24)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("RomanD", 1, 36)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Calendario");
 
+        btnReturn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnReturn.setText("Home");
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,92 +188,68 @@ public class FrmCalendar extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(347, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(btnReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(119, 119, 119)
+                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addGap(226, 226, 226))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnReturn)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(20, 20, 20))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 90));
+        jPanel1.add(DateAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 180, -1));
 
-        jLabel17.setFont(new java.awt.Font("RomanD", 1, 18)); // NOI18N
-        jLabel17.setText("Calendario");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        jPanel1.add(DateAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 180, -1));
-
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Fecha:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 40, 20));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 40, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 510));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("Doctor:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, -1));
+
+        cmbDoctors.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "David Josue Rodriguez Villaroel", "Doménica Nicole Villagómez Freire", "Samantha Stefany Villagómez Galeas", "Pedro Fabricio Condor Segarra" }));
+        cmbDoctors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbDoctorsActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmbDoctors, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableAppointmentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAppointmentsMouseClicked
-        int selectedRow = jTableAppointments.getSelectedRow();  // Obtener la fila seleccionada
-
-        if (selectedRow >= 0) {
-            // Obtener los valores de la fila seleccionada
-            String patientName = (String) model.getValueAt(selectedRow, 0);
+        int selectedRow = jTableAppointments.getSelectedRow();
+        if (selectedRow != -1) {
             String patientId = (String) model.getValueAt(selectedRow, 1);
-            String timeSlot = (String) model.getValueAt(selectedRow, 2);
-
-            // Ahora puedes buscar la cita correspondiente en la lista de citas, si la tienes almacenada
-            List<Appointment> appointments = AppointmentController.loadAppointments();
-
-            for (Appointment appointment : appointments) {
-                if (appointment.getPatient().getName().equals(patientName)
-                        && appointment.getPatient().getId().equals(patientId)
-                        && appointment.getTimeSlot().equals(timeSlot)) {
-
-                    // Cita encontrada, la puedes almacenar en selectedAppointment para su posterior uso
-                    selectedAppointment = appointment;
-                    break;
-                }
-            }
 
         }
-
-
     }//GEN-LAST:event_jTableAppointmentsMouseClicked
-  
 
-    private void ButtonCarryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCarryActionPerformed
-         // Obtener la fecha seleccionada del JDateChooser
-        Date selectedDate = dateChooser.getDate();
-
-        if (selectedDate != null) {
-            // Convertir Date a LocalDate
-            LocalDate localDate = selectedDate.toInstant()
-                    .atZone(ZoneId.systemDefault()).toLocalDate();
-
-            // Llamar al método que actualiza la tabla con las citas para la fecha seleccionada
-            loadAppointmentsForDate(localDate);
-        } else {
-            // Mostrar un mensaje de advertencia si no se selecciona una fecha
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-
-    }//GEN-LAST:event_ButtonCarryActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         FrmMenu frmMenu = new FrmMenu();
         this.setVisible(false);
         frmMenu.setVisible(true);
     }//GEN-LAST:event_btnReturnActionPerformed
+
+    private void cmbDoctorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDoctorsActionPerformed
+        updateAppointmentTable();
+    }//GEN-LAST:event_cmbDoctorsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,6 +278,8 @@ public class FrmCalendar extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -288,12 +290,12 @@ public class FrmCalendar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonCarry;
     private com.toedter.calendar.JDateChooser DateAppointment;
     private javax.swing.JButton btnReturn;
+    private javax.swing.JComboBox<String> cmbDoctors;
     private com.toedter.calendar.JCalendar jCalendar1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
