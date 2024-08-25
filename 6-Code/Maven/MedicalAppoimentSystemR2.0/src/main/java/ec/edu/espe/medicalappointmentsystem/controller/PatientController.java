@@ -9,7 +9,9 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
+import static ec.edu.espe.medicalappointmentsystem.util.MongoDBConnection.getDatabase;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -52,54 +54,12 @@ public class PatientController {
         return dataBase;
     }
 
-    //Acceso a colecciones
-    public static MongoCollection<Document> accessToCollections(MongoDatabase dataBase, String collection) {
-        MongoCollection<Document> mongoCollection = dataBase.getCollection(collection);
-        return mongoCollection;
-    }
-
-    //Tipo de ingreso de datos
     public static void insertOneData(Document data, MongoCollection<Document> mongoCollection) {
         mongoCollection.insertOne(data);
     }
 
     public static void insertMoreThanOneData(List<Document> listOfData, MongoCollection<Document> mongoCollection) {
         mongoCollection.insertMany(listOfData);
-    }
-
-    //Obtención de datos
-    public static void getAllCollection(MongoCollection<Document> mongoCollection) {
-        //Si solo busco en base a un solo dato 
-        Document findDocument = new Document("male", true);
-        //Si quiero todo el documento:
-        //Document findDocument = new Document();
-
-        MongoCursor<Document> resultDocument = mongoCollection.find(findDocument).iterator();
-
-        System.out.println("***************************************");
-        System.out.println("People male");
-        System.out.println("***************************************");
-        while (resultDocument.hasNext()) {
-            System.out.println(resultDocument.next().getString("name"));
-        }
-
-        //return resultDocument;
-    }
-
-    //Actualización de documentos
-    public static void editDocuments(String key, String data, String newData, MongoCollection<Document> mongoCollection) {
-        Document findDocument = new Document(key, data);
-
-        Document updateDocument = new Document("$set", new Document(key, newData));
-
-        mongoCollection.findOneAndUpdate(findDocument, updateDocument);
-    }
-
-    //Eliminar documentos
-    public static void deleteDocuments(String key, String data, MongoCollection<Document> mongoCollection) {
-        //TODO: Combinar con método de obtención de datos
-        Document findDocument = new Document("male", true);
-        mongoCollection.findOneAndDelete(findDocument);
     }
 
     public static boolean exists(String patientId) {
@@ -136,32 +96,55 @@ public class PatientController {
             return false;
         }
     }
-public static Patient getPatientById(String patientId) {
-    try (MongoClient mongoClient = MongoClients.create(URI)) {
-        MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
-        MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
 
-        Document query = new Document("id", patientId);
-        Document document = collection.find(query).first();
-
-        if (document != null) {
-            return new Patient(
-                document.getString("id"),
-                document.getString("Nombre"),
-                document.getInteger("Edad"),
-                document.getString("Email"),
-                document.getString("Teléfono")
-            );
-        } else {
-            return null;
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;
-    }
-}
     public static Patient getId(String cedula) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public static List<Patient> getPatients() {
+        String collectionName = "Patient";
+        List<Patient> patients = new ArrayList<>();
+        MongoDatabase database = getDatabase();
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        try (MongoCursor<Document> cursor = collection.find().iterator()) {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                Patient patient = new Patient(
+                        doc.getString("id"),
+                        doc.getString("email"),
+                        doc.getString("cellphone"),
+                        doc.getString("name")
+                );
+                patients.add(patient);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return patients;
+    }
+
+    public static Patient getPatientById(String id) {
+        String collectionName = "Patient";
+        MongoDatabase database = getDatabase();
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        try {
+            Document filter = new Document("id", id);
+            Document doc = collection.find(filter).first();
+
+            if (doc != null) {
+                return new Patient(
+                        doc.getString("id"),
+                        doc.getString("name"),
+                        doc.getString("cellphone"),
+                        doc.getString("email")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

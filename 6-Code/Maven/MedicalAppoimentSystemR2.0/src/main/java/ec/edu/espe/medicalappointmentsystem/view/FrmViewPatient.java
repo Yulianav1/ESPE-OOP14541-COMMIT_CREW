@@ -4,7 +4,7 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
-import ec.edu.espe.medicalappointmentsystem.model.Doctor;
+import ec.edu.espe.medicalappointmentsystem.controller.PatientController;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
 import ec.edu.espe.medicalappointmentsystem.util.MongoDBConnection;
@@ -213,14 +213,14 @@ public class FrmViewPatient extends javax.swing.JFrame {
     private void btnLoadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataActionPerformed
         String id = txtId15.getText().trim();
         if (id.isEmpty()) {
-            loadPatientsToTable(); //
+            loadPatientsToTable();
         } else {
             loadPatientToTableById(id);
         }
     }//GEN-LAST:event_btnLoadDataActionPerformed
 
     private void loadPatientsToTable() {
-        List<Patient> patients = MongoDBConnection.getPatients();
+        List<Patient> patients = PatientController.getPatients();
         DefaultTableModel model = (DefaultTableModel) jTable16.getModel();
         model.setRowCount(0);
 
@@ -235,7 +235,7 @@ public class FrmViewPatient extends javax.swing.JFrame {
     }
 
     private void loadPatientToTableById(String id) {
-        Patient patient = MongoDBConnection.getPatientById(id);
+        Patient patient = PatientController.getPatientById(id);
         DefaultTableModel model = (DefaultTableModel) jTable16.getModel();
         model.setRowCount(0); 
 

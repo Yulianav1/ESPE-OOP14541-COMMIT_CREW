@@ -4,6 +4,7 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
+import ec.edu.espe.medicalappointmentsystem.controller.DoctorController;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
 import ec.edu.espe.medicalappointmentsystem.util.MongoDBConnection;
@@ -42,7 +43,7 @@ public class FrmViewDoctor extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         jPanel34 = new javax.swing.JPanel();
         jScrollPane16 = new javax.swing.JScrollPane();
-        jTable16 = new javax.swing.JTable();
+        tblUpdateDoctor = new javax.swing.JTable();
         jLabel34 = new javax.swing.JLabel();
         txtId15 = new javax.swing.JTextField();
         btnLoadData = new javax.swing.JButton();
@@ -116,7 +117,7 @@ public class FrmViewDoctor extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable16.setModel(new javax.swing.table.DefaultTableModel(
+        tblUpdateDoctor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -127,7 +128,7 @@ public class FrmViewDoctor extends javax.swing.JFrame {
                 "Cédula", "Nombre", "Especialidad", "Celular"
             }
         ));
-        jScrollPane16.setViewportView(jTable16);
+        jScrollPane16.setViewportView(tblUpdateDoctor);
 
         jLabel34.setText("Número de Cédula");
 
@@ -229,15 +230,15 @@ public class FrmViewDoctor extends javax.swing.JFrame {
     private void btnLoadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataActionPerformed
         String id = txtId15.getText().trim();
         if (id.isEmpty()) {
-            loadDoctorsToTable(); // 
+            loadDoctorsToTable(); 
         } else {
             loadDoctorToTableById(id); 
         }
     }//GEN-LAST:event_btnLoadDataActionPerformed
 
     private void loadDoctorsToTable() {
-        List<Doctor> doctors = MongoDBConnection.getDoctors();
-        DefaultTableModel model = (DefaultTableModel) jTable16.getModel();
+        List<Doctor> doctors = DoctorController.getDoctors();
+        DefaultTableModel model = (DefaultTableModel) tblUpdateDoctor.getModel();
         model.setRowCount(0);
 
         for (Doctor doctor : doctors) {
@@ -253,9 +254,9 @@ public class FrmViewDoctor extends javax.swing.JFrame {
     }
 
     private void loadDoctorToTableById(String id) {
-        Doctor doctor = MongoDBConnection.getDoctorById(id);
-        DefaultTableModel model = (DefaultTableModel) jTable16.getModel();
-        model.setRowCount(0); // Limpiar la tabla
+        Doctor doctor = DoctorController.getDoctorById(id);
+        DefaultTableModel model = (DefaultTableModel) tblUpdateDoctor.getModel();
+        model.setRowCount(0);
 
         if (doctor != null) {
             model.addRow(new Object[]{
@@ -318,7 +319,7 @@ public class FrmViewDoctor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel34;
     private javax.swing.JScrollPane jScrollPane16;
-    private javax.swing.JTable jTable16;
+    private javax.swing.JTable tblUpdateDoctor;
     private javax.swing.JTextField txtId15;
     // End of variables declaration//GEN-END:variables
 }

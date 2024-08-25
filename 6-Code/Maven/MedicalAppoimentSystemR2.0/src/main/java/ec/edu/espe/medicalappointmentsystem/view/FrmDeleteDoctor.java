@@ -4,6 +4,7 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
+import ec.edu.espe.medicalappointmentsystem.controller.DoctorController;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
 import ec.edu.espe.medicalappointmentsystem.util.MongoDBConnection;
@@ -42,7 +43,7 @@ public class FrmDeleteDoctor extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         btnLoadData = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDeleteDoctor = new javax.swing.JTable();
         btnDeleteDoctor = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -98,7 +99,7 @@ public class FrmDeleteDoctor extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDeleteDoctor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -109,7 +110,7 @@ public class FrmDeleteDoctor extends javax.swing.JFrame {
                 "Cédula", "Nombre", "Especialidad", "Celular"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblDeleteDoctor);
 
         btnDeleteDoctor.setText("Eliminar");
         btnDeleteDoctor.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +225,7 @@ public class FrmDeleteDoctor extends javax.swing.JFrame {
     private void btnDeleteDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDoctorActionPerformed
         String doctorId = txtId.getText();
         if (!doctorId.isEmpty()) {
-            MongoDBConnection.deleteDoctorById(doctorId);
+            DoctorController.deleteDoctorById(doctorId);
             JOptionPane.showMessageDialog(this, "Doctor eliminado exitosamente.");
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, ingresa el ID del doctor a eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -232,8 +233,8 @@ public class FrmDeleteDoctor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteDoctorActionPerformed
 
     private void loadDoctorsToTable() {
-        List<Doctor> doctors = MongoDBConnection.getDoctors();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        List<Doctor> doctors = DoctorController.getDoctors();
+        DefaultTableModel model = (DefaultTableModel) tblDeleteDoctor.getModel();
         model.setRowCount(0); // Clear existing data
 
         for (Doctor doctor : doctors) {
@@ -293,7 +294,7 @@ public class FrmDeleteDoctor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblDeleteDoctor;
     private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }

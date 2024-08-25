@@ -28,11 +28,6 @@ public class Patient {
         this.cellphone = cellphone;
     }
 
-    @Override
-    public String toString() {
-        return "Patient{" + "id=" + getId() + ", name=" + getName() + ", age=" + getAge() + ", email=" + getEmail() + '}';
-    }
-
     // Getters y Setters
     public String getId() {
         return id;
@@ -66,120 +61,10 @@ public class Patient {
         this.email = email;
     }
 
-public static Patient inputPatientData(Scanner input) {
-    String id = "";
-    String name = "";
-    int age = 0;
-    String email = "";
-
-    try {
-        System.out.println("==========================================");
-        System.out.println("|      Ingrese los datos del Paciente     |");
-        System.out.println("==========================================");
-
-        while (true) {
-            try {
-                System.out.print("| Ingrese el ID del paciente (cédula): ");
-                id = input.nextLine().trim();
-                IdValidator.idValidator(id);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Entrada inválida. Ingrese un número válido para el ID.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-
-        while (true) {
-            try {
-                System.out.print("| Ingrese el nombre y apellido del paciente: ");
-                name = input.nextLine().trim();
-                if (name.isEmpty()) {
-                    throw new IllegalArgumentException("El nombre no puede estar vacío.");
-                }
-                if (!name.matches("[a-zA-Z ]+")) {
-                    throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
-                }
-                if (name.trim().split("\\s+").length < 2) {
-                    throw new IllegalArgumentException("El nombre debe contener al menos dos palabras.");
-                }
-                name = capitalizeWords(name);
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-
-        while (true) {
-            try {
-                System.out.print("| Ingrese la edad del paciente: ");
-                age = Integer.parseInt(input.nextLine().trim());
-                if (age <= 0) {
-                    throw new IllegalArgumentException("La edad debe ser un número positivo.");
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Entrada inválida. Ingrese un número válido para la edad.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-
-        while (true) {
-            try {
-                System.out.print("| Ingrese el correo electrónico del paciente: ");
-                email = input.nextLine().trim();
-                if (!email.contains("@") || !email.contains(".")) {
-                    throw new IllegalArgumentException("El correo electrónico no es válido.");
-                }
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-
-        System.out.println("==========================================");
-        return new Patient(id, name, age, email, email);
-    } catch (Exception e) {
-        System.out.println("Error: " + e.getMessage());
-        return null;
-    }
-}
-
-    public void printPatientInfo() {
-        System.out.println("==========================================");
-        System.out.println("|        Información del Paciente         |");
-        System.out.println("==========================================");
-        System.out.printf("| ID:         %-30d |\n", getId());
-        System.out.printf("| Nombre:     %-30s |\n", getName());
-        System.out.printf("| Edad:       %-30d |\n", getAge());
-        System.out.printf("| Correo:     %-30s |\n", getEmail());
-        System.out.println("==========================================");
-    }
-    public static String capitalizeWords(String str) {
-        String[] words = str.split("\\s+");
-        StringBuilder capitalizedStr = new StringBuilder();
-
-        for (String word : words) {
-            if (word.length() > 0) {
-                capitalizedStr.append(Character.toUpperCase(word.charAt(0)))
-                               .append(word.substring(1).toLowerCase())
-                               .append(" ");
-            }
-        }
-        return capitalizedStr.toString().trim();
-    }
-
-    /**
-     * @return the cellphone
-     */
     public String getCellphone() {
         return cellphone;
     }
 
-    /**
-     * @param cellphone the cellphone to set
-     */
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
     }

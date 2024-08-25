@@ -2,6 +2,7 @@ package ec.edu.espe.medicalappointmentsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Doctor {
 
@@ -25,13 +26,13 @@ public class Doctor {
         this.education = education;
         this.email = email;
         this.cellphone = cellphone;
-        this.appointmentsCount = 0; // Inicializar el conteo en 0
+        this.appointmentsCount = 0; 
     }
 
     public Doctor(String name, String specialty) {
         this.name = name;
         this.specialty = specialty;
-        this.appointmentsCount = 0; // Inicializar el conteo en 0
+        this.appointmentsCount = 0;
     }
 
     public Doctor(String id, String name, String specialty, String cellphone, String email, String schedule) {
@@ -41,12 +42,6 @@ public class Doctor {
         this.cellphone = cellphone;
         this.email = email;
         this.schedule = schedule;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Doctor { ID: %s, Nombre: %s, Especialidad: %s, Horario: %s, Citas: %d }",
-                getId(), getName(), getSpecialty(), getSchedule(), getAppointmentsCount());
     }
 
     // Getters y Setters
