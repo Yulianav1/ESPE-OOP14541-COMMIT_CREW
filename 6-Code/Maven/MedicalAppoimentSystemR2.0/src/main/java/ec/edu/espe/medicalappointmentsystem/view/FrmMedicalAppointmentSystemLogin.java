@@ -4,6 +4,9 @@
  */
 package ec.edu.espe.medicalappointmentsystem.view;
 
+import ec.edu.espe.medicalappointmentsystem.controller.AdminController;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author MSI-PULSE
@@ -30,10 +33,10 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtUser = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField = new javax.swing.JPasswordField();
+        pwfPassword = new javax.swing.JPasswordField();
         btnLogin1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,8 +75,6 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPasswordField.setText("jPasswordField1");
-
         btnLogin1.setBackground(new java.awt.Color(51, 153, 255));
         btnLogin1.setText("Ingresar");
         btnLogin1.addActionListener(new java.awt.event.ActionListener() {
@@ -93,8 +94,8 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                    .addComponent(jPasswordField))
+                    .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(pwfPassword))
                 .addGap(121, 121, 121))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -117,11 +118,11 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pwfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(jLabel5)
                 .addGap(69, 69, 69))
@@ -149,7 +150,24 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-        // TODO add your handling code here:
+        
+    String username = txtUser.getText();
+    String password = new String(pwfPassword.getPassword());
+
+    
+    AdminController userController = new AdminController();
+
+    
+    if (userController.authenticate(username, password)) {
+        JOptionPane.showMessageDialog(this, "Bienvenido, Administrador!");
+
+        
+        FrmMenu frmMenu = new FrmMenu();
+        this.setVisible(false);
+        frmMenu.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
     /**
@@ -195,7 +213,7 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField pwfPassword;
+    private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
