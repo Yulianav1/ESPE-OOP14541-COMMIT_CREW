@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package ec.edu.espe.medicalappointmentsystem.view;
 
 import ec.edu.espe.medicalappointmentsystem.controller.AdminController;
@@ -14,6 +11,7 @@ import javax.swing.JOptionPane;
  */
 public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
 
+    private boolean passwordVisible = false;
     /**
      * Creates new form FrmMedicalAppointmentSystemLogin
      */
@@ -39,6 +37,7 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         pwfPassword = new javax.swing.JPasswordField();
         btnLogin1 = new javax.swing.JButton();
+        btnShow = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -84,6 +83,13 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
             }
         });
 
+        btnShow.setText("Mostrar");
+        btnShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -97,7 +103,9 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                     .addComponent(pwfPassword))
-                .addGap(121, 121, 121))
+                .addGap(18, 18, 18)
+                .addComponent(btnShow)
+                .addGap(28, 28, 28))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -123,8 +131,9 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(pwfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                    .addComponent(pwfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnShow))
+                .addGap(35, 35, 35)
                 .addComponent(jLabel5)
                 .addGap(69, 69, 69))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,6 +190,19 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
+    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+        if (passwordVisible) {
+            // Ocultar la contraseña
+            pwfPassword.setEchoChar('*');
+            btnShow.setText("Mostrar");
+        } else {
+            // Mostrar la contraseña
+            pwfPassword.setEchoChar((char) 0);
+            btnShow.setText("Ocultar");
+        }
+        passwordVisible = !passwordVisible;
+    }//GEN-LAST:event_btnShowActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -218,6 +240,7 @@ public class FrmMedicalAppointmentSystemLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin1;
+    private javax.swing.JButton btnShow;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

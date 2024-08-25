@@ -14,6 +14,7 @@ ec\edu\espe\medicalappointmentsystem\view\FrmViewPatient$1.class
 ec\edu\espe\medicalappointmentsystem\view\FrmViewDoctor$1.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddPatient$5.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$10.class
+ec\edu\espe\medicalappointmentsystem\controller\UserController.class
 ec\edu\espe\medicalappointmentsystem\util\Printer.class
 ec\edu\espe\medicalappointmentsystem\view\FrmPrint$4.class
 ec\edu\espe\medicalappointmentsystem\view\FrmDeleteAppointment$1.class
@@ -47,6 +48,7 @@ ec\edu\espe\medicalappointmentsystem\view\FrmReport$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$6.class
 ec\edu\espe\medicalappointmentsystem\view\FrmUpdateDoctor.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReportPatient.class
+ec\edu\espe\medicalappointmentsystem\view\FrmMedicalAppointmentSystemLogin$3.class
 ec\edu\espe\medicalappointmentsystem\model\Receptionist.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReschedule$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReschedule$9.class
@@ -63,6 +65,7 @@ ec\edu\espe\medicalappointmentsystem\controller\RescheduleController.class
 ec\edu\espe\medicalappointmentsystem\view\FrmDeleteAppointment$4.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddDoctor$7.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenuDoctor$3.class
+ec\edu\espe\medicalappointmentsystem\controller\AdminController.class
 ec\edu\espe\medicalappointmentsystem\view\FrmUpdateDoctor$2.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$8.class
 ec\edu\espe\medicalappointmentsystem\view\FrmDeleteDoctor$5.class
@@ -73,6 +76,7 @@ ec\edu\espe\medicalappointmentsystem\view\FrmReport$3.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReschedule$3.class
 ec\edu\espe\medicalappointmentsystem\view\FrmReportPatient$1.class
 ec\edu\espe\medicalappointmentsystem\view\FrmViewDoctor$2.class
+ec\edu\espe\medicalappointmentsystem\model\Specialty$ScheduleManager.class
 ec\edu\espe\medicalappointmentsystem\view\FrmAddAppointment$1.class
 ec\edu\espe\medicalappointmentsystem\view\FrmMenu$15.class
 ec\edu\espe\medicalappointmentsystem\controller\AppointmentController.class
