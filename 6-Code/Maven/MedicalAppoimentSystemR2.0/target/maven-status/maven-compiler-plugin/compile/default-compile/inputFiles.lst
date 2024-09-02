@@ -10,6 +10,7 @@ C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\util\DateValidator.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmUpdateDoctor.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmPrint.java
+C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\controller\UserController.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmCalendar.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\util\EmailConfig.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmAddPatient.java
@@ -26,6 +27,7 @@ C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\model\Doctor.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\util\EmailValidator.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmDeleteDoctor.java
+C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\controller\AdminController.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\controller\RescheduleController.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\util\Printer.java
 C:\Users\galo\Documents\alexis\term\COMMIT-CREW\ESPE-OOP14541-COMMIT_CREW\6-Code\Maven\MedicalAppoimentSystemR2.0\src\main\java\ec\edu\espe\medicalappointmentsystem\view\FrmReport.java

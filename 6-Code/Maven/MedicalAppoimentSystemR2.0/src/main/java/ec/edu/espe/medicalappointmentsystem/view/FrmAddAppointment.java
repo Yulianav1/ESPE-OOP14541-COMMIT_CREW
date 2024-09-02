@@ -13,6 +13,7 @@ import ec.edu.espe.medicalappointmentsystem.controller.PatientController;
 import ec.edu.espe.medicalappointmentsystem.model.Appointment;
 import ec.edu.espe.medicalappointmentsystem.model.Doctor;
 import ec.edu.espe.medicalappointmentsystem.model.Patient;
+import ec.edu.espe.medicalappointmentsystem.model.Reminder;
 import ec.edu.espe.medicalappointmentsystem.util.EmailValidator;
 import ec.edu.espe.medicalappointmentsystem.util.IdValidator;
 import ec.edu.espe.medicalappointmentsystem.util.MongoDBConnection;
@@ -65,6 +66,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
 
     public FrmAddAppointment() {
         initComponents();
+        //Reminder.putReminder();
         initializeComponents();
 
     }

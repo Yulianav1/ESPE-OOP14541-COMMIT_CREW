@@ -2,6 +2,8 @@ package ec.edu.espe.medicalappointmentsystem.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class DateValidator {
@@ -106,6 +108,19 @@ public class DateValidator {
                 System.out.println(e.getMessage());
             }
         }
+    }
+     private static final Map<String, String> TIME_SLOTS = new HashMap<>();
+
+    static {
+        TIME_SLOTS.put("1", "07:00 AM - 08:30 AM");
+        TIME_SLOTS.put("2", "08:30 AM - 10:00 AM");
+        TIME_SLOTS.put("3", "10:00 AM - 11:30 AM");
+        TIME_SLOTS.put("4", "11:30 AM - 01:00 PM");
+        TIME_SLOTS.put("5", "01:00 PM - 02:30 PM");
+    }
+
+    public static String getAppointmentTime(String timeSlot) {
+        return TIME_SLOTS.getOrDefault(timeSlot, "Hora no válida");
     }
 
     public static boolean isDateAfterToday(LocalDate date) {

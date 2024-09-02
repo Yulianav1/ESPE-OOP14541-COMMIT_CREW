@@ -25,6 +25,7 @@ import org.bson.Document;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.result.UpdateResult;
 import static ec.edu.espe.medicalappointmentsystem.controller.AppointmentController.loadAppointments;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import org.bson.types.ObjectId;
 
@@ -52,7 +53,7 @@ public class Reminder {
         
         for (Appointment appointment : appointments) {
             Patient patient = appointment.getPatient();
-            /*if (checkDays(appointment.getDateAppointment()) && checkShipment(appointment.getEmailSent())) {
+            if (checkDays(appointment.getDateAppointment()) && checkShipment(appointment.getEmailSent())) {
                 Doctor doctor = appointment.getDoctor();
                 String to = patient.getEmail();
                 appointment.setHourToAppointment(DateValidator.getAppointmentTime(appointment.getTimeSlot()));
@@ -81,7 +82,7 @@ public class Reminder {
                 updateEmailSentStatus(appointment.getIdApp(), true);
             } else {
                 System.out.print(".");
-            } */
+            } 
         }
     } catch (Exception e) {
         System.err.println("Error inesperado al procesar las citas.");
@@ -122,9 +123,12 @@ public class Reminder {
 
 
 
-    public static boolean checkDays(LocalDate appointmentDate) {
+    public static boolean checkDays(Date appointmentDate) {
+        LocalDate appointmentLocalDate = appointmentDate.toInstant()
+                                                      .atZone(ZoneId.systemDefault())
+                                                      .toLocalDate();
         LocalDate today = LocalDate.now();
-        long daysUntilAppointment = ChronoUnit.DAYS.between(today, appointmentDate);
+        long daysUntilAppointment = ChronoUnit.DAYS.between(today, appointmentLocalDate);
         return daysUntilAppointment <= 3 && daysUntilAppointment >= 0;
     }
 
