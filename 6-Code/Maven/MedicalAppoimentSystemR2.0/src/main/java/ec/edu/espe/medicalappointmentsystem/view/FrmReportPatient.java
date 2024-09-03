@@ -184,10 +184,9 @@ public class FrmReportPatient extends javax.swing.JFrame {
         return;
     }
 
-    // Buscar el paciente en la base de datos
     try {
         if (PatientController.exists(cedula)) {
-            // Obtener los datos del paciente
+            
             Patient patient = PatientController.getPatientById(cedula);
             
             if (patient != null) {

@@ -707,6 +707,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
 
         try {
             Patient patient = createPatient();
+            PatientController.create(patient);
             Appointment appointment = createAppointment(patient);
             System.out.println("Detalles de la cita a crear:");
             System.out.println("ID: " + appointment.getIdApp());

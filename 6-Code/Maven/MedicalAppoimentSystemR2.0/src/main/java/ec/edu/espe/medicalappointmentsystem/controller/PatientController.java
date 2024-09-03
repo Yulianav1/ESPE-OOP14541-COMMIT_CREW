@@ -33,10 +33,10 @@ public class PatientController {
 
             Document dataOfPatient = new Document()
                     .append("id", patient.getId())
-                    .append("Nombre", patient.getName())
-                    .append("Edad", patient.getAge())
-                    .append("Email", patient.getEmail())
-                    .append("Teléfono", patient.getCellphone());
+                    .append("name", patient.getName())
+                    .append("age", patient.getAge())
+                    .append("email", patient.getEmail())
+                    .append("cellphone", patient.getCellphone());
 
             collection.insertOne(dataOfPatient);
             return true;
@@ -82,10 +82,10 @@ public class PatientController {
 
             Bson filter = Filters.eq("id", patient.getId());
             Bson updates = Updates.combine(
-                    Updates.set("Nombre", patient.getName()),
-                    Updates.set("Edad", patient.getAge()),
-                    Updates.set("Email", patient.getEmail()),
-                    Updates.set("Teléfono", patient.getCellphone())
+                    Updates.set("name", patient.getName()),
+                    Updates.set("age", patient.getAge()),
+                    Updates.set("email", patient.getEmail()),
+                    Updates.set("cellphone", patient.getCellphone())
             );
             UpdateOptions options = new UpdateOptions().upsert(true);
 
@@ -137,8 +137,9 @@ public class PatientController {
                 return new Patient(
                         doc.getString("id"),
                         doc.getString("name"),
-                        doc.getString("cellphone"),
-                        doc.getString("email")
+                        doc.getInteger("age"),
+                        doc.getString("email"),
+                        doc.getString("cellphone")
                 );
             }
         } catch (Exception e) {
