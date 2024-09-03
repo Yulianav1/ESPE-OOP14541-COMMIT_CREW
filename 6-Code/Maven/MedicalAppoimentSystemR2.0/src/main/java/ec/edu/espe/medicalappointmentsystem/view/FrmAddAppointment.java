@@ -66,7 +66,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
 
     public FrmAddAppointment() {
         initComponents();
-        //Reminder.putReminder();
+        
         initializeComponents();
 
     }
@@ -734,15 +734,16 @@ public class FrmAddAppointment extends javax.swing.JFrame {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error al añadir la cita.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Cita añadida correctamente: ", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 System.out.println("La creación de la cita fue cancelada o hubo un error.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al crear la cita: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cita añadida correctamente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        Reminder.putReminder();
     }
 
     private void clearFields() {

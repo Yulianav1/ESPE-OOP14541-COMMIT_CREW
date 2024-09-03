@@ -50,35 +50,30 @@ public class Reminder {
         List<Appointment> appointments = loadAppointments();
 
         EmailSender emailSender = new EmailSender(new EmailConfig("smtp.gmail.com", 587, "alexisviterigithub@gmail.com", "djdkbbjlijjeghcv"));
-        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (Appointment appointment : appointments) {
+             
             Patient patient = appointment.getPatient();
             if (checkDays(appointment.getDateAppointment()) && checkShipment(appointment.getEmailSent())) {
                 Doctor doctor = appointment.getDoctor();
                 String to = patient.getEmail();
                 appointment.setHourToAppointment(DateValidator.getAppointmentTime(appointment.getTimeSlot()));
                 String subject = "Recordatorio de Cita Médica";
+                String formattedDate = dateFormat.format(appointment.getDateAppointment());
                 String body = "Estimado(a) " + patient.getName() + ",\n\n" +
                         "Este es un recordatorio de su cita médica.\n\n" +
                         "Detalles de la cita:\n" +
                         "ID de la cita: " + appointment.getIdApp() + "\n" +
-                        "Fecha: " + appointment.getDateAppointment() + "\n" +
-                        "Hora: " + appointment.getHourToAppointment() + "\n" +
+                        "Fecha: " + formattedDate + "\n" +
+                        "Hora: " + appointment.getTimeSlot() + "\n" +
                         "Doctor: " + doctor.getName() + "\n" +
                         "Especialidad: " + doctor.getSpecialty() + "\n\n" +
-                        "Por favor, asegúrese de llegar a tiempo.\n\n" +
+                        "Por favor, trate de llegar 15 minutos antes de su cita.\n\n" +
                         "Saludos cordiales,\n" +
-                        "Su equipo médico";
+                        "Su equipo médico\n\n"+
+                        "Este correo es unicamente un recordatorio de cita medica, no es necesario que responda.";
                 emailSender.sendMail(to, subject, body);
                 System.out.println("Correo enviado a: " + to);
-                
-                // Verifica que appointmentId no sea null
-                if (appointment.getIdApp() == null || appointment.getIdApp().isEmpty()) {
-                    System.err.println("ID de cita inválido: " + appointment.getIdApp());
-                    continue;
-                }
-
-                appointment.setEmailSent(true);
                 updateEmailSentStatus(appointment.getIdApp(), true);
             } else {
                 System.out.print(".");
@@ -101,11 +96,7 @@ public class Reminder {
 
     
     public static void updateEmailSentStatus(String appointmentId, boolean emailSent) {
-    if (!isValidObjectId(appointmentId)) {
-        System.err.println("ID de cita inválido: " + appointmentId);
-        return;
-    }
-
+        
     String uri = "mongodb+srv://valencia:valencia@cluster0.wmq4g6d.mongodb.net/";
     String databaseName = "Medical_Appointment";
     String collectionName = "Appointment";
@@ -114,7 +105,7 @@ public class Reminder {
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
-        collection.updateOne(eq("_id", new ObjectId(appointmentId)), new Document("$set", new Document("emailSent", emailSent)));
+        collection.updateOne(eq("idApp", appointmentId), new Document("$set", new Document("emailSent", emailSent)));
     } catch (Exception e) {
         System.err.println("Error inesperado al actualizar el estado de emailSent.");
         e.printStackTrace();

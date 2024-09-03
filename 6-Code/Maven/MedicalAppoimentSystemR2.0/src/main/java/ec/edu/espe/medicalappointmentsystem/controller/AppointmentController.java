@@ -38,6 +38,7 @@ public class AppointmentController {
             Document doc = new Document("idApp", appointment.getIdApp())
                     .append("dateAppointment", appointment.getDateAppointment())
                     .append("timeSlot", appointment.getTimeSlot())
+                    .append("emailSent", false)
                     .append("doctor", new Document("name", appointment.getDoctor().getName())
                             .append("specialty", appointment.getDoctor().getSpecialty()))
                     .append("patient", new Document("id", appointment.getPatient().getId())
